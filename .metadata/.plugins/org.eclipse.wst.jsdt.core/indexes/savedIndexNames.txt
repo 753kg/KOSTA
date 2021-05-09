@@ -1,8 +1,0 @@
-INDEX VERSION 1.4+C:\GitRepository\KOSTA\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-2537889925.index
-1820681279.index
-2448684311.index
-3065038706.index
-186595657.index
-506327055.index
-1097463564.index

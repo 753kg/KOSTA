@@ -1,8 +1,0 @@
-package com.kosta.sample1;
-
-public class Car {
-	
-	public void carPrint() {
-		System.out.println("car의 정보입니다.");
-	}
-}

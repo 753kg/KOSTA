@@ -1,7 +1,0 @@
-package com.kosta.sample2;
-
-public class People {
-	String name;
-	String phone;
-	Car car;
-}
