@@ -1,0 +1,11 @@
+package com.kosta.sample5AOP;
+
+public class Coffee {
+	
+	@Around
+	public void add(int shot) {
+		///
+		System.out.println("Coffee " + shot + " 샷 추가");
+		///
+	}
+}

@@ -1,0 +1,21 @@
+package com.kosta.sample2;
+
+public class People {
+	String name;
+	String phone;
+	Car car;
+	
+	public People(String name, String phone, Car car) {
+		super();
+		this.name = name;
+		this.phone = phone;
+		this.car = car;
+	}
+
+	@Override
+	public String toString() {
+		return "People [name=" + name + ", phone=" + phone + ", car=" + car + "]";
+	}
+	
+	
+}

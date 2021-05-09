@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> <!-- 환경설정했던 정보를 읽는다 -->
+		<property name="locations">
+			<list>
+				<value>oracledb.properties</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	
+	<!-- 생성자를 통한 DI
+	<bean id="deptDAO" class="com.kosta.model.DeptDAO">
+		<constructor-arg index="0" ref="dataSource"></constructor-arg>
+	</bean>
+	 -->
+	 
+	 <!-- setter를 통한 DI -->
+	<bean id="deptDAO" class="com.kosta.model.DeptDAO">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+</beans>

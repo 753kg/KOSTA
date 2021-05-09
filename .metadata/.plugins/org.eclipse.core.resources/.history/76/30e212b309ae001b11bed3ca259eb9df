@@ -1,0 +1,12 @@
+package com.kosta.sample1;
+
+public class LgTV implements TV {
+	
+	public void turnOn() {
+		System.out.println(getClass().getSimpleName() + " 전원을 켠다");
+	}
+	
+	public void turnOff() {
+		System.out.println(getClass().getSimpleName() + " 전원을 끈다");
+	}
+}

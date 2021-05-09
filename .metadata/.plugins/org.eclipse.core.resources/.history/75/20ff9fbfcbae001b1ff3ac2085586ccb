@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- MemberDAOImpl dao1 = new MemberDAOImpl(); -->
+	<!-- default 생성자가 있어야 가능 -->
+	<bean id="dao1" class="com.kosta.sample3.MemberDAOImpl"></bean>
+
+	<!-- 
+	// MemberServiceImpl에서 listmember()를 하려면 setter로 memberDAO를 꼭 설정해야한다. null이면 안되니까
+	MemberServiceImple service1 = new MemberServiceImple();
+	service1.setMemberDAO(dao1);
+	 -->
+	<bean id="service1" class="com.kosta.sample3.MemberServiceImpl">
+		<property name="memberDAO" ref="dao1"></property> 				<!-- name: setter 이름 (setMemberDAO) -->
+	</bean>
+</beans>

@@ -1,0 +1,22 @@
+package com.kosta.sample3;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class MemberServiceImpl implements MemberService {
+	private MemberDAO memberDAO;
+	 
+	public MemberServiceImpl() {
+		System.out.println("MemberServiceImpl의 기본생성자...");
+	}
+
+	public void setMemberDAO(MemberDAO memberDAO) {
+		this.memberDAO = memberDAO;
+		System.out.println("MemberServiceImpl의 setMemberDAO()...");
+	}
+
+	@Override
+	public void listMembers() {
+		memberDAO.listMembers();
+	}
+}

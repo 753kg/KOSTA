@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+   "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+   <bean id="calcTarget" class="com.kosta.sample4AOP.Calculator" />
+   <bean id="logAdvice" class="com.kosta.sample4AOP.LoggingAdvice" />
+   <bean id="logAdvice2" class="com.kosta.sample4AOP.LoggingAdvice2"></bean>
+   
+   <!-- aspect : 주업무에 보조업무를 끼움 -->
+   <bean id="proxyCal"
+          class="org.springframework.aop.framework.ProxyFactoryBean"> <!-- Spring의 AOP 라이브러리.. 나한테 없음 -->
+      <property name="target" ref="calcTarget"/>	<!-- 주업무 -->
+      <property name="interceptorNames">			<!-- 보조업무 -->
+         <list>
+            <value>logAdvice</value>
+            <value>logAdvice2</value>
+         </list>
+      </property>
+   </bean>
+</beans>

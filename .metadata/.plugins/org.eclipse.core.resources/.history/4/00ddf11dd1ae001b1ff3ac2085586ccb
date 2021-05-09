@@ -1,0 +1,19 @@
+package com.kosta.sample3;
+
+import org.springframework.stereotype.Repository;
+
+// DB와 관련된 것은 Repository
+// default 이름 : memberDAOImpl
+@Repository("mdao")
+public class MemberDAOImpl implements MemberDAO {
+	
+	public MemberDAOImpl() {
+		System.out.println("MemberDAOImpl의 기본생성자...");
+	}
+	
+	@Override
+	public void listMembers() {
+		System.out.println("listMembers  메서드 호출");
+		System.out.println("회원정보를 조회합니다.");
+	}
+}

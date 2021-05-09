@@ -1,0 +1,12 @@
+package com.kosta.sample2;
+
+import java.util.List;
+
+public class People {
+	String name;
+	String phone;
+	List<Car> carlist;
+	
+	
+	
+}

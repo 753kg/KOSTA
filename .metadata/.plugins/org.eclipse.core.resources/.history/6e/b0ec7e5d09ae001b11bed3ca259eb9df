@@ -1,0 +1,21 @@
+package com.kosta.sample1;
+
+public class TVUser {
+
+	public static void main(String[] args) {
+		test1();
+	}
+	
+	private static void test2() {
+		LgTV tv = new LgTV();
+		tv.turnOn();
+		tv.turnOff();
+	}
+
+	private static void test1() {
+		SamsungTV tv = new SamsungTV();
+		tv.powerOn();
+		tv.powerOff();
+	}
+
+}

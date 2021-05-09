@@ -1,0 +1,14 @@
+package com.kosta.sample2;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class DITest {
+
+	public static void main(String[] args) {
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("sample2.xml");
+		//People p1 = ctx.getBean("people", People.class);	// id를 입력
+		//System.out.println(p1);
+	}
+
+}

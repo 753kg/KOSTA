@@ -1,0 +1,52 @@
+package com.kosta.sample2;
+
+import java.util.List;
+
+public class People {
+	String name;
+	String phone;
+	List<Car> carlist;
+	List<String> major;
+	
+	public People() {
+		super();
+	}
+	public People(String name, String phone, List<Car> carlist) {
+		super();
+		this.name = name;
+		this.phone = phone;
+		this.carlist = carlist;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public List<Car> getCarlist() {
+		return carlist;
+	}
+	public void setCarlist(List<Car> carlist) {
+		this.carlist = carlist;
+	}
+	
+	public List<String> getMajor() {
+		return major;
+	}
+	public void setMajor(List<String> major) {
+		this.major = major;
+	}
+	@Override
+	public String toString() {
+		return "People [name=" + name + ", phone=" + phone + ", carlist=" + carlist + ", major=" + major + "]";
+	}
+	
+	
+	
+}

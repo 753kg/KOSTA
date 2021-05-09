@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- default 생성자가 있어야함 -->
+	<bean id="samsung" class="com.kosta.sample1.SamsungTV"></bean>
+	<!-- default 생성자없으면 등록해주기 -->
+	<bean id="lg" class="com.kosta.sample1.LgTV">
+		<constructor-arg name="model" value="ABC123"></constructor-arg>
+		<constructor-arg name="company" value="엘지"></constructor-arg>
+	</bean>
+	<bean id="car" class="com.kosta.sample1.Car">
+		<constructor-arg index="0" value="SM7"></constructor-arg>
+		<constructor-arg index="1" value="5000"></constructor-arg>
+	</bean>
+</beans>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+   "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+   <bean id="calcTarget" class="com.kosta.sample4AOP.Calculator" />
+   <bean id="logAdvice" class="com.kosta.sample4AOP.LoggingAdvice" />
+   <bean id="logAdvice2" class="com.kosta.sample4AOP.LoggingAdvice2"></bean>
+   
+   <!-- advisor = advise + pointcut -->
+   <!-- aop를 어떤 method에다만 적용할건지 (세밀하게 target 지정) -->
+   <bean id="advisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+   		<!-- 보조업무지정 -->
+   		<property name="advice" ref="logAdvice2"/>
+   		<!-- target지정 -->
+   		<property name="pointcut">
+   			<bean class="org.springframework.aop.aspectj.AspectJExpressionPointcut">	<!-- aspectj 라이브러리가 있어야함 -->
+   				<property name="expression">
+   					<!-- within:범위가 넓음, execution:세밀함 -->
+   					<!-- <value>execution(* add(..))</value> -->	<!-- add라는 함수에만 적용 -->
+   					<value>within(com.kosta.sample4AOP.Calculator)</value>
+   				</property>
+   			</bean>
+   		</property>
+   </bean>
+   
+   <!-- aspect : 주업무에 보조업무를 끼움 -->
+   <bean id="proxyCal"
+          class="org.springframework.aop.framework.ProxyFactoryBean"> <!-- Spring의 AOP 라이브러리.. 나한테 없음 -->
+      <property name="target" ref="calcTarget"/>	<!-- 주업무 -->
+      <property name="interceptorNames">			<!-- 보조업무 -->
+         <list>
+            <value>advisor</value>
+         </list>
+      </property>
+   </bean>
+</beans>
