@@ -40,7 +40,7 @@
 			<td>삭제</td>
 		</tr>
 		<c:forEach var="emp" items="${emplist}">
-		<c:url value="empDetail" var="empD">
+		<c:url value="empDetail.do" var="empD">
 			<c:param name="empid" value="${emp.employee_id}"></c:param>
 		</c:url>
 			<tr>
@@ -79,7 +79,7 @@
 		function call(empid){
 			// get방식
 			// post는 form으로만 가능
-			location.href = "empDelete?empid=" + empid;
+			location.href = "empDelete.do?empid=" + empid;
 		}
 	</script>
 </body>

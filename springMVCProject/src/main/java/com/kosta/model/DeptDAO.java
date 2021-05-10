@@ -54,12 +54,13 @@ public class DeptDAO {
 	public DeptVO selectById(int deptid) {
 		DeptVO dept = null;
 		
-		Connection conn = DBUtil.getConnection();
+		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		String sql = "select * from departments where department_id = ?";
 		
 		try {
+			conn = dataSource.getConnection();
 			st = conn.prepareStatement(sql);
 			st.setInt(1, deptid);
 			rs = st.executeQuery();
@@ -79,12 +80,13 @@ public class DeptDAO {
 	public List<LocationVO> selectAllLocation() {
 		List<LocationVO> loclist = new ArrayList<>();
 		
-		Connection conn = DBUtil.getConnection();
+		Connection conn = null;
 		Statement st = null;
 		ResultSet rs = null;
 		String sql = "select * from locations order by 1";
 		
 		try {
+			conn = dataSource.getConnection();
 			st = conn.createStatement();
 			rs = st.executeQuery(sql);
 			while(rs.next()) {
@@ -134,12 +136,13 @@ public class DeptDAO {
 	
 	public int insertDept(DeptVO dept) {
 		String sql = "insert into departments values(?, ?, ?, ?)";
-		Connection conn;
+		Connection conn = null;
 		PreparedStatement st = null;
 		int result = 0;
 		
-		conn = DBUtil.getConnection();
+		
 		try {
+			conn = dataSource.getConnection();
 			st = conn.prepareStatement(sql);
 			st.setInt(1, dept.getDepartment_id());
 			st.setString(2, dept.getDepartment_name());
@@ -167,12 +170,12 @@ public class DeptDAO {
 				+ "manager_id=?, "
 				+ "location_id = ? "
 				+ "where department_id = ?";
-		Connection conn;
+		Connection conn = null;
 		PreparedStatement st = null;
 		int result = 0;
 		
-		conn = DBUtil.getConnection();
 		try {
+			conn = dataSource.getConnection();
 			st = conn.prepareStatement(sql);
 			st.setString(1, dept.getDepartment_name());
 			st.setInt(2, dept.getManager_id());
@@ -196,12 +199,12 @@ public class DeptDAO {
 
 	public int deleteDept(int deptid) {
 		String sql = "delete from departments where department_id = ?";
-		Connection conn;
+		Connection conn = null;
 		PreparedStatement st = null;
 		int result = 0;
 		
-		conn = DBUtil.getConnection();
 		try {
+			conn = dataSource.getConnection();
 			st = conn.prepareStatement(sql);
 			st.setInt(1, deptid);
 			result = st.executeUpdate();

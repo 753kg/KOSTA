@@ -28,12 +28,13 @@ public class EmpDAO {
 	public EmpVO loginChk(int empid, String email) {
 		EmpVO emp = null;
 		
-		Connection conn = DBUtil.getConnection();
+		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		String sql = "select * from employees where employee_id = ? and email = ?";
 		
 		try {
+			conn = dataSource.getConnection();
 			st = conn.prepareStatement(sql);
 			st.setInt(1, empid);
 			st.setString(2, email);
@@ -108,12 +109,13 @@ public class EmpDAO {
 	public EmpVO selectById(int empid) {
 		EmpVO emp = null;
 		
-		Connection conn = DBUtil.getConnection();
+		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		String sql = "select * from employees where employee_id = ?";
 		
 		try {
+			conn = dataSource.getConnection();
 			st = conn.prepareStatement(sql);
 			st.setInt(1, empid);
 			rs = st.executeQuery();
@@ -134,12 +136,13 @@ public class EmpDAO {
 	public List<EmpVO> selectByDept(int deptid) {
 		List<EmpVO> emplist = new ArrayList<>();
 		
-		Connection conn = DBUtil.getConnection();
+		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		String sql = "select * from employees where department_id = ?";
 		
 		try {
+			conn = dataSource.getConnection();
 			st = conn.prepareStatement(sql);
 			st.setInt(1, deptid);
 			rs = st.executeQuery();
@@ -160,12 +163,13 @@ public class EmpDAO {
 	public List<EmpVO> selectByJob(String jobid) {
 		List<EmpVO> emplist = new ArrayList<>();
 		
-		Connection conn = DBUtil.getConnection();
+		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		String sql = "select * from employees where job_id = ?";
 		
 		try {
+			conn = dataSource.getConnection();
 			st = conn.prepareStatement(sql);
 			st.setString(1, jobid);
 			rs = st.executeQuery();
@@ -186,12 +190,13 @@ public class EmpDAO {
 	public List<EmpVO> selectBySalary(int minsal, int maxsal) {
 		List<EmpVO> emplist = new ArrayList<>();
 		
-		Connection conn = DBUtil.getConnection();
+		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		String sql = "select * from employees where salary between ? and ?";
 		
 		try {
+			conn = dataSource.getConnection();
 			st = conn.prepareStatement(sql);
 			st.setInt(1, minsal);
 			st.setInt(2, maxsal);
@@ -213,13 +218,14 @@ public class EmpDAO {
 	public List<EmpVO> selectByDate(String sdate, String edate) {
 		List<EmpVO> emplist = new ArrayList<>();
 		
-		Connection conn = DBUtil.getConnection();
+		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		String sql = "select * from employees" +
 					" where hire_date between ? and ?";
 		
 		try {
+			conn = dataSource.getConnection();
 			st = conn.prepareStatement(sql);
 			st.setString(1, sdate);				// string -> date �ڵ�����ȯ
 			st.setString(2, edate);
@@ -240,13 +246,14 @@ public class EmpDAO {
 	public List<EmpVO> selectByDate2(Date sdate, Date edate) {
 		List<EmpVO> emplist = new ArrayList<>();
 		
-		Connection conn = DBUtil.getConnection();
+		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		String sql = "select * from employees" +
 					" where hire_date between ? and ?";
 		
 		try {
+			conn = dataSource.getConnection();
 			st = conn.prepareStatement(sql);
 			st.setDate(1, sdate);				// string -> date �ڵ�����ȯ
 			st.setDate(2, edate);
@@ -268,13 +275,14 @@ public class EmpDAO {
 	public List<EmpVO> selectByName(String str) {
 		List<EmpVO> emplist = new ArrayList<>();
 		
-		Connection conn = DBUtil.getConnection();
+		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		String sql = "select * from employees where first_name like ? ";
 //		String sql = "select * from employees where instr(first_name, ?) > 0";
 		
 		try {
+			conn = dataSource.getConnection();
 			st = conn.prepareStatement(sql);
 //			st.setString(1, str);
 			st.setString(1, "%"+str+"%");
@@ -296,7 +304,7 @@ public class EmpDAO {
 	public List<EmpVO> selectByCondition(int deptid, String jobid, int sal, Date hdate) {
 		List<EmpVO> emplist = new ArrayList<>();
 		
-		Connection conn = DBUtil.getConnection();
+		Connection conn = null; 
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		String sql = " select * from employees" +
@@ -307,6 +315,7 @@ public class EmpDAO {
 													// 2�� ��
 		
 		try {
+			conn = dataSource.getConnection();
 			st = conn.prepareStatement(sql);
 			st.setInt(1, deptid);
 			st.setString(2, jobid);
@@ -329,12 +338,12 @@ public class EmpDAO {
 	
 	public int insertEmp(EmpVO emp) {
 		String sql = "insert into employees values(?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?)";
-		Connection conn;
+		Connection conn = null;
 		PreparedStatement st = null;
 		int result = 0;
 		
-		conn = DBUtil.getConnection();
 		try {
+			conn = dataSource.getConnection();
 			st = conn.prepareStatement(sql);
 			st.setInt(1, emp.getEmployee_id());
 			st.setString(2, emp.getFirst_name());
@@ -377,12 +386,12 @@ public class EmpDAO {
 				+ "manager_id=?, "
 				+ "department_id=? "
 				+ "where employee_id = ?";
-		Connection conn;
+		Connection conn = null;
 		PreparedStatement st = null;
 		int result = 0;
 		
-		conn = DBUtil.getConnection();
 		try {
+			conn = dataSource.getConnection();
 			st = conn.prepareStatement(sql);
 			st.setString(1, emp.getFirst_name());
 			st.setString(2, emp.getLast_name());
@@ -414,12 +423,12 @@ public class EmpDAO {
 	
 	public int deleteEmp(int empid) {
 		String sql = "delete from employees where employee_id = ?";
-		Connection conn;
+		Connection conn = null;
 		PreparedStatement st = null;
 		int result = 0;
 		
-		conn = DBUtil.getConnection();
 		try {
+			conn = dataSource.getConnection();
 			st = conn.prepareStatement(sql);
 			st.setInt(1, empid);
 			result = st.executeUpdate();

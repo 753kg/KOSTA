@@ -18,18 +18,18 @@
 <body>
 	<h1>부서전체목록</h1>
 	<jsp:include page="../common/header.jsp"></jsp:include>
-	<a href="deptInsert">신규등록</a><!-- 무조건 servlet으로 이동(controller로) -->
+	<a href="deptInsert.do">신규등록</a><!-- 무조건 servlet으로 이동(controller로) -->
 	<table>
 		<tr>
 			<td>부서코드</td><td>부서이름</td><td>매니저</td><td>지역코드</td><td></td>
 		</tr>
 		<c:forEach var="dept" items="${deptAll }">
 			<tr>
-				<td><a href="deptDetail?deptid=${dept.department_id}">${dept.department_id}</a></td>
+				<td><a href="deptDetail.do?deptid=${dept.department_id}">${dept.department_id}</a></td>
 				<td>${dept.department_name}</td>
 				<td>${dept.manager_id}</td>
 				<td>${dept.location_id}</td>
-				<td><button onclick="location.href='deptDelete?deptid=${dept.department_id}'">삭제</button></td>
+				<td><button onclick="location.href='deptDelete.do?deptid=${dept.department_id}'">삭제</button></td>
 			</tr>		
 		</c:forEach>
 	</table>

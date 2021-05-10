@@ -22,7 +22,7 @@
 <body>
 	<h1>직원 신규 등록</h1>
 	<jsp:include page="../common/header.jsp"></jsp:include>
-	<form action="empInsert" method="post" enctype="multipart/form-data">
+	<form action="empInsert.do" method="post" >
 		<label>직원번호:</label>
 		<input type="text" name="employee_id"><br>
 		<label>성:</label>

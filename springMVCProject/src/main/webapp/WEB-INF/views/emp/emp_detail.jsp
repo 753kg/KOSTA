@@ -5,6 +5,7 @@
 <%@page import="com.kosta.model.EmpVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,20 +19,11 @@
 		text-align: left;
 	}
 </style>
-<%
-//EmpVO emp = (EmpVO)request.getAttribute("emp");
-List<JobVO> joblist = (List<JobVO>)request.getAttribute("joblist");
-List<DeptVO> deptlist = (List<DeptVO>)request.getAttribute("deptlist");
-List<ManagerVO> mlist = (List<ManagerVO>)request.getAttribute("mlist");
-int mydept = ((EmpVO)request.getAttribute("emp")).getDepartment_id();
-int mymanager = ((EmpVO)request.getAttribute("emp")).getManager_id();
-String myjob = ((EmpVO)request.getAttribute("emp")).getJob_id();
-%>
 </head>
 <body>
 	<h1>직원 정보 수정</h1>
 	<jsp:include page="../common/header.jsp"></jsp:include>
-	<form id="myfrm" action="empUpdate" method="post">
+	<form id="myfrm" action="empDetail.do" method="post">
 		<!-- emp는 request.getAttribute("emp")와 같다. -->
 		<img src="/webShop/upload/${emp.phone_number }"><br>
 		<label>직원번호:</label>
@@ -48,13 +40,10 @@ String myjob = ((EmpVO)request.getAttribute("emp")).getJob_id();
 		<input type="date" name="hire_date" value="${emp.hire_date }"><br>
 		<label>직책:</label>
 		<select name="job_id">
-			<%
-			for(JobVO j : joblist){
-				String jobid = j.getJob_id();
-				String s = myjob.equals(jobid)? "selected":"";
-				out.print("<option "+s+" value='"+jobid+"'>"+j.getJob_title()+"</option>");
-			}
-			%>
+			<c:forEach var="j" items="${joblist }">
+				<option value="${j.job_id }" 
+					<c:if test="${j.job_id == emp.job_id }">selected</c:if>>${j.job_title}</option>
+			</c:forEach>
 		</select><br>
 		<label>급여:</label>
 		<input type="number" name="salary" value="${emp.salary }"><br>
@@ -62,20 +51,17 @@ String myjob = ((EmpVO)request.getAttribute("emp")).getJob_id();
 		<input type="number" step=0.01 name="commission_pct" value="${emp.commission_pct}"><br>
 		<label>매니저:</label>
 		<select name="manager_id">
-		<%
-		for(ManagerVO m : mlist){
-			int mid = m.getManager_id();
-			String s = mymanager == mid? "selected":"";
-			out.print("<option "+s+" value='"+mid+"'>"+m.getFullname()+"</option>");
-		}
-		%>
+			<c:forEach var="m" items="${mlist }">
+				<option value="${m.manager_id }" 
+					<c:if test="${m.manager_id == emp.manager_id }">selected</c:if>>${m.fullname}</option>
+			</c:forEach>
 		</select><br>
 		<label>부서:</label>
 		<select name="department_id">
-			<%for(DeptVO dept : deptlist) {%>
-			<%	int deptid = dept.getDepartment_id(); %>
-					<option <%=mydept==deptid?"selected":""%> value=<%=deptid%>><%=dept.getDepartment_name()%></option>
-			<%} %>
+			<c:forEach var="dept" items="${deptlist }">
+				<option value="${dept.department_id }" 
+					<c:if test="${dept.department_id == emp.department_id }">selected</c:if>>${dept.department_name}</option>
+			</c:forEach>
 		</select><br>
 		<input type="submit" value="수정하기(submit)">
 		<input type="button" id="btnUpdate" value="수정하기(button)">
@@ -94,12 +80,12 @@ String myjob = ((EmpVO)request.getAttribute("emp")).getJob_id();
 		});
 		
 		$("#btnRetrieve").on("click", function(){
-			location.href = "emplist";
+			location.href = "emplist.do";
 		});
 		
 		$("#btnDelete").on("click", function(){
 			//alert($(this).attr("mydata"));
-			location.href = "empDelete?empid=" + $(this).attr("mydata");
+			location.href = "empDelete.do?empid=" + $(this).attr("mydata");
 		});
 		
 	});
