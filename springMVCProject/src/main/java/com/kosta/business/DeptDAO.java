@@ -1,4 +1,4 @@
-package com.kosta.model;
+package com.kosta.business;
 //import ==> ctrl+shift+o
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,11 +13,14 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kosta.model.DeptVO;
+import com.kosta.model.LocationVO;
+import com.kosta.model.ManagerVO;
 import com.kosta.util.DBUtil;
 
 // bean으로 등록
-@Repository("deptdao2")	// bean의 이름
-public class DeptDAO {
+@Repository("deptDAO_jdbc")	// bean의 이름
+public class DeptDAO implements DeptDAOInterface{
 	
 	// 1. 생성자로 injection
 	// 2. setter로 injection
@@ -25,7 +28,7 @@ public class DeptDAO {
 	@Autowired
 	DataSource dataSource;
 	
-	public List<DeptVO> selectAll() {
+	public List<DeptVO> findAll() {
 		List<DeptVO> deptlist = new ArrayList<>();
 		
 		Connection conn = null;
@@ -51,7 +54,7 @@ public class DeptDAO {
 		return deptlist;
 	}
 	
-	public DeptVO selectById(int deptid) {
+	public DeptVO findById(int deptid) {
 		DeptVO dept = null;
 		
 		Connection conn = null;
@@ -77,7 +80,7 @@ public class DeptDAO {
 		return dept;
 	}
 	
-	public List<LocationVO> selectAllLocation() {
+	public List<LocationVO> findAllLocation() {
 		List<LocationVO> loclist = new ArrayList<>();
 		
 		Connection conn = null;
@@ -105,7 +108,7 @@ public class DeptDAO {
 		return loclist;
 	}
 	
-	public List<ManagerVO> selectAllManager() {
+	public List<ManagerVO> findAllManager() {
 		List<ManagerVO> mlist = new ArrayList<>();
 		
 		Connection conn = null;
@@ -134,7 +137,7 @@ public class DeptDAO {
 		return mlist;
 	}
 	
-	public int insertDept(DeptVO dept) {
+	public int insert(DeptVO dept) {
 		String sql = "insert into departments values(?, ?, ?, ?)";
 		Connection conn = null;
 		PreparedStatement st = null;
@@ -164,7 +167,7 @@ public class DeptDAO {
 		return result;	
 	}
 
-	public int updateDept(DeptVO dept) {
+	public int update(DeptVO dept) {
 		String sql = "update departments "
 				+ "set department_name=?, "
 				+ "manager_id=?, "
@@ -197,7 +200,7 @@ public class DeptDAO {
 		return result;	
 	}
 
-	public int deleteDept(int deptid) {
+	public int delete(int deptid) {
 		String sql = "delete from departments where department_id = ?";
 		Connection conn = null;
 		PreparedStatement st = null;
@@ -208,18 +211,14 @@ public class DeptDAO {
 			st = conn.prepareStatement(sql);
 			st.setInt(1, deptid);
 			result = st.executeUpdate();
-		} catch (SQLException e) {
-			try {
-				conn.rollback();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
+		} catch (SQLException e) {	
+			// 에러 처리를 DAO에서 하기 때문에 xml에 등록한 에러페이지로 이동을 안함. Controller까지 에러가 와야한다.
+			// RuntimeException : 컴파일 시에는 에러가 안나고 실행했을 때 에러가 남 ex) 10 / 0
+			//					: 에러를 JVM이 처리하도록함
+			throw new RuntimeException(e.getMessage());
 		} finally {
 			DBUtil.dbClose(null, st, conn);
 		}
-		
 		return result;
 	}
 }

@@ -1,4 +1,4 @@
-package com.kosta.model;
+package com.kosta.business;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -15,11 +15,13 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kosta.model.EmpVO;
+import com.kosta.model.JobVO;
 import com.kosta.util.DBUtil;
 
 // DAO(Data Access Object)
 @Repository
-public class EmpDAO {
+public class EmpDAO implements EmpDAOInterface{
 	
 	@Autowired
 	DataSource dataSource;	//dataSource가 여기로 주입되도록
