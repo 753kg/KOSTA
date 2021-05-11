@@ -41,8 +41,7 @@
 		<label>직책:</label>
 		<select name="job_id">
 			<c:forEach var="j" items="${joblist }">
-				<option value="${j.job_id }" 
-					<c:if test="${j.job_id == emp.job_id }">selected</c:if>>${j.job_title}</option>
+				<option ${j.job_id==emp.job_id?"selected":"" } value="${j.job_id }">${j.job_title}</option>
 			</c:forEach>
 		</select><br>
 		<label>급여:</label>
