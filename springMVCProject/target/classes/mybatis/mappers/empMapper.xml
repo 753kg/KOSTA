@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kosta.emp">
+
+  <select id="selectAll" resultType="evo">
+    select * from employees order by 1
+  </select>
+  
+  <select id="selectAllJobs" resultType="com.kosta.model.JobVO">
+  	select * from jobs order by 1
+  </select>
+  
+  <select id="selectById" resultType="evo" parameterType="int">
+  	select * from employees where employee_id = #{employee_id}
+  </select>
+  
+  <select id="selectByDept" resultType="evo" parameterType="int">
+  	select * from employees where department_id = #{department_id}
+  </select>
+  
+  <select id="selectByJob" resultType="evo" parameterType="int">
+  	select * from employees where job_id = #{job_id}
+  </select>
+  
+  <insert id="insertEmp" parameterType="evo">
+  	insert into employees values(#{employee_id}, #{first_name}, #{last_name}, 
+  		#{email}, #{phone_number}, #{hire_date}, #{job_id}, #{salary}, 
+  		#{commission_pct} ,#{manager_id} ,#{department_id})
+  </insert>
+  
+  <update id="updateEmp" parameterType="evo">
+  	update employees
+	set first_name=#{first_name},
+	last_name=#{last_name},
+	email=#{email},
+	phone_number=#{phone_number},
+	hire_date=#{hire_date},
+	job_id=#{job_id},
+	salary=#{salary},
+	commission_pct = #{commission_pct},
+	manager_id=#{manager_id},
+	department_id=#{department_id}
+	where employee_id = #{employee_id}
+  </update>
+  
+  <delete id="deleteEmp" parameterType="int">
+  	delete from employees where employee_id = #{employee_id}
+  </delete>
+  
+</mapper>
