@@ -33,6 +33,7 @@ public class DeptController {
 	
 	@RequestMapping(value="dept/deptInsert.do", method = RequestMethod.POST)
 	public String deptInsertPost(DeptVO dept) {
+		System.out.println(dept);
 		service.insert(dept);
 		return "redirect:/dept/deptlist.do";
 	}

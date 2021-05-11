@@ -38,6 +38,7 @@ public class DeptDAO implements DeptDAOInterface{
 	
 	@SuppressWarnings("unchecked")
 	public List<DeptVO> findAll() {
+		System.out.println("jdbc 직접 사용함...");
 		List<DeptVO> deptlist = new ArrayList<>();
 		String sql = "select * from departments order by 1";
 		deptlist = jdbcTemplate.query(sql, new RowMapper() {
