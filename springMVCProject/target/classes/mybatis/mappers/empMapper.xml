@@ -4,6 +4,10 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kosta.emp">
 
+  <select id="loginChk" resultType="evo" parameterType="map">
+  	select * from employees where employee_id = #{employee_id} and email = #{email}
+  </select>
+
   <select id="selectAll" resultType="evo">
     select * from employees order by 1
   </select>
@@ -22,6 +26,30 @@
   
   <select id="selectByJob" resultType="evo" parameterType="int">
   	select * from employees where job_id = #{job_id}
+  </select>
+  
+  <select id="selectBySalary" resultType="evo" parameterType="map">
+  	select * from employees where salary between #{minsal} and #{maxsal}
+  </select>
+  
+  <select id="selectByDate" resultType="evo" parameterType="map">
+  	select * from employees where hire_date between #{sdate} and #{edate}
+  </select>
+  
+  <select id="selectByDate2" resultType="evo" parameterType="map">
+  	select * from employees where hire_date between #{sdate} and #{edate}
+  </select>
+  
+  <select id="selectByName" resultType="evo" parameterType="String">
+  	select * from employees where first_name like %${str}%
+  </select>
+  
+  <select id="selectByCondition" resultType="evo" parameterType="map">
+  	select * from employees
+	where department_id = #{department_id} 
+	and job_id = #{job_id}
+	and salary >= #{salary}
+	and hire_date between #{hire_date} and add_months(#{hire_date}, 24)
   </select>
   
   <insert id="insertEmp" parameterType="evo">

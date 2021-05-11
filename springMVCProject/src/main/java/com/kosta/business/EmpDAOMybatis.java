@@ -1,7 +1,9 @@
 package com.kosta.business;
 
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +22,10 @@ public class EmpDAOMybatis implements EmpDAOInterface{
 
 	@Override
 	public EmpVO loginChk(int empid, String email) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, Object> map = new HashMap<>();
+		map.put("employee_id", empid);
+		map.put("email", email);
+		return sqlsession.selectOne(namespace + "loginChk", map);
 	}
 
 	@Override
@@ -56,32 +60,42 @@ public class EmpDAOMybatis implements EmpDAOInterface{
 
 	@Override
 	public List<EmpVO> selectBySalary(int minsal, int maxsal) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, Object> map = new HashMap<>();
+		map.put("minsal", minsal);
+		map.put("maxsal", maxsal);
+		return sqlsession.selectList(namespace + "selectBySalary", map);
 	}
 
 	@Override
 	public List<EmpVO> selectByDate(String sdate, String edate) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, Object> map = new HashMap<>();
+		map.put("sdate", sdate);
+		map.put("edate", edate);
+		return sqlsession.selectList(namespace + "selectByDate", map);
 	}
 
 	@Override
 	public List<EmpVO> selectByDate2(Date sdate, Date edate) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, Object> map = new HashMap<>();
+		map.put("sdate", sdate);
+		map.put("edate", edate);
+		return sqlsession.selectList(namespace + "selectByDate2", map);
 	}
 
 	@Override
 	public List<EmpVO> selectByName(String str) {
 		// TODO Auto-generated method stub
-		return null;
+		return sqlsession.selectList(namespace + "selectByName", str);
 	}
 
 	@Override
 	public List<EmpVO> selectByCondition(int deptid, String jobid, int sal, Date hdate) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, Object> map = new HashMap<>();
+		map.put("department_id", deptid);
+		map.put("job_id", jobid);
+		map.put("salary", sal);
+		map.put("hire_date", hdate);
+		return sqlsession.selectList(namespace + "selectByCondition", map);
 	}
 
 	@Override
