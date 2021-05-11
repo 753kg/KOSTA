@@ -11,6 +11,8 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kosta.model.DeptVO;
@@ -25,9 +27,30 @@ public class DeptDAO implements DeptDAOInterface{
 	// 1. 생성자로 injection
 	// 2. setter로 injection
 	// 3. Autowired로 injection = type이 똑같은거
+	
+	// JDBC
 	@Autowired
 	DataSource dataSource;
 	
+	// Spring JDBC
+	@Autowired
+	JdbcTemplate jdbcTemplate;
+	
+	@SuppressWarnings("unchecked")
+	public List<DeptVO> findAll() {
+		List<DeptVO> deptlist = new ArrayList<>();
+		String sql = "select * from departments order by 1";
+		deptlist = jdbcTemplate.query(sql, new RowMapper() {
+			@Override
+			public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+				DeptVO dept = new DeptVO(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4));
+				return dept;
+			}
+		});
+		return deptlist;
+	}
+	
+	/* JDBC 원본
 	public List<DeptVO> findAll() {
 		List<DeptVO> deptlist = new ArrayList<>();
 		
@@ -53,6 +76,7 @@ public class DeptDAO implements DeptDAOInterface{
 		
 		return deptlist;
 	}
+	*/
 	
 	public DeptVO findById(int deptid) {
 		DeptVO dept = null;
