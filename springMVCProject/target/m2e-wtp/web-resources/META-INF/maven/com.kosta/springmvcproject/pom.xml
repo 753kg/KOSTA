@@ -15,35 +15,52 @@
     <org.aspectj-version>1.9.5</org.aspectj-version>
    </properties>
    
+   <!-- 
     <repositories>
       <repository>
          <id>Talan Repository</id>
          <url>http://nexus.talanlabs.com/content/repositories/releases/</url>
       </repository>
    </repositories>
-   
+    -->
+    
    <dependencies>
+      <!-- 1. mvnrepository에 11.2.0 버전이 없어서 repository 등록 -->
+      <!-- 
+      <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>11.2.0</version>
+      </dependency>
+       -->
+       
+      <!-- 2. 직접 추가? -->
+      <dependency>
+			<groupId>jdbc.oracle</groupId>
+			<artifactId>OracleDriver</artifactId>
+			<version>11.2.0</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/src/main/webapp/WEB-INF/lib/ojdbc6_g.jar</systemPath>
+	  </dependency>
+
+       
         <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
       <dependency>
           <groupId>org.aspectj</groupId>
           <artifactId>aspectjweaver</artifactId>
           <version>${org.aspectj-version}</version>
       </dependency>
+      
       <dependency>
           <groupId>org.aspectj</groupId>
           <artifactId>aspectjrt</artifactId>
           <version>${org.aspectj-version}</version>
       </dependency>
+      
       <dependency>
           <groupId>org.aspectj</groupId>
           <artifactId>aspectjtools</artifactId>
           <version>${org.aspectj-version}</version>
-      </dependency>
-      <!-- https://mvnrepository.com/artifact/com.oracle/ojdbc6 -->
-      <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc6</artifactId>
-            <version>11.2.0</version>
       </dependency>
   
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
