@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kosta.model.DeptDAO;
-import com.kosta.model.EmpDAO;
+import com.kosta.business.DeptDAO;
+import com.kosta.business.EmpDAO;
 import com.kosta.model.UserVO;
 
 @Controller
@@ -120,14 +120,14 @@ public class kostaController {
 	
 	@RequestMapping("emp/allmanager.do")
 	public String allmanager(Model mydata) {
-		mydata.addAttribute("mlist", deptDAO.selectAllManager());
+		mydata.addAttribute("mlist", deptDAO.findAllManager());
 		return "emp/allmanager";
 	}
 	
 	@RequestMapping("emp/alldeptlist.do")
 	public String alldeptlist(Model mydata) {
-		System.out.println(deptDAO.selectAll());
-		mydata.addAttribute("dlist", deptDAO.selectAll());
+		System.out.println(deptDAO.findAll());
+		mydata.addAttribute("dlist", deptDAO.findAll());
 		return "emp/alldeptlist";
 	}
 	
