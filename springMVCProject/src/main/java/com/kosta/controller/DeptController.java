@@ -2,12 +2,15 @@ package com.kosta.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kosta.business.DeptDAO;
 import com.kosta.business.DeptServiceImpl;
+import com.kosta.business.DeptServiceInterface;
 import com.kosta.model.DeptVO;
 
 @Controller
@@ -56,6 +59,15 @@ public class DeptController {
 	@RequestMapping("dept/deptDelete.do")
 	public String deptDelete(int deptid) {
 		service.delete(deptid);
+		return "redirect:/dept/deptlist.do";
+	}
+	
+	@RequestMapping(value = "dept/transactionTest.do")
+	//@ResponseBody
+	public String insertUpdate() {
+		DeptVO new_dept = new DeptVO(6, "transaction1", 100, 1700);
+		DeptVO update_dept = new DeptVO(1, "transaction2수정2", 100, 1700);
+		service.insertUpdate(new_dept, update_dept);
 		return "redirect:/dept/deptlist.do";
 	}
 }

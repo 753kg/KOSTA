@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kosta.model.DeptVO;
 import com.kosta.model.LocationVO;
@@ -60,6 +62,15 @@ public class DeptServiceImpl implements DeptServiceInterface {
 	public List<LocationVO> findAllLocation() {
 		// TODO Auto-generated method stub
 		return deptDAO.findAllLocation();
+	}
+
+	// Transaction 방법 1
+	// @Transactional(propagation=Propagation.REQUIRED)
+	@Override
+	public int insertUpdate(DeptVO new_dept, DeptVO update_dept) {
+		int ret1 = deptDAO.insert(new_dept);
+		int ret2 = deptDAO.update(update_dept);
+		return ret1 + ret2;
 	}
 
 }
