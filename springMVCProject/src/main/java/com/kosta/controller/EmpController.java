@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,8 +33,14 @@ public class EmpController {
 	@Autowired
 	DeptServiceInterface deptService;
 	
+	Logger logger = LoggerFactory.getLogger(EmpController.class);	// EmpController Class의 logger를 생성
+	
 	@RequestMapping("/emp/emplist.do")
 	public String emplist(Model model) {	// 함수 이름은 아무거나
+		
+		logger.warn("[warn] emplist.do 요청...");		// info보다 high level. info하면 warn도 같이 뜸
+		logger.info("[info] emplist.do 요청...");
+		logger.debug("[debug] emplist.do 요청...");
 		
 		model.addAttribute("emplist", empService.selectAll());
 		return "emp/emplist";	// view 이름

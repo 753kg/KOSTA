@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +21,8 @@ public class EmpDAOMybatis implements EmpDAOInterface{
 	SqlSession sqlsession;
 	
 	String namespace = "com.kosta.emp.";
+	
+	Logger logger = LoggerFactory.getLogger(EmpDAOMybatis.class);
 
 	@Override
 	public EmpVO loginChk(int empid, String email) {
@@ -32,15 +36,14 @@ public class EmpDAOMybatis implements EmpDAOInterface{
 	@Override
 	public List<EmpVO> selectAll() {
 		List<EmpVO> emplist = sqlsession.selectList(namespace + "selectAll");
-		System.out.println("EmpDAOMybatis...");
-		System.out.println(emplist.size() + " 건");
+		logger.info("{}건", emplist.size());		// placeholder
 		return emplist;
 	}
 
 	@Override
 	public List<JobVO> selectAllJobs() {
 		List<JobVO> joblist = sqlsession.selectList(namespace + "selectAllJobs");
-		System.out.println(joblist.size() + " 건의 job");
+		logger.info("{}건의 job", joblist.size());
 		return joblist;
 	}
 
@@ -53,7 +56,7 @@ public class EmpDAOMybatis implements EmpDAOInterface{
 	@Override
 	public List<EmpVO> selectByDept(int deptid) {
 		List<EmpVO> emplist = sqlsession.selectList(namespace + "selectByDept", deptid);
-		System.out.println("selectByDept >> " + emplist.size() + "건");
+		logger.info("{}건", emplist.size());	
 		return emplist;
 	}
 
@@ -69,7 +72,7 @@ public class EmpDAOMybatis implements EmpDAOInterface{
 		map.put("minsal", minsal);
 		map.put("maxsal", maxsal);
 		List<EmpVO> emplist = sqlsession.selectList(namespace + "selectBySalary", map);
-		System.out.println("selectBySalary >> " + emplist.size() + "건");
+		logger.info("{}건", emplist.size());	
 		return emplist;
 	}
 
@@ -79,7 +82,7 @@ public class EmpDAOMybatis implements EmpDAOInterface{
 		map.put("sdate", sdate);
 		map.put("edate", edate);
 		List<EmpVO> emplist = sqlsession.selectList(namespace + "selectByDate", map);
-		System.out.println("selectByDate >> " + emplist.size() + "건");
+		logger.info("{}건", emplist.size());	
 		return emplist;
 	}
 
@@ -89,14 +92,14 @@ public class EmpDAOMybatis implements EmpDAOInterface{
 		map.put("sdate", sdate);
 		map.put("edate", edate);
 		List<EmpVO> emplist = sqlsession.selectList(namespace + "selectByDate2", map);
-		System.out.println("selectByDate2 >> " + emplist.size() + "건");
+		logger.info("{}건", emplist.size());	
 		return emplist;
 	}
 
 	@Override
 	public List<EmpVO> selectByName(String str) {
 		List<EmpVO> emplist = sqlsession.selectList(namespace + "selectByName", "%"+str+"%");
-		System.out.println("selectByName >> " + emplist.size() + "건");
+		logger.info("{}건", emplist.size());	
 		return emplist;
 	}
 	
@@ -114,28 +117,28 @@ public class EmpDAOMybatis implements EmpDAOInterface{
 	@Override
 	public int insertEmp(EmpVO emp) {
 		int result = sqlsession.insert(namespace + "empInsert", emp);
-		System.out.println(result + "건 입력됨..");
+		logger.info("{}건 입력", result);	
 		return result;
 	}
 
 	@Override
 	public int updateEmp(EmpVO emp) {
 		int result = sqlsession.update(namespace + "empUpdate", emp);
-		System.out.println(result + "건 수정됨..");
+		logger.info("{}건 수정", result);	
 		return result;
 	}
 
 	@Override
 	public int deleteEmp(int empid) {
 		int result = sqlsession.delete(namespace + "empDelete", empid);
-		System.out.println(result + "건 삭제됨..");
+		logger.info("{}건 삭제", result);	
 		return result;
 	}
 
 	@Override
 	public List<EmpVO> selectByDeptMany(List<Integer> deptidlist) {
 		List<EmpVO> emplist = sqlsession.selectList(namespace + "selectByDeptMany", deptidlist);
-		System.out.println("selectByDeptMany >> " + emplist.size() + "건");
+		logger.info("{}건", emplist.size());	
 		return emplist;
 	}
 
