@@ -26,6 +26,13 @@
 
 	<dependencies>
 	
+		<!-- 트랜잭션 라이브러리 -->
+		<dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${org.springframework-version}</version>
+      	</dependency>
+	
 		<!-- Mybatis SQL문 예쁘게 display -->
 		<dependency>
 			<groupId>org.lazyluke</groupId>

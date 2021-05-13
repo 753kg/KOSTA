@@ -2,19 +2,26 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.3.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
 	
 	<!-- DB -->
 	<bean id="propertyConfigurer"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> <!-- 환경설정했던 정보를 읽는다 -->
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> <!-- 환경설정했던 정보를 읽는다 --> 
 		<property name="locations">
 			<list>
 				<value>classpath:/oracledb.properties</value>
 			</list>
 		</property>
 	</bean>
-	
+	  
 	<!-- 방법 1
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
@@ -88,6 +95,26 @@
 		<constructor-arg ref="sqlSessionFactory"></constructor-arg>
 	</bean>
 	
+	<!-- Transaction bean 생성 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<!-- Transaction 관련 annotation 찾아줌 -->
+	<!-- proxy-target-class="true" : 인터페이스 없이 class에 직접 적용되는 proxy -->
+	<tx:annotation-driven proxy-target-class="true" transaction-manager="transactionManager"/>
+	
+	<!-- Transaction 방법2 : AOP 이용 -->
+	<tx:advice id="txAdvice"  transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	<aop:config>
+    	<aop:advisor advice-ref="txAdvice"  pointcut="execution(* insertUpdate(..))" />
+	</aop:config>
+		
 	
 	
 </beans>
