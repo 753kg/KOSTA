@@ -56,7 +56,18 @@
 	 
 	<!-- 방법 5 JNDI -->
 	<!-- context.xml에 있는 resource를 참조 -->
-	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/myoracle" resource-ref="true"/>
+	<jee:jndi-lookup id="dataSourceOriginal" jndi-name="jdbc/myoracle" resource-ref="true"/>
+	
+	<!-- DB 연결 소스(dataSourceOriginal)를 가져와서 거기에 log를 추가 -->
+	<bean id="dataSource"  class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+		<constructor-arg ref="dataSourceOriginal" />
+		<property name="logFormatter">
+			<bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+				<property name="loggingType" value="MULTI_LINE"></property>
+				<property name="sqlPrefix" value="[ SQL문장 ] "></property>
+			</bean>
+		</property>
+	</bean>
 	 
 	<!-- JDBC Template -->
 	<!-- JdbcTemplate의 setDataSource에 위에서 만든 dataSource를 넣음 -->
@@ -77,5 +88,6 @@
 		<constructor-arg ref="sqlSessionFactory"></constructor-arg>
 	</bean>
 	
-
+	
+	
 </beans>
