@@ -14,7 +14,7 @@ import com.kosta.model.JobVO;
 public class EmpServiceImpl implements EmpService {
 	
 	@Autowired
-	@Qualifier("empDAO_mybatis")
+	@Qualifier("empDAOMybatis")
 	EmpDAOInterface empDAO;
 
 	@Override
@@ -99,6 +99,12 @@ public class EmpServiceImpl implements EmpService {
 	public int deleteEmp(int empid) {
 		// TODO Auto-generated method stub
 		return empDAO.deleteEmp(empid);
+	}
+
+	@Override
+	public List<EmpVO> selectByDeptMany(List<Integer> deptidlist) {
+		// TODO Auto-generated method stub
+		return empDAO.selectByDeptMany(deptidlist);
 	}
 
 }

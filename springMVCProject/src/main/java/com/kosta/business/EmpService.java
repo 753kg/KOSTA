@@ -21,4 +21,5 @@ public interface EmpService {
 	public int insertEmp(EmpVO emp) ;
 	public int updateEmp(EmpVO emp);
 	public int deleteEmp(int empid);
+	public List<EmpVO> selectByDeptMany(List<Integer> deptidlist);
 }

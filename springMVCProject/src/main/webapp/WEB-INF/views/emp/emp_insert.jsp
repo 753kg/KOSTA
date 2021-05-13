@@ -45,7 +45,7 @@
 		<label>급여:</label>
 		<input type="number" name="salary"><br>
 		<label>커미션:</label>
-		<input type="number" step=0.01 name="commission_pct"><br>
+		<!-- <input type="number" step=0.01 name="commission_pct"><br> -->
 		<label>매니저:</label>
 		<select name="manager_id">
 			<option value="" selected disabled hidden>===선택===</option>

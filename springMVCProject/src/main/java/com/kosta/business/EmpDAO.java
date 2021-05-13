@@ -465,5 +465,11 @@ public class EmpDAO implements EmpDAOInterface{
 		emp.setSalary(rs.getInt("Salary"));
 		return emp;
 	}
+
+	@Override
+	public List<EmpVO> selectByDeptMany(List<Integer> deptidlist) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

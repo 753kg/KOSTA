@@ -33,5 +33,17 @@
 			</tr>		
 		</c:forEach>
 	</table>
+	
+	<hr>
+	<c:set var="cpath" value="${pageContext.request.contextPath }"></c:set>
+	<h1>여러부서의 직원들 조회</h1>
+	<form action="${cpath }/emp/selectByDeptMany.do">
+	  <select name="deptlist" multiple="multiple" size="10">
+		<c:forEach items="${deptAll }" var="dept">
+			<option value="${dept.department_id}">${dept.department_name}</option>
+		</c:forEach>
+	  </select>
+	  <input type="submit" value="조회하기">
+	</form>
 </body>
 </html>

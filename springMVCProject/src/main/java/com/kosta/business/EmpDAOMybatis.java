@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.kosta.model.EmpVO;
 import com.kosta.model.JobVO;
 
-@Repository("empDAO_mybatis")
+@Repository()
 public class EmpDAOMybatis implements EmpDAOInterface{
 	
 	@Autowired
@@ -22,22 +22,26 @@ public class EmpDAOMybatis implements EmpDAOInterface{
 
 	@Override
 	public EmpVO loginChk(int empid, String email) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("employee_id", empid);
-		map.put("email", email);
-		return sqlsession.selectOne(namespace + "loginChk", map);
+		Map<String, Object> empInfo = new HashMap<>();
+		empInfo.put("employee_id", empid);
+		empInfo.put("email", email);
+		EmpVO emp = sqlsession.selectOne(namespace + "loginChk", empInfo);
+		return emp;
 	}
 
 	@Override
 	public List<EmpVO> selectAll() {
+		List<EmpVO> emplist = sqlsession.selectList(namespace + "selectAll");
 		System.out.println("EmpDAOMybatis...");
-		return sqlsession.selectList(namespace + "selectAll");
+		System.out.println(emplist.size() + " 건");
+		return emplist;
 	}
 
 	@Override
 	public List<JobVO> selectAllJobs() {
-		// TODO Auto-generated method stub
-		return sqlsession.selectList(namespace + "selectAllJobs");
+		List<JobVO> joblist = sqlsession.selectList(namespace + "selectAllJobs");
+		System.out.println(joblist.size() + " 건의 job");
+		return joblist;
 	}
 
 	@Override
@@ -48,46 +52,55 @@ public class EmpDAOMybatis implements EmpDAOInterface{
 
 	@Override
 	public List<EmpVO> selectByDept(int deptid) {
-		// TODO Auto-generated method stub
-		return sqlsession.selectOne(namespace + "selectByDept", deptid);
+		List<EmpVO> emplist = sqlsession.selectList(namespace + "selectByDept", deptid);
+		System.out.println("selectByDept >> " + emplist.size() + "건");
+		return emplist;
 	}
 
 	@Override
 	public List<EmpVO> selectByJob(String jobid) {
 		// TODO Auto-generated method stub
-		return sqlsession.selectOne(namespace + "selectByJob", jobid);
+		return sqlsession.selectList(namespace + "selectByJob", jobid);
 	}
 
 	@Override
 	public List<EmpVO> selectBySalary(int minsal, int maxsal) {
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Integer> map = new HashMap<>();
 		map.put("minsal", minsal);
 		map.put("maxsal", maxsal);
-		return sqlsession.selectList(namespace + "selectBySalary", map);
+		List<EmpVO> emplist = sqlsession.selectList(namespace + "selectBySalary", map);
+		System.out.println("selectBySalary >> " + emplist.size() + "건");
+		return emplist;
 	}
 
 	@Override
 	public List<EmpVO> selectByDate(String sdate, String edate) {
-		Map<String, Object> map = new HashMap<>();
+		Map<String, String> map = new HashMap<>();
 		map.put("sdate", sdate);
 		map.put("edate", edate);
-		return sqlsession.selectList(namespace + "selectByDate", map);
+		List<EmpVO> emplist = sqlsession.selectList(namespace + "selectByDate", map);
+		System.out.println("selectByDate >> " + emplist.size() + "건");
+		return emplist;
 	}
 
 	@Override
 	public List<EmpVO> selectByDate2(Date sdate, Date edate) {
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Date> map = new HashMap<>();
 		map.put("sdate", sdate);
 		map.put("edate", edate);
-		return sqlsession.selectList(namespace + "selectByDate2", map);
+		List<EmpVO> emplist = sqlsession.selectList(namespace + "selectByDate2", map);
+		System.out.println("selectByDate2 >> " + emplist.size() + "건");
+		return emplist;
 	}
 
 	@Override
 	public List<EmpVO> selectByName(String str) {
-		// TODO Auto-generated method stub
-		return sqlsession.selectList(namespace + "selectByName", str);
+		List<EmpVO> emplist = sqlsession.selectList(namespace + "selectByName", "%"+str+"%");
+		System.out.println("selectByName >> " + emplist.size() + "건");
+		return emplist;
 	}
-
+	
+	// 동적 SQL                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 	@Override
 	public List<EmpVO> selectByCondition(int deptid, String jobid, int sal, Date hdate) {
 		Map<String, Object> map = new HashMap<>();
@@ -100,20 +113,30 @@ public class EmpDAOMybatis implements EmpDAOInterface{
 
 	@Override
 	public int insertEmp(EmpVO emp) {
-		// TODO Auto-generated method stub
-		return sqlsession.insert(namespace + "insertEmp", emp);
+		int result = sqlsession.insert(namespace + "empInsert", emp);
+		System.out.println(result + "건 입력됨..");
+		return result;
 	}
 
 	@Override
 	public int updateEmp(EmpVO emp) {
-		// TODO Auto-generated method stub
-		return sqlsession.update(namespace + "updateEmp", emp);
+		int result = sqlsession.update(namespace + "empUpdate", emp);
+		System.out.println(result + "건 수정됨..");
+		return result;
 	}
 
 	@Override
 	public int deleteEmp(int empid) {
-		// TODO Auto-generated method stub
-		return sqlsession.delete(namespace + "deleteEmp", empid);
+		int result = sqlsession.delete(namespace + "empDelete", empid);
+		System.out.println(result + "건 삭제됨..");
+		return result;
+	}
+
+	@Override
+	public List<EmpVO> selectByDeptMany(List<Integer> deptidlist) {
+		List<EmpVO> emplist = sqlsession.selectList(namespace + "selectByDeptMany", deptidlist);
+		System.out.println("selectByDeptMany >> " + emplist.size() + "건");
+		return emplist;
 	}
 
 }

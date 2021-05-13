@@ -1,11 +1,21 @@
 package com.kosta.controller;
 
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonObjectFormatVisitor;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.kosta.business.DeptDAO;
 import com.kosta.business.DeptServiceInterface;
 import com.kosta.business.EmpDAO;
@@ -64,5 +74,87 @@ public class EmpController {
 	public String empDetailPost(EmpVO emp) {
 		empService.updateEmp(emp);
 		return "redirect:/emp/emplist.do";
+	}
+	
+	// http://localhost:9090/springmvcproject/emp/login.do?id=100&email=SKING
+	@RequestMapping(value = "/emp/login.do", produces = {"text/html;charset=utf-8"})		
+	@ResponseBody							// 브라우저에 응답문서가 간다. 페이지 body에 출력
+	public String empLogin(int id, String email) {
+		EmpVO emp = empService.loginChk(id, email);
+		String message = "<h1>존재하지않는 사용자입니다.</h1>";
+		if(emp != null) message = emp.toString();
+		return message;
+	}
+	
+	
+	
+	@RequestMapping("/login/loginForm.do")
+	public String loginFormGet() {
+		return "/login/loginForm";
+	}
+	
+	@RequestMapping(value = "/login/login3.do", method = RequestMethod.POST)
+	public String loginFormPost(int userid, String userpw, HttpSession session) {
+		EmpVO emp = empService.loginChk(userid, userpw);
+		System.out.println(emp);
+		if(emp == null) {
+			return "redirect:/login/loginForm.do";
+		}else {
+			session.setAttribute("loginemp", emp);
+			return "redirect:/emp/emplist.do";
+		}
+	}
+	
+	@RequestMapping("/emp/selectByDept.do")
+	public String selectByDept(int deptid, Model model) {
+		List<EmpVO> emplist = empService.selectByDept(deptid);
+		model.addAttribute("emplist", emplist);
+		return "emp/emplist";
+	}
+	
+	@RequestMapping("/emp/selectBySalary.do")
+	public String selectBySalary(int minsal, int maxsal ,Model model) {
+		List<EmpVO> emplist = empService.selectBySalary(minsal, maxsal);
+		model.addAttribute("emplist", emplist);
+		return "emp/emplist";
+	}
+	
+	@RequestMapping("/emp/selectByDate.do")
+	public String selectByDate(String sdate, String edate ,Model model) {
+		List<EmpVO> emplist = empService.selectByDate(sdate, edate);
+		model.addAttribute("emplist", emplist);
+		return "emp/emplist";
+	}
+	
+	@RequestMapping("/emp/selectByDate2.do")
+	public String selectByDate2(Date sdate, Date edate ,Model model) {
+		List<EmpVO> emplist = empService.selectByDate2(sdate, edate);
+		model.addAttribute("emplist", emplist);
+		return "emp/emplist";
+	}
+	
+	@RequestMapping("/emp/selectByCondition.do")
+	public String selectByCondition(String deptid, String jobid, String sal, String hdate, String hdateChk, Model model) {
+		System.out.println(hdateChk);
+		int dept = "".equals(deptid)? 0 : Integer.parseInt(deptid);
+		int salary = "".equals(sal)? 0 : Integer.parseInt(sal);
+		if(hdateChk != null) hdate = null;
+		Date hiredate = null;
+		if(!"".equals(hdate) && hdate!=null) hiredate = Date.valueOf(hdate);
+		List<EmpVO> emplist = empService.selectByCondition(dept, jobid, salary, hiredate);
+		model.addAttribute("emplist", emplist);
+		return "emp/emplist";
+	}
+	
+	@RequestMapping("/emp/selectByDeptMany.do")
+	public String selectByDeptMany(Model model, int[] deptlist) {
+		System.out.println(Arrays.toString(deptlist));
+		
+		List<Integer> dlist = new ArrayList<>();
+		for(Integer dept : deptlist) dlist.add(dept);
+		
+		List<EmpVO> emplist = empService.selectByDeptMany(dlist);
+		model.addAttribute("emplist", emplist);
+		return "emp/emplist";
 	}
 }

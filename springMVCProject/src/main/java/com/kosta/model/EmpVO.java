@@ -112,7 +112,7 @@ public class EmpVO {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("EmpVO �������� [employee_id=").append(employee_id).append(", first_name=").append(first_name)
+		builder.append("EmpVO 직원정보 [employee_id=").append(employee_id).append(", first_name=").append(first_name)
 				.append(", last_name=").append(last_name).append(", email=").append(email).append(", phone_number=")
 				.append(phone_number).append(", hire_date=").append(hire_date).append(", job_id=").append(job_id)
 				.append(", salary=").append(salary).append(", commission_pct=").append(commission_pct)

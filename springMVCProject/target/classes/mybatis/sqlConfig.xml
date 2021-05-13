@@ -3,6 +3,11 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+	
+
 	<typeAliases>
 		<typeAlias type="com.kosta.model.DeptVO" alias="dvo"/>
 		<typeAlias type="com.kosta.model.EmpVO" alias="evo"/>
@@ -18,9 +23,9 @@
         <property name="password" value="${password}"/>
       </dataSource>
     </environment>
-  </environments> -->
+  </environments>
   
-  <!-- 
+  
   <mappers>
     <mapper resource="org/mybatis/example/BlogMapper.xml"/>
   </mappers>

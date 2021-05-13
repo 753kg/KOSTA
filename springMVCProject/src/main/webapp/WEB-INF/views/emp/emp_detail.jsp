@@ -89,14 +89,5 @@
 		
 	});
 	</script>
-	<%-- selected 추가하기
-	<script>
-	var current_job = "<%=emp.getJob_id()%>";
-	var current_manager = "<%=emp.getManager_id()%>";
-	var current_dept = "<%=emp.getDepartment_id()%>";
-	$('select[name="job_id"]').find('option[value="'+current_job+'"]').attr("selected",true);
-	$('select[name="manager_id"]').find('option[value="'+current_manager+'"]').attr("selected",true);
-	$('select[name="department_id"]').find('option[value="'+current_dept+'"]').attr("selected",true);
-	</script> --%>
 </body>
 </html>
