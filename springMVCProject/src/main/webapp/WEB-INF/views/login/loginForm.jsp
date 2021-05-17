@@ -24,37 +24,47 @@
 
 </script>
 <script>
+	function resultPrint(responseData){
+		var output = "<ul>";
+		$.each(responseData, function(index, item){
+			output += "<li>" + item["first_name"] + "</li>";
+		});
+		output += "</ul>";
+		$("#here").html(output);
+	}
+
 	$(function(){
 		$("#dynamic input[type='button']").click(function(){
-			var param = $("#dynamic input[name='deptid']").val() + "/";
-			param += $("#dynamic input[name='jobid']").val() + "/";
-			param += $("#dynamic input[name='sal']").val() + "/";
-			param += $("#dynamic input[name='hdate']").val();
-			param += $("#dynamic input[name='hdateChk']").val();
+			var deptid = $("#dynamic input[name='deptid']").val();
+			if(deptid == "") deptid = 0;
+			var jobid = $("#dynamic input[name='jobid']").val();
+			if(jobid == "") jobid = null;
+			var sal = $("#dynamic input[name='sal']").val();
+			if(sal == "") sal = 0;
+			var hdate = $("#dynamic input[name='hdate']").val();
+			if(hdate == "") hdate = null;
+			var hdateChk = $("#dynamic input[name='hdateChk']").prop("checked");
+			
+			var param = deptid + "/" + jobid + "/" + sal + "/"+ hdate + "/"+ hdateChk;
 			alert(param);
-			/*
+			
 			$.ajax({
-				url: "${cpath }/emp2/selectByDate2.do/" + param,
+				url: "${cpath }/emp2/selectByDynamic.do/" + param,
 				type: "get",
-				success: function(responseData){
-					$("#here").html(JSON.stringify(responseData));
-				}
+				success: resultPrint
 			});
-			*/
+			
 		});
 		
 		$("#hiredate2 input[type='button']").click(function(){
 			var sdate = $("#hiredate2 input[name='sdate']").val();
 			var edate = $("#hiredate2 input[name='edate']").val();
 			var param = sdate + "/" + edate;
-			alert(param);
 			
 			$.ajax({
 				url: "${cpath }/emp2/selectByDate2.do/" + param,
 				type: "get",
-				success: function(responseData){
-					$("#here").html(JSON.stringify(responseData));
-				}
+				success: resultPrint
 			});
 			
 		});
@@ -63,14 +73,11 @@
 			var sdate = $("#hiredate input[name='sdate']").val();
 			var edate = $("#hiredate input[name='edate']").val();
 			var param = sdate + "/" + edate;
-			alert(param);
 			
 			$.ajax({
 				url: "${cpath }/emp2/selectByDate.do/" + param,
 				type: "get",
-				success: function(responseData){
-					$("#here").html(JSON.stringify(responseData));
-				}
+				success: resultPrint
 			});
 			
 		});
@@ -83,9 +90,9 @@
 			$.ajax({
 				url: "${cpath }/emp2/selectBySalary.do/" + param,
 				type: "get",
-				success: function(responseData){
-					$("#here").html(JSON.stringify(responseData));
-				}
+				success: resultPrint		
+				// responseData를 받는 function을 만들어서 resultPrint를 부르고 있었는데
+				// resultPrint도 responseData를 받으니까 그냥 resultPrint를 넣어주기
 			});
 			
 		});
@@ -97,7 +104,9 @@
 				url: "${cpath }/emp2/selectByDept.do/" + param,
 				type: "get",
 				success: function(responseData){
-					$("#here").html(JSON.stringify(responseData));
+					console.log(responseData);	// 배열
+					console.log(JSON.stringify(responseData));
+					resultPrint(responseData);
 				}
 			});
 			
@@ -164,7 +173,7 @@
 		</form>
 	</div>
 	
-	
+	<!-- 버튼이 submit이면 name주고 아니면 id주기 -->
 	<div id="dept" class="deactive">
 		<h1>부서로 조회하기</h1>
 		<form>
@@ -205,7 +214,7 @@
 		<form action="${cpath }/emp/selectByCondition.do">
 			부서번호:<input type="number" name="deptid" value="60"><br>
 			jobID:<input type="text" name="jobid" value="IT_PROG"><br>
-			급여:<input type="number" name="sal" value="10000"><br>
+			급여:<input type="number" name="sal" value="1000"><br>
 			입사일:<input type="date" name="hdate" value="2005-01-03"><input type="checkbox" name="hdateChk">일자조회제외<br>
 			<input type="button" value="조회하기">
 		</form>

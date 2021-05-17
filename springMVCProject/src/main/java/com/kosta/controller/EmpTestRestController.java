@@ -179,14 +179,23 @@ public class EmpTestRestController {
 			method = RequestMethod.GET,
 			produces = "application/json;charset=utf-8")
 	public List<EmpVO> selectByDynamic(@PathVariable String deptid, @PathVariable String jobid,
-			@PathVariable String sal, @PathVariable String hdate, @PathVariable String chk) {
+			@PathVariable String sal, @PathVariable String hdate, @PathVariable boolean chk) {
 		
-		int dept = "".equals(deptid)? 0 : Integer.parseInt(deptid);
-		int salary = "".equals(sal)? 0 : Integer.parseInt(sal);
-		if(chk != null) hdate = null;
+		int dept = Integer.parseInt(deptid);
+		int salary = Integer.parseInt(sal);
+		if("null".equals(jobid)) jobid = null;
+		if("null".equals(hdate)) hdate = null;
+		// 날짜제외를 누르면
+		if(chk) hdate = null;
 		Date hiredate = null;
-		if(!"".equals(hdate) && hdate!=null) hiredate = Date.valueOf(hdate);
-		List<EmpVO> emplist = empService.selectByCondition(0, jobid, 0, null);
+		if(hdate!=null) hiredate = Date.valueOf(hdate);
+		
+		logger.info("dept: *" + deptid + "*");
+		logger.info("jobid: *" + jobid + "*");
+		logger.info("salary: *" + sal + "*");
+		logger.info("hiredate: *" + hiredate + "*");
+		
+		List<EmpVO> emplist = empService.selectByCondition(dept, jobid, salary, hiredate);
 		
 		return emplist;
 	}
