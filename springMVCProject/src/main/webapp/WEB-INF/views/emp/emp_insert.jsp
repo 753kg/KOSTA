@@ -22,7 +22,7 @@
 <body>
 	<h1>직원 신규 등록</h1>
 	<jsp:include page="../common/header.jsp"></jsp:include>
-	<form action="empInsert.do" method="post" >
+	<form action="empInsert.do" method="post" enctype="multipart/form-data">
 		<label>직원번호:</label>
 		<input type="text" name="employee_id"><br>
 		<label>성:</label>
@@ -43,9 +43,9 @@
 			</c:forEach>
 		</select><br>
 		<label>급여:</label>
-		<input type="number" name="salary"><br>
+		<input type="number" name="salary" value=3000><br>
 		<label>커미션:</label>
-		<!-- <input type="number" step=0.01 name="commission_pct"><br> -->
+		<input type="number" step=0.01 name="commission_pct" value=0.5><br>
 		<label>매니저:</label>
 		<select name="manager_id">
 			<option value="" selected disabled hidden>===선택===</option>
@@ -61,7 +61,7 @@
 			</c:forEach>
 		</select><br>
 		<label>사진:</label>
-		<input type="file" name="photos"><br>
+		<input type="file" name="uploadfile"><br>
 		<input type="submit" value="등록하기">
 	</form>
 	<br>

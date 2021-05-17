@@ -74,7 +74,7 @@
 	<p>jsp페이지에서의 기본경로 ==> http://localhost:9090/webShop</p>
 	<c:set var="aa" value="${pageContext.request.contextPath }"/> <%--jsp기본경로 --%>
 	<jsp:include page="../common/footer.jsp"></jsp:include>
-	<img src="${aa }/duke.png"/> <%-- html기본경로  --%>
+	<img src="${aa }/images/duke.png"/>
 	<script>
 		function call(empid){
 			// get방식

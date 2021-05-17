@@ -2,6 +2,8 @@ package com.kosta.model;
 
 import java.sql.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 // DTO(Data Transfer Object) : ������ ���� ����
 // VO(Value Object) : �������� ����
 public class EmpVO {
@@ -16,6 +18,7 @@ public class EmpVO {
 	private double commission_pct;
 	private int manager_id;
 	private int department_id;
+	private MultipartFile uploadfile;	// 변수이름은 jsp의 name과 같아야함
 	
 	public EmpVO() {
 		super();
@@ -28,8 +31,10 @@ public class EmpVO {
 		this.hire_date = hire_date;
 		this.job_id = job_id;
 	}
+	
 	public EmpVO(int employee_id, String first_name, String last_name, String email, String phone_number,
-			Date hire_date, String job_id, int salary, double commission_pct, int manager_id, int department_id) {
+			Date hire_date, String job_id, int salary, double commission_pct, int manager_id, int department_id,
+			MultipartFile uploadfile) {
 		super();
 		this.employee_id = employee_id;
 		this.first_name = first_name;
@@ -42,6 +47,7 @@ public class EmpVO {
 		this.commission_pct = commission_pct;
 		this.manager_id = manager_id;
 		this.department_id = department_id;
+		this.uploadfile = uploadfile;
 	}
 	public int getEmployee_id() {
 		return employee_id;
@@ -109,17 +115,21 @@ public class EmpVO {
 	public void setDepartment_id(int department_id) {
 		this.department_id = department_id;
 	}
+	
+	public MultipartFile getUploadfile() {
+		return uploadfile;
+	}
+	public void setUploadfile(MultipartFile uploadfile) {
+		this.uploadfile = uploadfile;
+	}
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("EmpVO 직원정보 [employee_id=").append(employee_id).append(", first_name=").append(first_name)
-				.append(", last_name=").append(last_name).append(", email=").append(email).append(", phone_number=")
-				.append(phone_number).append(", hire_date=").append(hire_date).append(", job_id=").append(job_id)
-				.append(", salary=").append(salary).append(", commission_pct=").append(commission_pct)
-				.append(", manager_id=").append(manager_id).append(", department_id=").append(department_id)
-				.append("]");
-		return builder.toString();
+		return "EmpVO [employee_id=" + employee_id + ", first_name=" + first_name + ", last_name=" + last_name
+				+ ", email=" + email + ", phone_number=" + phone_number + ", hire_date=" + hire_date + ", job_id="
+				+ job_id + ", salary=" + salary + ", commission_pct=" + commission_pct + ", manager_id=" + manager_id
+				+ ", department_id=" + department_id + ", uploadfile=" + uploadfile + "]";
 	}
+	
 	
 	
 	
