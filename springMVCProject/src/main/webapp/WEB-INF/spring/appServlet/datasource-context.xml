@@ -110,10 +110,11 @@
 			<tx:method name="*" propagation="REQUIRED" />
 		</tx:attributes>
 	</tx:advice>
-	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+
 	<aop:config>
     	<aop:advisor advice-ref="txAdvice"  pointcut="execution(* insertUpdate(..))" />
 	</aop:config>
+	<aop:aspectj-autoproxy/>
 		
 	
 	
