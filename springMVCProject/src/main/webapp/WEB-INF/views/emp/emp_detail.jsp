@@ -64,8 +64,10 @@
 		</select><br>
 		<input type="submit" value="수정하기(submit)">
 		<input type="button" id="btnUpdate" value="수정하기(button)">
+		<input type="button" id="btnUpdate2" value="수정하기(rest)">
 		<input type="button" id="btnRetrieve" value="목록보기(button)">
 		<input type="button" id="btnDelete" value="삭제하기(button)" mydata="${emp.employee_id}">
+		<input type="button" id="btnDelete2" value="삭제하기(rest)" mydata="${emp.employee_id}">
 		<br>
 		<h1>${appInfo }</h1>
 	</form>
@@ -85,6 +87,37 @@
 		$("#btnDelete").on("click", function(){
 			//alert($(this).attr("mydata"));
 			location.href = "empDelete.do?empid=" + $(this).attr("mydata");
+		});
+		
+		$("#btnDelete2").on("click", function(){
+			var url = "${pageContext.request.contextPath}/emp2/empDelete.do/" + $(this).attr("mydata"); 
+			$.ajax({
+				"url": url,
+				type: "delete",
+				success: function(responseData){
+					alert(responseData);
+				}
+			});
+		});
+		
+		$("#btnUpdate2").on("click", function(){
+			var emp = $("#myfrm").serializeArray(); // [name,val],[name,val]
+			var object = {};
+			for (var i = 0; i < emp.length; i++){
+			    object[emp[i]['name']] = emp[i]['value'];	// {"name":"val"} ...object
+			}
+			
+			var json = JSON.stringify(object);	// '{"name":"val"}'  .. string으로
+			
+			$.ajax({
+				url: "${pageContext.request.contextPath}/emp2/empUpdate.do/",
+				type:"put", 
+				data: json, 
+				contentType:"application/json",
+			    success:function(responseData){
+			    	alert(responseData);
+			    }
+			});
 		});
 		
 	});
