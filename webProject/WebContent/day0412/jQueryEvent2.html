@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<style>
+	body, div, form { 
+		border: 1px solid gray; 
+		padding: 10px;
+	}
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(function(){
+	
+	$("#myfrm").on("submit", function(ev){
+		var uobj = $("input[name='userid']");
+		if(!validate(uobj)) ev.preventDefault();	//디폴트 이벤트 제거. 서버로 이동 안함
+		var uobj = $("input[name='userpw']");	// var 안붙이면 global돼서 붙였음
+		if(!validate(uobj)) ev.preventDefault();
+		// return true;	// default로 true가 return됨.
+	});
+	
+	// var f = function(){ alert(this); };	// form -> div -> body전달됨
+	/*
+	var f = function(ev){ alert(this); ev.stopPropagation(); };		// 전달 막음
+	$("#container").on("click", f);
+	$("#myfrm").on("click", f);
+	$("body").on("click", f);
+	*/
+	var f2 = function(){
+		$("#here").html($(this).val());	//keyup해서 입력한 값을 읽어서 html 씀
+	};
+	$("input[name='userpw']").on("keyup", f2); 
+	
+});
+
+function validate(obj){
+	var val = $(obj).val();	// obj의 값을 얻는다.
+	if(val==""){	// 입력이 안됐으면
+		alert("필수입력입니다.");
+		$(obj).focus();	// 마우스 커서가 obj로 간다.
+		return false;
+	}
+	return true;
+}
+</script>
+<script>
+$(function(){
+	$("#all-check").on("change", function(){
+		if(this.checked){
+			$("#check-item").children().prop("checked", function(idx){
+				return idx<3?true:false;	//왜 2개만 되는거야
+			});
+		} else{
+			$("#check-item").children().prop("checked", false);			
+		}
+	});
+});
+</script>
+</head>
+<body>
+	<div id="container">
+		<form id="myfrm" action="../day0408/loginChk.jsp" method="get"> 
+			아이디:<input type="number" name="userid" value="100" placeholder="숫자만 입력가능"><br>
+			비밀번호:<input type="text" name="userpw" value="1234"><br>
+			<input type="submit" value="로그인">
+		</form>
+	</div>
+	<div id="here">여기</div>
+	
+	<div id="changeTest">
+		<input type="checkbox" id="all-check">
+		<label>All</label>
+		<div id="check-item">
+			<input type="checkbox">
+			<label>HTML5</label>
+			<input type="checkbox">
+			<label>CSS</label>
+			<input type="checkbox">
+			<label>JavaScript</label>
+			<input type="checkbox">
+			<label>JQuery</label>
+		</div>
+	</div>
+</body>
+</html>

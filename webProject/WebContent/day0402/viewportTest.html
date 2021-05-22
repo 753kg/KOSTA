@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>viewport test</title>
+<style>
+  /* px : 기기에 상관 없이 고정 사이즈 */
+  /* %, em : 부모의 폰트 사이즈의 배율 */
+  /* rem : 루트 최상위(브라우저 user agent) 사이즈의 배율 */
+  body { font-size: 10px; }
+  #container { font-size: 12px; }
+  .aa { font-size: 2rem; } 
+  .bb { 
+  	width:30vw; height: 20vw; 
+  	border:1px solid red;
+  }
+</style>
+</head>
+<body>
+  <div id="container">
+  	  <h1 class="bb">viewport.. vw, vh</h1>
+	  <h1>viewport test... h1:32px / h1 user agent size:2em</h1>
+	  <h1 class="aa">viewport test... h1:32px</h1>
+	  <div>viewport : 기기에 맞게 디자인... div:16px</div>
+	  <div class="aa">viewport : 기기에 맞게 디자인... div:16px</div>
+	  <p>p태그...p:16px</p>
+	  <p class="aa">p태그...p:16px</p>
+  </div>
+</body>
+</html>

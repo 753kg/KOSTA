@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<style>
+	p {
+		background:#98bf21;
+		height:100px;
+		width:100px;
+		position:absolute;
+	}
+</style>
+<script src="../day0409/js/jquery-3.6.0.min.js"></script>
+<script>
+$(function(){
+	
+	$("button:first-of-type").on("click", function(){
+		$("p").show(500);
+	});
+	
+	$("button").eq(1).on("click", function(){
+		$("p").hide(500);
+	});
+	
+	$("button").eq(2).on("click", function(){
+		$("p").toggle(500);
+	});
+	
+	$("button").eq(3).on("click", function(){
+		$("p").slideToggle(500);	//위에서 아래로 내려옴
+	});
+	
+	$("button").eq(4).on("click", function(){
+		$("p").fadeToggle("slow");
+	});
+	
+	$("button").eq(5).on("click", function(){
+		$("p").fadeTo(2000, 0.5, function(){
+			// callback : 효과가 끝나면 실행할 문장
+			$("#here").html("END");
+		});
+	});
+	
+	$("button").eq(6).on("click", function(){
+		var obj = {
+			      left: '250px',
+			      opacity: '0.5',
+			      height: '150px',
+			      width: '+=150px'	//복합대입연산자도 가능
+			    };
+		$("p").eq(0).animate(obj, 2000, function(){		// animate obj, time, callback
+			// callback : 효과가 끝나면 실행할 문장
+			$("#here").html("animate END");
+		});
+		var div = $("p");
+	  div.animate({height: '300px', opacity: '0.4'}, "slow");
+	  div.animate({width: '300px', opacity: '0.8'}, "slow");
+	  div.animate({height: '100px', opacity: '0.4'}, "slow");
+	  div.animate({width: '100px', opacity: '0.8'}, "slow");
+	});
+
+	
+});
+</script>
+</head>
+<body>
+	<button>show</button>
+	<button>hide</button>
+	<button>toggle</button>
+	<button>slide toggle</button>
+	<button>fade toggle</button>
+	<button>fade to</button>
+	<button>animate</button>
+	<div id="here"></div>
+	<p>This is a paragraph with little content.</p>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script>
+
+	// a = document.getElementById("op").value;	// 1. 에러
+	// alert(a);
+	
+	// 3. callback 함수...함수 정의만 하고 호출은 하지않음. 호출은 받은쪽에서 함
+	// window = <body> // window(body)가 다 로드 되고 나면 함수를 부름
+	window.onload = function(){ 
+		 a = document.getElementById("op").value;	// 에러
+		 alert(a);
+		 
+		 // btn1.onclick = function() {};
+		 btn1.onclick = execute;	// 함수를 만들어서 넣어놓고 버튼을 누르면 함수가 불러짐
+	};
+
+	// 선언적 함수
+	function execute(){
+		var op = document.getElementById("op").value;
+		var val1 = Number(document.getElementById("val1").value);
+		var val2 = Number(document.getElementById("val2").value);
+		/* var result = 0;
+		if(op === "+") result = val1 + val2;
+		else if(op === "-") result = val1 - val2;
+		else if(op === "*") result = val1 * val2;
+		else if(op === "/") result = val1 / val2;
+		else if(op === "%") result = val1 % val2;
+		document.getElementById("result").value = result; */
+		// 0407 eval 수정
+		var s = val1 + op + val2;	// "10-20"
+		document.getElementById("result").value = eval(s);
+	}
+</script>
+
+</head>
+<body>
+
+	<h1>사칙연산 수행하기</h1>
+	<hr>
+	
+	<input type="number" id="val1" value="10">
+	<select id="op">
+		<option>+</option>	<!-- 자동으로 +가 value가 된다. -->
+		<option>-</option>
+		<option>*</option>
+		<option>/</option>
+		<option value="%">나머지</option>
+	</select>
+	<input type="number" id="val2" value="20">
+	<!-- <input type="button" value="연산하기" onclick="execute();"> -->
+	<input type="button" value="연산하기" id="btn1">
+	<input type="number" id="result" readonly="readonly">
+	
+	<script>
+	 	// a = document.getElementById("op").value;	// 2. 여기서하면 에러안남
+	 	// alert(a);
+	</script>
+	
+</body>
+</html>

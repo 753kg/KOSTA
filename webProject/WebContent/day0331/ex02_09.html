@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	.header h3{ color: red; }
+	.footer > h3{ color: blue; }
+	
+	/* ul 밑에 있는 li*/
+	ul li{ background-color: green; }
+	/* div 밑에 있는 li */
+	div li{ color:yellow; list-sytle:none; }
+	
+	/* h3과 형제인 div... ~:모든형제 */
+	h3~div{ border:1px solid blue; }
+	h3~p{ border:1px solid purple; }
+	
+	/* 형제인 태그 중 바로 다음 태그 */
+	h3+div{ background-color: pink; }
+</style>
+
+</head>
+<body>
+	<div>
+	  <ul>
+	    <li>HTML5</li>
+	    <li>CSS3</li>
+	    <li>JavaScript</li>
+	    <li>JavaScript - JQuery</li>
+	    <li>JavaScript - node.js</li>
+      </ul>
+    </div>
+    
+    <ol>
+	    <li>HTML5</li>
+	    <li>CSS3</li>
+	    <li>JavaScript</li>
+	    <li>JavaScript - JQuery</li>
+	    <li>JavaScript - node.js</li>
+    </ol>
+
+	<div class="header">
+		<h3>test1...자식</h3>
+		<div class="hea">
+			<h3>test2...후손</h3>
+		</div>
+		<div class="hea">
+			<h3>test2-1...후손</h3>
+		</div>
+		<p>h3, div와 형제인 p</p>
+	</div>
+	
+	<div class="footer">
+		<h3>test3...자식</h3>
+		<div class="foo">
+			<h3>test4...후손</h3>
+		</div>
+		<div class="foo">
+			<h3>test4-1...후손</h3>
+		</div>
+		<p>h3, div와 형제인 p</p>
+	</div>
+</body>
+</html>

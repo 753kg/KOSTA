@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script>
+	// 호이스팅 단계 : var을 먼저 실행(선언만 된 상태로. 맨 위로 올린다)
+	a = 19;			// 실행 시에 생성
+	document.write(a + "<br>");
+	
+	document.write(b + "<br>");	// 호이스팅단계 >> undefined
+	var b = 39;	// 값 대입은 실행 시에 수행된다.
+	document.write(b + "<br>");
+	
+	document.write(c + "<br>");	// not defined == 에러
+	c = 50;
+	document.write(c + "<br>");
+</script>
+
+<script>
+	//var 없음 :변수 선언을 먼저 안했어도 사용 가능 (문장을 만나면 global)
+	for(i=1; i<=5; i++){
+		document.write(i + "<br>");
+	}
+	document.write("<h1> loop 후 : " + i + "</h1>");	
+	
+	// var : 호이스팅(맨처음수행. 아무데서나 사용가능) 처음부터 global
+	for(var j=1; j<=5; j++){ 
+		document.write(j+ "<br>");
+	}
+	document.write("<h1> loop 후 : " + j + "</h1>");
+	
+	// let: block 내에서만 유효. 같은 이름 충돌 안되게
+	for(let z=1; z<=5; z++){	
+		document.write(z + "<br>");
+	}
+	document.write("<h1> loop 후 : " + z + "</h1>");	// not defined ==> 크롬에서 확인
+</script>
+
+</head>
+<body>
+	<h1>JavaScript Type</h1>
+</body>
+</html>

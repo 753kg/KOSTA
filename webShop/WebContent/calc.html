@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Calculator</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+$(function(){
+	$("#myfrm").on("submit", function(event){
+		alert("submit");
+		event.preventDefault(); // default event 취소
+		$.ajax({
+			url:"calculator",
+			type:"get",
+			data:$("#myfrm").serialize(),	//?num1=11&num2=12&op=+
+			success:function(responseData){
+				$("#result").html(responseData);
+			}
+		});
+	});
+});
+</script>
+</head>
+<body>
+	<form id="myfrm" action="calculator">
+		숫자1<input type="number" name="num1"><br>
+		op:
+		<select name="op">
+			<option value="+">더하기<br>
+			<option value="-">빼기<br>
+			<option value="*">곱하기<br>
+			<option value="/">나누기<br>
+		</select>
+		<hr>
+		숫자2:<input type="number" name="num2">
+		<input type="submit" value="계산">
+	</form>
+	<div id="result">결과</div>
+</body>
+</html>

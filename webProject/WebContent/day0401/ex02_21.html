@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	div {
+		background-color: darkgray;
+		color: white;
+		width: 450px; /*컨텐츠만 450*/
+		padding: 30px;
+		border: thin solid teal;
+		border-radius:20px;
+		margin-top: 50px;
+		margin-bottom: 50px;
+	}
+	/* default : content-box (width는 content의 사이즈) */
+	/* border-box : width는 contents + (border+padding)*2 */
+	#aa { box-sizing: content-box; }
+	#bb { box-sizing: border-box; }
+	
+	#aa { box-shadow:2px -2px 5px 0px;}
+	#bb { box-shadow:5px 5px 15px 5px blue;}
+</style>
+</head>
+<body>
+	<div id="aa">Alice in Wonderland<br><br>
+		When Alice follows the White Rabbit down a rabbit hole, she finds herself in a land where she can change her size. She meets a Duchess with a pig for a baby, a Cook that throws spoons, a wise but mad Cheshire cat, the March Hare, Mad Hatter and a Dormouse. A Caterpillar shows her how to adjust her height by eating from the right and left sides of a mushroom.
+	</div>
+	<div id="bb">Alice in Wonderland<br><br>
+		When Alice follows the White Rabbit down a rabbit hole, she finds herself in a land where she can change her size. She meets a Duchess with a pig for a baby, a Cook that throws spoons, a wise but mad Cheshire cat, the March Hare, Mad Hatter and a Dormouse. A Caterpillar shows her how to adjust her height by eating from the right and left sides of a mushroom.
+	</div>
+</body>
+</html>
+
+<!-- margin이 중첩되면 둘 중 큰 값으로 합쳐진다.  -->

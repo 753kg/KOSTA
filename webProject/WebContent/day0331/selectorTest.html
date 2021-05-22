@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+
+  *{ font-size: 20px; }
+  
+  p{ border-style: solid; 
+     border-width: 2px;
+  }
+  
+  #p1{ background-color: green; }
+  
+  .here{ color: red; }
+  
+  h1.here{ border: 5px dotted purple; }
+  
+  h2 { border:2px dotted blue; text-align: center;}	
+  #hh { border:2px dotted red; text-align: right;}
+  .h2class{ border:2px dotted green !important; text-align: left;}
+  
+</style>
+</head>
+<body>
+  <h1 class="here">Selector 연습</h1>
+  <p class="here">전체 선택자 : *</p>
+  <p>태그 선택자 : 태그 이름</p>
+  <p id="p1">id 선택자 : #</p>
+  <p class="here">class 선택자 : .</p>
+  
+  <h2 id="hh" class="h2class" style="text-align:left">선택자 우선순위에 대하여</h2>
+  <p> !important &gt; inline &gt; id &gt; class &gt; 태그 </p>
+</body>
+</html>

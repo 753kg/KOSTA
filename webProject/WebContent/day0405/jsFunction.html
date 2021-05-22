@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+
+<script>
+
+	// 2. 익명 함수(이름이 없다)
+	window.onload = function() {
+		// 3. callback 함수
+		btn1.onclick = f1; 			// ()를 붙이면 로드 끝나고 버튼 안눌러도 바로 호출하게됨. 
+		btn2.onclick = f2;
+		btn3.onclick = f3;
+		btn4.onclick = f4;
+		btn5.onclick = f5;
+		btn6.onclick = f6;
+		btn7.onclick = f7;
+	}
+	
+	// 1. 선언적 함수(이름이 있는 함수)
+	function f1(){
+		here.innerHTML = `
+			<ul>
+				<li>number</li>
+				<li>string</li>
+				<li>boolean</li>
+				<li>object</li>
+				<li>function</li>
+				<li>undefined</li>
+			</ul>
+			`;
+	}
+	// 1. 선언적 함수
+	function f2(){
+		// 복합대입연산자: 기존의 문자열에 문자열을 붙임
+		here.innerHTML += "<ol><li>선언적함수</li><li>익명함수</li></ol>";
+	}
+	
+	function f3(){
+		var currentDate = new Date();		// 현재날짜
+		var year = currentDate.getFullYear();
+																													// default값. 수정 가능
+		var birthYear = Number(prompt("태어난 연도를 입력하세요. (yyyy)", 1997));
+		var age = year - birthYear + 1;
+		here.innerHTML = `당신의 나이는 ${age}세입니다.`;
+	}
+	
+	var cnt = 0;
+	function f4(){
+		cnt++;
+		here.innerHTML = `당신은 ${cnt}번 째 방문자입니다.`;		// 버튼 누를 때마다 값 증가
+	}
+	
+	function f5(){
+		var a = 10 + "문자가 숫자보다 우선순위가 높다";
+		here.innerHTML = `${a} ==> 타입 : ${typeof(a)}`;
+		// 변수 재선언
+		var a = true + 10;	// 결과:11 // true는 1로 변환 // 우선순위는 숫자가 더 높다.
+		here.innerHTML += `<br> ${a} ==> 타입 : ${typeof(a)}`;
+		here.innerHTML += `<hr> ${f4} ==> 타입 : ${typeof(f4)}`;
+		
+		here.innerHTML += "<br>" + 10*20; //자동형변환
+	}
+	
+	function f6(){
+			if(confirm("계속?"))
+			  here.innerHTML= "찬성";
+			else here.innerHTML= "반대";
+	}
+	
+	function f7(){
+		var a = "aaaa";
+		var a = "100";
+		here.innerHTML = Math.sqrt(a);	// Nan (not a number)
+		
+		here.innerHTML += "<br>" + Boolean(0);
+		here.innerHTML += "<br>" + Boolean('');
+		here.innerHTML += "<br>" + Boolean(NaN);
+		here.innerHTML += "<br>" + Boolean(null);
+		here.innerHTML += "<br>" + Boolean(undefined);
+		here.innerHTML += "<br>" + Boolean(10);					//true
+		here.innerHTML += "<br>" + Boolean("자바스크립트");	//true
+		
+	}
+	
+</script>
+
+<body>
+	<button id="btn1">변수종류</button>
+	<button id="btn2">함수종류</button>
+	<button id="btn3">나이계산(p466).. prompt</button>
+	<button id="btn4">증감연산자</button>
+	<button id="btn5">type 우선순위</button>
+	<button id="btn6">confirm</button>
+	<button id="btn7">NaN</button>
+	<hr>
+	<div id="here"></div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="register2.jsp">
+	<input type="date">
+	<input type="time">
+	<!-- datetime은  지원 안됨 -->
+	<input type="datetime-local">
+	<input type="month">
+	<input type="week"><br>
+	
+	<input type="email" name="email" placeholder="abc@daum.net"><br>
+	<input type="tel" name="telephone" pattern="[01]{3}-[0-9]{4}-[0-9]{4}"><br>
+	<input type="url" name="url"><br>
+	<!-- number : 입력 양식 숫자... 서버에서 읽으면 문자 -->
+	<input type="number" name="age"><br>
+	<input type="range" list="steplist" min="0" max="100" step="25" name="score"><br>
+	<datalist id="steplist">
+		<option>0</option>
+		<option>25</option>
+		<option>50</option>
+		<option>75</option>
+		<option>100</option>
+	</datalist>
+	<input type="color"><br>
+	<input type="search" autofocus="autofocus"><br>
+	
+	<details>
+	  <summary>사용자 정보 상세보기</summary>
+	  <ul>
+	    <li>aa</li>
+	    <li>bb</li>
+	    <li>cc</li>
+	    <li>dd</li>
+	    <li>ee</li>
+	  </ul>
+	</details>
+	
+	<input type="submit" value="서버전송">
+</form>
+
+</body>
+</html>

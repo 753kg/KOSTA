@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+
+<script>
+  s1 = 100;		// 값을 넣으면 타입이 결정됨. 동적 타이핑
+  						// 변수 선언 없이 사용 가능
+	document.write("<h1>"+ s1 +"</h1>");	// s1이 아직 올라오지 않았기 때문에 에러남. 수행안됨
+</script>
+
+<body>
+
+<h1>javascript 문법</h1>
+
+<script>
+  name = "김채연";
+  s1 = "자바스크립트";
+	s2 = '자바스크립트2' + name;
+	s3 = `자바스크립트3 ${name} 백틱`;	// 백틱(EC6에서 지원)을 쓰면 연결연산자를 안써도 된다. 
+																// 내부 브라우저(EC5까지만 지원)에서는 사용불가
+	console.log(s1);
+	console.log(s2);
+	console.log(s3);	// 브라우저 F12 개발자 도구로만 확인이 가능하다.
+	document.write("<h1>"+ s1 +"</h1>");	// document.write() : 문서에 찍기
+	document.write(`<h1> ${s2} </h1>`);
+	document.write(`<h1> ${s3} </h1>`);
+</script>
+
+</body>
+</html>

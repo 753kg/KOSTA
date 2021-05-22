@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>내장함수</title>
+<style>
+	button:nth
+</style>
+<script>
+	// URI = URL(Location, 주소로접근) + URN(Name, 이름으로접근)
+	window.onload = function(){
+		document.getElementById("btn1").onclick = function(){
+			here.innerHTML = this.innerText;
+			// 모든 문자 encoding
+			var url = "https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=제주여행";
+			var url2 = encodeURIComponent(url);
+			here.innerHTML += "<br>" + url2;
+			// decoding
+			var url3 = decodeURIComponent(url2);
+			here.innerHTML += "<br>" + url3;
+		};
+		document.querySelector("#btn2").onclick = function(){
+			here.innerHTML = this.innerText;
+			var s = "a=10;b=20;c=a+b;alert(c);";	// 문자
+			eval(s);
+			
+		};
+		btn3.onclick = function(){
+			here.innerHTML = this.innerText;
+			var a = 10;
+			var b = "aa";
+			here.innerHTML += "<br>" + (isNaN(a/b)?"계산불가":"계산가능");	// 계산불가
+			here.innerHTML += "<br>" + (NaN == NaN);	// false 이렇게 비교 불가능
+			here.innerHTML += "<br>" + isNaN(NaN);	// true
+			here.innerHTML += "<br>" + (isNaN(NaN) == true);	// true
+		};
+		document.querySelector("button:nth-of-type(4)").onclick = function(){
+			here.innerHTML = this.innerText;	
+			var a = "100점";
+			//here.innerHTML += "<br>" + (Number(a) + 10);	// NaN
+			here.innerHTML += "<br>" + (parseInt(a) + 10);	// 앞부분의 숫자만 
+			var b = "200";
+			here.innerHTML += "<br>" + (Number(b) + 10);	// 숫자형 문자일 때
+			here.innerHTML += "<br>" + (b / 10);	// 자동형변환된다.
+			here.innerHTML += "<br>" + (b + 10);	// +는 연결연산자가 우선돼서 계산이 안된다.
+		};
+		document.querySelector("button:nth-of-type(5)").onclick = function(){
+			here.innerHTML = this.innerText;
+			call(10, 20, 30);
+			call();
+			call(10);
+			call(10, 20);
+			// call(a=10, c=30); // 안됨. 순서가 중요
+		};
+		btn6.onclick = function(){
+			here.innerHTML = this.innerText;
+			var arr = [10,20,30,40,50];
+			arr.forEach(function(elt, i, array) {	// 변수 순서가 중요
+			})
+			arr.forEach(function(i) {	// elt가 됨
+				here.innerHTML += "<br>" + i;
+			})
+			arr.forEach(function(elt, i) {
+				here.innerHTML += "<br>" + i + "번째: " + elt;
+			})
+			arr.forEach(function() {	// arguments[0]는 elt arguments[1]는 i
+				here.innerHTML += "<br>" + arguments[1] + "번째: " + arguments[0];
+			})
+		}
+		btn7.onclick = function(){
+			here.innerHTML = this.innerText;
+			// 매개변수 갯수가 가변
+			call2(1, 2);
+			var arr = [3, 4];
+			call2(30, 40, ...arr);	// arr이 펼쳐져서 전달
+			call2(...arr, ...arr);
+			var arr2 = [10, 20, 30];
+			call21(...arr, ...arr2);
+		}
+	};
+	
+	// 전개연산자
+	function call2(){
+		here.innerHTML += "<br>" + (arguments[0] + arguments[1]);
+	}
+	function call2(...nums){
+		here.innerHTML += "<br>전개연산자이용: " + (nums[0] + nums[1]);
+	}
+	function call2(a, b, ...nums){	// 정의할 때 ...nums는 마지막 파라미터로만 쓸수있다.
+		here.innerHTML += "<br>전개연산자이용: " + (a + b + nums[0] + nums[1]);
+	}
+	function call21(a, ...nums){
+		var total = 0;
+		for(var i in nums){
+			total += nums[i];
+		}
+		here.innerHTML += "<br>전개연산자이용: " + (a + total);
+	}
+	
+	// default 값 주는 방법
+	function call(a, b, c){
+		if(!a) a = 1;	// a가 없으면 1을 준다.
+		if(!b) b = 2;
+		if(!c) c = 3;
+		here.innerHTML += "<br>" + (a + b + c);
+	}
+	function call(a, b, c){
+		a = a || 1;
+		b = b || 2;
+		c = c || 3;
+		here.innerHTML += "<br>" + (a + b + c);
+	}
+	// ECMAScript6에서 추가된 기능...
+	function call(a=1, b=2, c=3){
+		here.innerHTML += "<br>" + (a + b + c);
+	}
+	
+</script>
+</head>
+<body>
+	<button id="btn1">uriEncoding</button>
+	<button id="btn2">eval</button>
+	<button id="btn3">isNaN</button>
+	<button id="btn4">parseInt</button>
+	<button id="btn5">기본매개변수</button>
+	<button id="btn6">forEach</button>
+	<button id="btn7">전개연산자</button>
+	<hr>
+	<div id="here">여기</div>
+</body>
+</html>

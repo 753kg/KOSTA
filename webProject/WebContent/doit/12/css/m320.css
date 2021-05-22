@@ -1,0 +1,6 @@
+@media screen and (max-width:320px){
+	body {
+	  background: url(../images/bg3.jpg) no-repeat fixed;  /* 가로가 320px 이하면 bg3.jpg 지정 */
+	  background-size: cover; 
+	}
+}

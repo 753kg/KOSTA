@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<script>
+	a = 10;
+	b = "10";
+	c = "10";
+	document.write(a == b);		// 값이 같은지?
+	document.write(a === b);	// type도 같고 값도 같은지?
+	document.write(c === b);
+	document.write("<br>");
+	
+	document.write(true + 20);		// true는 1로 자동 형변환
+	document.write(false + 20);	//false는 0으로 
+	document.write("<br>");
+	
+	document.write(30 > 20> 10);	// 불가::  true > 10 ==> 1 > 10 ==> false
+	document.write(30 > 20 && 20 > 10);
+	document.write("<br>");
+	
+	a = 10; b = 20;
+	document.write(a > b && ++a > 10);	// && : 앞의 결과가 거짓이면 뒤에 문장 수행 안함
+	document.write("<br>");
+	document.write(a);
+	document.write("<br>");
+	
+	document.write(a < b || ++a > 10);	// || : 앞의 결과가 참이면 뒤 문장 수행 안함
+	// || : 앞의 결과가 참이면 뒤 문장 수행 안함
+	document.write("<br>");
+	document.write(a);
+	
+	function call(){
+		var s = 
+			`<ul>
+				<li>HTML5</li>
+				<li>CSS3</li>
+				<li>JavaScript</li>
+			</ul>`;
+		// document.write(s);	// 위쪽에 써져있던 거 다 지워짐
+		
+		// 해당 id의 innerHTML(요소)에 s를 넣음
+		document.getElementById("here").innerHTML = s;	// 정석
+		here2.innerHTML = s;	// 이렇게 해도 됨
+	}
+	</script>
+
+</body>
+
+	<button onclick="call();">클릭</button>
+	<hr>
+	<div id="here">여기에 찍고싶어</div>
+	<div id="here2">여기에 찍고싶어</div>
+
+</html>

@@ -1,0 +1,38 @@
+1) cmd 창에서 sql*plus 실행
+
+C:\Users\KOSTA>sqlplus
+
+SQL> select sysdate from dual;	시간보기
+-----------------------------------------------------------------------------------
+2) ISQL 접근 => 바탕화면 아이콘 Get Started With Oracle Database 11g Express Edition 실행
+Application Express 클릭
+Login : system 1234
+Use Existing, hr hr hr hr, Create Workspace
+click here
+로그인
+
+SQL Workshop > SQL Commands
+select * from departments -> Run (ctrl+enter)
+-----------------------------------------------------------------------------------
+3) sqldeveloper 응용프로그램 실행
+접속 +
+사용자이름hr 비번hr
+
+sql파일만들기
+파일>새로만들기>데이터베이스파일
+-------------------------------------------------------------------------
+4) 이클립스
+나의oracle 더블클릭하면 연결됨
+new sql file -> oracle_11 , 나의oracle, xe
+문장 선택하고 오른쪽마우스 execute seleted text (alt+X)
+결과값은 result에
+주석 : --
+-------------------------------------------------------------
+작업관리자 -> 서비스
+OracleServiceXE
+OracleXETNSListener
+중지/ 시작
+
+SCOTT 계정 만들기
+username:SCOTT
+password:TIGER 

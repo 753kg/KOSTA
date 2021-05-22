@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>이미지 이동</title>
+<script src="js/jquery-3.6.0.min.js"></script>
+<script>
+
+/*
+	// 이미지 이동
+	$(function(){
+		var interID = setInterval(function() {
+			$("li").first().appendTo($("ul"));	//원래있는 객체를 appendTo하면 이동됨
+		}, 2000);
+		
+		// 마우스가 움직이면 중지
+		$(this).mousemove(function(){
+			clearInterval(interID);
+		});
+	});
+	*/
+	
+	// 이미지 복제
+	$(function(){
+		var interID = setInterval(function() {
+			$("li").first().clone().appendTo($("ul"));
+		}, 2000);
+		
+		// 마우스가 움직이면 중지
+		$(this).mousemove(function(){
+			clearInterval(interID);
+		});
+	});
+	
+</script>
+</head>
+<body>
+	<div class="row">
+      <ul>
+        <li><img src="images/tree-1-thumb.jpg" data-src="images/tree-1.jpg" class="pic"></li>
+        <li><img src="images/tree-2-thumb.jpg" data-src="images/tree-2.jpg" class="pic"></li>
+        <li><img src="images/tree-3-thumb.jpg" data-src="images/tree-3.jpg" class="pic"></li> 
+        <li><img src="images/tree-4-thumb.jpg" data-src="images/tree-4.jpg" class="pic"></li>
+        <li><img src="images/tree-5-thumb.jpg" data-src="images/tree-5.jpg" class="pic"></li>
+        <li><img src="images/tree-6-thumb.jpg" data-src="images/tree-6.jpg" class="pic"></li>          
+      </ul>    
+   </div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function call(){
+		var arr = [10, 7, 20, 2, 6, 8, 30, 5];
+		var f = function(elt, idx){
+			here.innerHTML += idx + "번째: " + elt + "<br>";
+		};
+		arr.forEach(f);
+	}
+	function call2(){
+		var arr = [10, 7, 20, 2, 6, 8, 30, 5];
+		var f = function(elt) {
+			return elt % 2;
+		};
+		var arr2 = arr.map(f);
+		here.innerHTML = arr2;
+	}
+	function call3(){
+		var arr = [10, 7, 20, 2, 6, 8, 30, 5];
+		var f = function(elt) {
+			return elt % 2 == 1;
+		};
+		var arr2 = arr.filter(f);	// 나머지가 1인것만 담음
+		here.innerHTML = arr2;
+	}
+	function call4(){
+		var arr = [10, 7, 20, 2, 6, 8, 30, 5];
+		var f = function(a, b) {
+			return a - b;
+		};
+		var arr2 = arr.sort(f);	// 나머지가 1인것만 담음
+		here.innerHTML = arr2;
+	}
+	function call5(){
+		var d = new Date();
+		here.innerHTML = d.getMonth() + 1;
+	}
+	function call6(){
+		here.innerHTML = Math.floor(Math.random()*11) 	// 0~10
+	}
+	function bomWindow(){
+		// 객체는 속성. 배열은 인덱스
+		here.innerHTML = "";
+		for(var property in window){
+			here.innerHTML += "<br>" + property + " : " + window[property];	// 속성의 값
+		}
+	}
+	function bomDocument(){
+		here.innerHTML = "";
+		for(var property in document){
+			here.innerHTML += "<br>" + property + " : " + document[property];	// 속성의 값
+		}
+	}
+	function bomScreen(){
+		here.innerHTML = "";
+		for(var property in screen){
+			here.innerHTML += "<br>" + property + " : " + screen[property];	// 속성의 값
+		}
+	}
+	function bomLocation(){
+		here.innerHTML = "";
+		for(var property in location){
+			here.innerHTML += "<br>" + property + " : " + location[property];	// 속성의 값
+		}
+	}
+	function bomNavi(){
+		here.innerHTML = "";
+		for(var property in navigator){
+			here.innerHTML += "<br>" + property + " : " + navigator[property];	// 속성의 값
+		}
+	}
+	function bomHist(){
+		here.innerHTML = "";
+		for(var property in history){
+			here.innerHTML += "<br>" + property + " : " + history[property];	// 속성의 값
+		}
+	}
+</script>
+</head>
+<body>
+	<button onclick="call();">Array객체-forEach</button>
+	<button onclick="call2();">Array객체-map</button>
+	<button onclick="call3();">Array객체-filter</button>
+	<button onclick="call4();">Array객체-sort</button>
+	<button onclick="call5();">Date객체</button>
+	<button onclick="call6();">Math객체</button>
+	<br>
+	<button onclick="bomWindow();">BOM-window객체</button>
+	<button onclick="bomDocument();">BOM-document객체</button>
+	<button onclick="bomScreen();">BOM-screen객체</button>
+	<button onclick="bomLocation();">BOM-location객체</button>
+	<button onclick="bomNavi();">BOM-navigator객체</button>
+	<button onclick="bomHist();">BOM-history객체</button>
+	<div id="here">여기</div>
+</body>
+</html>

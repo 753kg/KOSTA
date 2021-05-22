@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	input[type="text"]{
+		background-color: lightyellow;
+	}
+	input:not([type="text"]){
+		background-color: pink;
+	}
+	input[type="radio"]{
+		width: 100px;
+	}
+	input[type="radio"]+label{ /* radio 바로 다음에 나오는 형제 */
+		background-color: lightgreen;
+	}
+
+</style>
+</head>
+<body>
+	<input type="text"><br>
+	<input type="password"><br>
+	<input type="text"><br>
+	<input type="text"><br>
+	<input type="radio"><label>남자</label><br>
+	<input type="radio"><label>여자</label><br>
+</body>
+</html>

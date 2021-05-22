@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<style>
+	ul { 
+		border:1px solid gray; 
+		padding:10px; 
+		list-style-type: none;
+	}
+	.high-light {
+		background-color: lightgreen;
+	}
+</style>
+<!-- JQuery 구글 CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	//document가 준비가 되면(로드가 끝나면) function 수행
+	// 1. js
+	// window.onload = function(){ alert("load후1"); };
+	// window.onload = function(){ alert("load후2"); };		// onload 한번밖에 못씀. 2번만 수행됨
+	// window.addEventListener 하면 ??????
+			
+	// 2. jquery 
+	// $(document).ready(function(){});
+	$(document).ready(function(){ 	// jquery는 여러번 사용 가능	
+		var s = $("#here").html();
+		$("#here").html(s + "<p>jQuery문법1-1</p>");
+	});		
+	$(document).ready(function(){ 
+		var s = $("#here").html();
+		$("#here").html(s + "<p>jQuery문법1-2</p>");
+	});
+	// 3. jquery 간단한 방법
+	// $(function(){});
+	$(function(){
+		var s = $("#here").html();
+		$("#here").html(s + "<p>jQuery문법2-1</p>");
+	});
+	$(function(){
+		// $(접근할대상).함수이름();
+		var s = $("#here").html();	// here안의 html을 읽어라
+		$("#here").html(s + "<p>jQuery문법2-2</p>");	// here에 html을 써라
+	});
+	
+	$(function(){
+		// btn1을 누르면 function 수행
+		$("#btn1").click(function(){
+			$("#here").html("<h1>버튼을 누름</h1>");
+		});
+		
+		$("#btn2").click(function(){
+			$("#here").css("color","red");
+			// object는 key:value
+			var obj = {border:"1px solid green",
+							"background-color":"orange" };
+			$("#here").css(obj);
+		});
+		
+		$("#btn3").click(function(){
+			$("h1.active").css("color","pink");
+		});
+		
+		$("#btn4").click(function(){
+			var arr = ["바나나", "사과", "오렌지", "한라봉"];
+			var s = "";
+			$.each(arr, function(idx, item){
+				s += idx + "번째: " + item + "<br>";
+			});
+			$("#here").html(s);
+		});
+		
+		$("#btn5").click(function(){
+			var s = "<ul>";
+			$("h1,h2").each(function(idx, item){
+				s += "<li>" + $(item).html() + "</li>";
+			});
+			$("#here").html(s + "</ul>");
+		});
+		
+		$("#btn6").click(function(){
+			var output = "<ul>";
+			$("#mydata p").each(function(idx, item){
+				//var str = $(item).html().split("-");
+				//output += "<li><a href=" + str[1] + ">" + str[0] + "</a></li>";
+				var s = $(item).html();
+				var position = s.indexOf("-");
+				var name = s.substring(0, position);
+				var url = s.substring(position + 1);
+				output += "<li><a href=" + url + ">" + name + "</a></li>";
+			});
+			$("#here").html(output + "</ul>");
+		});
+		
+		$("#btn7").click(function(){
+			$("li,h1").addClass("high-light");
+		});
+		
+		$("#btn8").click(function(){
+			var obj = {"name":"윤인성", age:30};
+			var obj2 = {major:"심리학", school:"고려대"};
+			$.extend(obj, obj2, {phone:"010-1111-1111"});	// obj에 obj2를 추가, 다른속성들도 추가
+			var s = "";
+			$.each(obj, function(key, value){
+				//here.innerHTML += key + " : " + value + "<br>";		// 자바스크립트 섞어서 써도 됨
+				s += key + " : " + value + "<br>";
+			});
+			$("#here").html(s);
+		});
+		
+	});
+</script>
+</head>
+<body>
+	<h1>jQuery 문법1</h1>
+	<h1 class="active">jQuery 문법2</h1>
+	<h1 class="active">jQuery 문법3</h1>
+	<h2 class="active">jQuery 문법4</h2>
+	<h1>jQuery 문법5</h1>
+	<button id="btn1">JQuery 이용하기</button>
+	<button id="btn2">CSS 변경하기<br>(here변경)</button>
+	<button id="btn3">CSS 변경하기<br>(h1.active변경)</button>
+	<button id="btn4">반복문 each<br>(배열)</button>
+	<button id="btn5">반복문 each<br>(selector이용)</button>
+	<button id="btn6">반복문 each<br>(lab)</button>
+	<button id="btn7">addClass<br>(태그에class주기)</button>
+	<button id="btn8">extend</button>
+	<div id="mydata">
+		<p>다음-http://www.daum.net</p>
+		<p>네이버-http://www.naver.com</p>
+		<p>구글-http://www.google.com</p>
+	</div>
+	<hr>
+	<div id="here">
+		<p>여기</p>
+	</div>
+</body>
+</html>

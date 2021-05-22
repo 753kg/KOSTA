@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	#result { 
+		border:1px solid gray; 
+		height: 300px;
+	}
+</style>
+<script>
+	window.onload = init;
+	
+	function call1(){
+		result.innerHTML = this.innerText;	// id가 btn1인 것의 텍스트
+																				// innerHTML은 태그까지 가져옴
+	}
+	function call2(){
+		result.innerHTML = this.innerText;
+		var f = function(){
+			alert("익명함수는 이름이 없는 함수이다.");
+		}
+		result.innerHTML += "<br>" + f;
+		f(); 	// 함수 실행
+		// 익명함수 실행
+		(function(){
+			alert("익명함수 실행");
+		})();
+	}
+	function call3(){
+		result.innerHTML = this.innerText;
+		var f = `(function(){
+						alert("즉시실행");
+						})()`;
+		result.innerHTML += "<br>" + f;
+		(function(){
+			alert("선언과 동시에 즉시실행");
+		})();
+	}
+	function call4(){
+		result.innerHTML = this.innerText;
+		// 배열을 만드는 방법
+		var arr1 = [1, 2, 3, 4, 5];
+		var arr2 = Array();						// size를 안주면 빈 배열이 만들어짐
+		var arr3 = Array(5);					// 5개짜리 배열
+		var arr4 = Array(10, 20, 30);	// 값을 3개 가진 배열
+		result.innerHTML += "<br> 배열의 개수 <br>";
+		result.innerHTML += "arr1= " + arr1.length + "<br>";
+		result.innerHTML += "arr2= " + arr2.length + "<br>";
+		result.innerHTML += "arr3= " + arr3.length + "<br>";
+		result.innerHTML += "arr4= " + arr4.length + "<br>";
+		result.innerHTML += "<br> 배열의 값 <br>";
+		result.innerHTML += "arr1= " + arr1 + "<br>";
+		result.innerHTML += "arr2= " + arr2 + "<br>";
+		result.innerHTML += "arr3= " + arr3 + "<br>";
+		result.innerHTML += "arr4= " + arr4 + "<br>";
+		result.innerHTML += "<br> 매개변수가있는함수 정의 <br>";
+		sum(10, 20, 30);
+		result.innerHTML += "<br> 가변인자함수 <br>";
+		sum2(10, 20, 30, 40, 50);
+		
+	}
+	
+	function sum2(){	// 가변일땐 매개변수 안씀
+		var total = 0;
+		for(let i=0; i<arguments.length; i++){
+			total += arguments[i];
+		}
+		result.innerHTML += "합계는 " + total + "<br>";
+	}
+	
+	function sum(a, b, c){
+		result.innerHTML += "합계는 " + (a + b + c) + "<br>";
+	}
+	
+	function call5(){
+		result.innerHTML = this.innerText;
+		result.innerHTML += "<br>합계는 " + sum3(10,20,30,40,50) + "<br>";
+		
+	}
+	
+	function sum3(){
+		var total = 0;
+		for(let i=0; i<arguments.length; i++){
+			total += arguments[i];
+		}
+		return total;
+	}
+	
+	function call6(){
+		result.innerHTML = this.innerText;
+		function innerfunc(){
+			result.innerHTML += " : 함수 안에 함수";
+		}
+		innerfunc();
+		result.innerHTML += "<br> 피타고라스 정리 <br>";
+		// 빗변의 길이
+		test1(3,4);
+		
+		function test1(width, height){
+			// test1 에서만 쓸 함수는 내부에 만든다.
+			// 가까운 sqare을 부른다.
+			function sqare(x) {
+				return x*x;
+			}
+			var c = Math.sqrt(sqare(width) + sqare(height));
+			alert(c);
+		}
+		// 이름이 같은 함수
+		function sqare(x) {
+			return x*x + 100000;
+		}
+		
+	}
+	
+	function call7(){
+		result.innerHTML = this.innerText;
+		result.innerHTML += "<br> 1. 함수가 매개변수로 전달된다.";
+		result.innerHTML += "<br> 2. 함수를 받은쪽에서 호출한다. <br>";
+		
+		var f = function(){ alert("callback 함수"); };
+		// f();	// 내가 호출
+		test7(f);	// 매개변수로 함수를 전달
+		
+		result.innerHTML += "<br> 시간 <br>";
+		// ms초마다 function 수행
+		setInterval(function() {
+			time.innerHTML = new Date();
+		}, 1000);	//1초마다
+	}
+	
+	function test7(ff){
+		for(let i=0; i<3; i++){
+			ff();	// 함수를 받은쪽에서 호출
+		}
+	}
+	
+	function call8(){
+		result.innerHTML = this.innerText;
+		// 한번만 ==> setTimeout?
+		// 일정시간마다 함수반복
+		var cnt = 0;
+		setInterval(function() {
+			var r = Math.floor(Math.random() * 256);
+			var g = Math.floor(Math.random() * 256);
+			var b = Math.floor(Math.random() * 256);
+			result.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+			
+			var size = Math.floor(Math.random() * 50 + 1);
+			cnt++;
+			result.innerHTML += `<span style="font-size:${size}px;">${cnt}</span>`;
+			if(cnt % 10 == 0) result.innerHTML += "<br>";
+		}, 1000)
+	}
+	
+	function call9(){
+		result.innerHTML = this.innerText;
+		result.innerHTML += `<br>1. 지역변수는 함수 종료 후 자동 제거된다.`;
+		result.innerHTML += `<br>2. 지역변수가 다른 곳에서 사용된다면 지워지지않고 남아있다.`;
+		result.innerHTML += `<br>3. 그러나 지역변수는 함수 내에서만 유효하다.`;
+		result.innerHTML += `<br>4. ==> 지역변수를 담고있는 함수를 return해서 지역변수가 남아있게 한다.`;
+		
+		var f = f9("자바스크립트");
+		f("KOSTA");	// 함수를 리턴받아서 실행
+		
+		f9("HTML")("가산");	// 함수 리턴받아서 실행
+	}
+	
+	function f9(subject){
+		var a = 100;
+		
+		return function(b){			
+			alert(subject + a + b);
+		};
+	}
+	
+	function call10(){
+		var counter= 0;
+		return function(){counter++; return counter;};
+	}
+	
+	// var 사용시 ==> 문제있음 ==> for가 다 돌고나서 setTimeout이 실행돼서 4가출력됨
+	// 1. let로 해결 !!!
+	function call11(){
+		for(let i=1; i<=3; i++){
+			setTimeout(function() {
+				alert(i);
+			}, 0);			
+		}
+	}
+	// 2. 지역변수를 매개변수로 사용해서 해결한다. 
+	/* 
+	function call11(){
+		for(let i=1; i<=3; i++){ 
+			(function(){setTimeout(function() {
+				alert(i);
+			}, 0); })(i);			
+		}
+	} */
+	
+	function call12(){
+		var arr = [100, 200, 300];
+										// element, index
+		arr.forEach(function(elt, i, array) {	// elt에 100, 200, 300 차례로 들어감 i는 0, 1, 2 차례로 array는 전체다
+			result.innerHTML += `<br> ${i}번째 ${elt}...${array}`;
+		});
+										
+		var arr = ["자바","웹","프레임워크"];
+		arr.forEach(function(element) {	// elt 1개만
+			result.innerHTML += `<br> ${element}`;
+		});
+	}
+	
+	function call13(){
+		function sum(a, b){
+			result.innerHTML += `<br> ${ a+b }`;
+		}
+		sum(10, 20);
+		
+		var sum2 = (a, b) => { result.innerHTML += `<br> 람다표현식연습 : ${ a+b }`; };
+		sum2(30, 50);
+		
+		var sum3 = (a, b) => a+b;
+		result.innerHTML += `<br> 람다표현식연습2 : ${ sum3(100, 200) }`;
+	}
+	
+	function init(){
+		btn1.onclick = call1;
+		btn2.onclick = call2;
+		btn3.onclick = call3;
+		btn4.onclick = call4;
+		btn5.onclick = call5;
+		btn6.onclick = call6;
+		btn7.onclick = call7;
+		btn8.onclick = call8;
+		btn9.onclick = call9;
+		btn10.onclick = call10;
+		btn11.onclick = call11;
+		btn12.onclick = call12;
+		btn13.onclick = call13;
+	}
+	
+	
+</script>
+</head>
+<body>
+	<button id="btn1">선언적함수</button>
+	<button id="btn2">익명함수</button>
+	<button id="btn3">즉시실행함수</button>
+	<button id="btn4">매개변수가있는함수</button>
+	<button id="btn5">리턴값이있는함수</button>
+	<button id="btn6">내부함수</button>
+	<button id="btn7">콜백함수</button>
+	<button id="btn8">콜백함수2</button>
+	<button id="btn9">클로저</button>
+	<button id="btn10">클로저2</button>
+	<button id="btn11">클로저3</button>
+	<button id="btn12">클로저4</button>
+	<button id="btn13">화살표함수(람다식)</button>
+	<hr>
+	<div id="result"></div>
+	<div id="time"></div>
+</body>
+</html>

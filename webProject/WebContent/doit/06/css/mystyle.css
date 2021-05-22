@@ -1,0 +1,25 @@
+h1 {
+      display: inline-block;
+      /* size를 1.4배로  */
+      font-size:1.4em;
+      background-color:#222;
+      color:#fff;
+      /* padding : border와 글자 사이 간격 */
+      padding:10px;
+    }
+ul {
+      list-style:none;
+    }
+li {
+      font-size:1.2em;
+      line-height:1.5;
+      color:blue;
+    }
+    
+p {
+	border: 1px solid red;
+	line-height: 0.7;
+	padding: 10px;
+	text-align: center;
+	font-size: 1.5em;
+}

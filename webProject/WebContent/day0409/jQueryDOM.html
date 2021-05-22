@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>JQuery DOM 활용</title>
+<style>
+	.style1 {
+		border: 1px solid gray;
+		padding: 10px;
+		margin: 10px;
+		background-color: pink;
+	}
+	.style2 {
+		border: 5px dotted blue;
+		padding: 10px;
+		margin: 10px;
+		background-color: skyblue;
+	}
+</style>
+<!-- jquery 라이브러리 꼭 추가하기!!! -->
+<script src="js/jquery-3.6.0.min.js"></script>
+<script>
+$(function(){
+	$("#btn1").click(function(){
+		$("h3:even").css("background-color","pink");
+	});
+	
+	$("#btn2").click(function(){
+		$("h3").filter(":odd").css("background-color","skyblue");
+	});
+	
+	$("#btn3").click(function(){
+		$("h3").filter(":nth-child(3n)").css("background-color","red");
+	});
+	
+	$("#btn4").click(function(){
+		$("h3").filter(function(idx, item){
+			// 걸러내고싶은것
+			// 선택하고자한다면 true, 그렇지않으면 false 리턴
+			return (idx == 1 || idx == 4) ? true : false;
+		}).css("color","red");
+	});
+	
+	$("#btn5").click(function(){
+		$("h3").css("border","1px solid gray")
+		.filter(":odd").css("background-color","lightgreen").end() // end 안하면 홀수를 거른것에서 짝수를 구함
+		.filter(":even").css("color","orange");		
+	});
+	
+	$("#btn6").click(function(){
+		$("h3").eq(3).css("background-color","purple");			
+		$("h3").eq(0).css("background-color","darkgray");	//첫번째
+		$("h3").first().css("color","white");
+		$("h3").eq(-1).css("background-color","hotpink");		//마지막
+		$("h3").last().css("color","white");	
+	});
+	
+	$("#btn7").click(function(){
+		$("h3").css("background-color","yellow")	// background h3만 적용
+		.add("button")
+		.css("color","purple");	// color h3과 button 둘다 적용
+	});
+	
+	$("#btn8").click(function(){
+		// JSON (자바스크립트에서 읽을 수 있는 형태의 데이터)
+		var s = '{"name":"홍","age":20}';
+		var obj = JSON.parse(s);
+		$("#here").html(obj.name);
+		
+		// XML (태그 안에 정보가 있음)
+		var s = '<customers>' + 
+			'<customer><name>홍1</name><age>10</age></customer>' +
+			'<customer><name>홍2</name><age>20</age></customer>' +
+			'<customer><name>홍3</name><age>30</age></customer>' +
+			'</customers>';
+		var obj = $.parseXML(s);	// Parse : String -> Object
+		$(obj).find("customer").each(function(idx, item){
+			alert($(item).find("name").text());
+		});
+	});
+	
+	$("#btn9").click(function(){
+		$(this).parent().css("background-color","yellow");
+		var s = $(this).text();
+		if(s =="활성화하기(parent)"){
+			$(this).text("비활성화하기");	// 태그 제외 텍스트만 바꾸기
+			$(this).parent().find("span").text("활성화");
+		} else {
+			$(this).text("활성화하기(parent)");
+			$(this).parent().find("span").text("비활성화");
+		}
+	});
+	
+	$("#btn10").click(function(){
+		$("#here").addClass("style1");
+		$("#here").addClass("style2");	// 둘다적용되는데 2번째것이 덮어쓰여있음
+	});
+	
+	$("#btn11").click(function(){
+		$("#here").removeClass("style2");	// 2번째만 제거해서 1번째 style이 보이게됨
+	});
+	
+});
+</script>
+</head>
+<body>
+  <h1>jQuery DOM 활용</h1>
+  <button id="btn1">CSS적용-짝수</button>
+  <button id="btn2">filter-홀수</button>
+  <button id="btn3">filter-3의배수</button>
+  <button id="btn4">filter-함수(1,4)</button>
+  <button id="btn5">filter-체이닝,end</button>
+  <button id="btn6">특정위치찾기</button>
+  <button id="btn7">add</button>
+  <button id="btn8">XML파싱</button>
+  <button id="btn10">class추가</button>
+  <button id="btn11">class제거</button>
+  <hr>
+  <h3>HTML0</h3>
+  <h3>HTML1</h3>
+  <h3>HTML2</h3>
+  <h3>HTML3</h3>
+  <h3>HTML4</h3>
+  <div id="here">
+  	<span>비활성화</span>
+  	<button id="btn9">활성화하기(parent)</button>
+  </div>
+</body>
+</html>

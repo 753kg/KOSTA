@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>내장 객체</title>
+<script type="text/javascript">
+	window.onload = function() {
+		btn1.onclick = function(){
+			// 자바는 기본형, wrapper class=기본형+기능
+			// 자바스크립트는 기본형이지만 기능을 갖고있다.
+			// JS => 기본형, 객체형 모두 같은 기능을 갖는다.
+			var num1 = 10;
+			var num2 = new Number(20);	//내장객체
+			here.innerHTML = "기본형: " + num1.toString(2) + ", " + typeof(num1); // toString radix에 2대입 : 2진수로 바꾸기
+			here.innerHTML += "<br>Number객체형: " + num2.toString(2) + ", " + typeof(num2);
+			// ** 차이점 : 객체형에는 기능을 추가할 수 있다. 기본형엔 불가능 **
+			num1.print1 = function(){ here.innerHTML += "<br>기본형 메서드 추가"; };
+			num2.print2 = function(){ here.innerHTML += "<br>Number객체형 메서드 추가"; };
+			//num1.print1();	// 에러 : num1.print1 is not a function
+			num2.print2();
+		};
+		
+		btn2.onclick = function(){
+			var s = "KOSTA";
+			here.innerHTML = s.bold();	// <b>태그로 감싸서 리턴. bold
+			here.innerHTML += "<br>" + s.italics();	// <i>태그
+		};
+		
+		btn3.onclick = function(){
+			var arr1 = [12, 2, 30];
+			var arr2 = new Array(4, 50, 6);
+			// concat : 배열 합치기
+			var arr3 = arr1.concat(arr2);
+			here.innerHTML = arr3;
+			// join : 배열을 구분자를 합쳐서 문자열로 만들기 
+			here.innerHTML += "<br>sort전: " + arr3.join("--");
+			// sort : 원본을 바꾸지 않음
+			here.innerHTML += "<br>기본sort후: " + arr3.sort();	//문자로 sort됨. 아스키 순서대로
+			here.innerHTML += "<br>오름차순sort후: " + arr3.sort(function(a,b){return a-b;});	// sort방법 전달
+			here.innerHTML += "<br>내림차순sort후: " + arr3.sort(function(a,b){return b-a;});
+		};
+		
+		btn4.onclick = call4;
+	};
+	
+	function call4(){
+		var arr = [];
+		arr.push( new Student("김길동1", 100, 90, 80) );
+		arr.push( new Student("김길동2", 70, 90, 80) );
+		arr.push( new Student("김길동3", 90, 90, 80) );
+		arr.push( new Student("김길동4", 100, 70, 90) );
+		arr.push( new Student("김길동5", 60, 100, 90) );
+		
+		Student.prototype.getSum = function(){ return this.국어 + this.영어 + this.수학; };
+		Student.prototype.getAvg = function(){ return this.getSum()/3};
+		Student.prototype.toString = function(){ return this.getName() + "의 평균점수==> " +this.getAvg();}
+		
+		var arr2 = arr.sort(function(a,b){return b.getAvg()-a.getAvg();});	// descending sort
+		for(var i in arr){
+			here.innerHTML += "<br>" + arr2[i];
+		}
+		here.innerHTML += "<br><hr>";
+		arr2.reverse().forEach(function(elt, i, array) {
+			here.innerHTML += "<br>" + elt;
+		});
+		
+	}
+	// 생성자함수 : new 시에 자동 호출된다.
+	function Student(name, kor, eng, math){
+		var name=name;	// 지역변수 -> 밖에서 접근 못함 = 캡슐화
+		this.국어=kor;
+		this.영어 = eng;
+		this.수학 = math;
+		this.getName = function(){ return name; };	// 접근방법공개 : getter
+		
+	}
+</script>
+</head>
+<body>
+	<button id="btn1">기본타입과 객체타입 비교</button>
+	<button id="btn2">String</button>
+	<button id="btn3">Array</button>
+	<button id="btn4">Object Array - sort, 학생평균sort</button>
+	<hr>
+	<div id="here">출력</div>
+</body>
+</html>

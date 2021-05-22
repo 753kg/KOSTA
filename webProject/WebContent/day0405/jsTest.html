@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script>
+  // internal javascript... head, body 모든 위치 가능
+  alert("1. head");
+  console.log("1번째 실행");
+  /* document.getElementById("here").innerHTML = "<p>변경하기</p>"; */
+  /* doucument : body부분을 뜻함 */
+  /* getElementById("here") : here를 찾음 */
+  /* ineerHTML : 그 id의 요소 */
+  /* here가 아직 올라오지 못했기 때문에 오류가 난다. */
+  /* javaScript는 순서가 중요하다. 위 -> 아래 순서대로 흘러간다. */
+</script>
+
+<!-- external javascript -->
+<script src="external.js"></script>
+
+<!-- external js에 있는 함수 호출 -->
+<script>
+  call();
+  call2();
+</script>
+
+</head>
+
+<body onload="alert('load완료');">	<!-- inline javascript / onload : 다 load가 된 후에 alert 실행한다. -->
+
+<script>
+  alert("2. body 첫부분");
+  console.log("2번째 실행");
+</script>
+
+<h1>JavaScript 연습 (표준이름:ECMAScript, EC6기준)</h1>
+<h2>JS의 위치</h2>
+<h3 onclick="alert('click');">클릭하세요</h3>
+<div id="here">여기에 접근하고싶음</div>
+
+<script>
+  alert("3. body 마지막");
+  console.log("3번째 실행");
+  document.getElementById("here").innerHTML = "<p>변경하기</p>";
+</script>
+
+</body>
+</html>

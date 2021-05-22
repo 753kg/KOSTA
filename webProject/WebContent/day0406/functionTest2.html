@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>함수연습</title>
+<style>
+	input[type="button"]{
+		font-size:1em;
+	}
+	input[type="button"]:first-of-type {
+		background-color: red;
+	}
+	input[type="button"]:nth-of-type(2) {
+		background-color: orange;
+	}
+	input[type="button"]:nth-of-type(3) {
+		background-color: yellow;
+	}
+	input[type="button"]:nth-of-type(4) {
+		background-color: green;
+		color:white;
+	}
+	input[type="button"]:nth-of-type(5) {
+		background-color: blue;
+		color:white;
+	}
+</style>
+<script>
+	window.onload = function(){
+		//첫번째버튼을 누르면
+		document.querySelector('input[type="button"]:first-of-type').onclick = call;
+		document.querySelector('input[type="button"]:nth-of-type(2)').onclick = function(){ this.value = "익명함수"; };
+		document.querySelector('input[type="button"]:nth-of-type(3)').onclick = function(){ 
+			this.value = "callback함수...매개변수에 함수를 넣음"; };
+		document.querySelector('input[type="button"]:nth-of-type(4)').onclick = function(){ 
+			this.value = "클로저...지역변수를 담은 함수를 리턴. 지역변수계속사용"; };
+		document.querySelector('input[type="button"]:nth-of-type(5)').onclick = function(){ 
+			this.value = "화살표함수는 람다표현식과 거의같다. 함수의 간단 표현식"; };
+	};
+	
+	function call(){
+		this.value = "명시적함수";
+	}
+</script>
+</head>
+<body>
+	<h1>함수연습</h1>
+	<input type="button" value="함수1">
+	<input type="button" value="함수2">
+	<input type="button" value="함수3">
+	<input type="button" value="함수4">
+	<input type="button" value="함수5">
+	<input id="btn6" type="button" value="setInterval">
+	<input id="btn7" type="button" value="setInterval중지">
+	
+	<script>
+		console.dir(this);
+		console.log("----- this는 window -----")
+		// 다 로드된 후라서 window.onload 안해도 된다.
+		var b6 = document.querySelector("#btn6");
+		b6.onclick = function(){
+			console.dir(this);
+			console.log("----- this는 btn6 -----")
+			intervalID = setInterval(function() {
+				console.dir(this);
+				console.log("----- setInterval의 this는 window -----")
+				var r = Math.random() * 256;
+				var g = Math.random() * 256;
+				var b = Math.random() * 256;
+				b6.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+				// this.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+				// setInterval의 this : window가 되어버림
+			}, 1000);
+		};
+		document.querySelector("#btn7").onclick = function(){
+			clearInterval(intervalID);
+		}
+	/* document.querySelector("#btn6").onlick...가장최신!! 셀렉터 이용
+	btn6.onclick ...지원하지않는브라우저가있다. id만 쓸수있다.
+	document.getElementById("btn6").onclick...가장오래된문법 */
+	</script>
+	
+	
+</body>
+</html>

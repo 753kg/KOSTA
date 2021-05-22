@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>이벤트</title>
+<script type="text/javascript">
+	// 윈도우 로드 끝나면 이벤트 연결
+	window.onload = function(ev){
+		console.log(ev);
+		console.log(ev.type);
+		btn1.onclick = function(ev) {
+			console.log(ev);
+			console.log("event type: " + ev.type);
+			here.innerHTML = "x= " + ev.clientX + ", y= " + ev.clientY;
+		};
+		
+		btn2.onclick = function(aa) {
+			btn1.onclick(aa);
+		};
+		
+		btn3.onclick = function() {
+			alert("버튼3의 코드입니다.");
+		};
+		mytext.onkeydown = function(event){
+			if(event.key == "Enter") btn3.onclick();
+		};
+		
+		btn4.onclick = function() {
+			btn1.onclick = null;	// 이벤트 제거
+		};
+		
+		// default event : 이미 이벤트 핸들러가 제공된다. 코드가 되어있다.
+		// 이것을 막고자한다 ==>  return false
+		myfrm.onsubmit = function(){
+			var uobj = document.querySelector("input[name='userid']");
+			if(!validate(uobj)) return false;	// false가 오면 디폴트 이벤트 제거. 서버로 이동 안함
+			var uobj = document.querySelector("input[name='userpw']");	// var 안붙이면 global돼서 붙였음
+			if(!validate(uobj)) return false;
+			// return true;	// default로 true가 return됨.
+		}
+		function validate(obj){
+			var val = obj.value;
+			if(val==""){	// 입력이 안됐으면
+				alert("필수입력입니다.");
+				obj.focus();	// 마우스 커서가 obj로 간다.
+				return false;
+			}
+			return true;
+		}
+		// 버블링 막기
+		var p = document.querySelector("#p2");
+		// 1. 고전적 이벤트 모델
+		/* p.onclick = function(ev){
+			alert("p태그입니다.")
+			if(ev.stopPropagation){
+				ev.stopImmediatePropagation();
+			}else {
+				ev.cancelBubble = false;
+			}
+		}; */
+		// 2. 표준이벤트모델
+		p.addEventListener("click", function(ev) {
+			alert("p태그입니다.")
+			if(ev.stopPropagation){
+				ev.stopImmediatePropagation();	// 같은 요소의 다른 이벤트도 막고, 상위로 가는 이벤트도 막는다.
+			}else {
+				ev.cancelBubble = false;
+			}
+		}, false);	// true:캡쳐링, false:버블링??
+		
+		// 표준 이벤트 모델				// 버튼5를 눌렀다.
+		btn5.addEventListener("click", function(e) {
+			alert("표준이벤트모델 사용하기");		//이벤트 핸들러
+		}, false);	// 캡쳐링 false : 이벤트 전달 X
+		
+		btn6.addEventListener("click", func);
+		function func(){
+			try{				
+				var arr = new Array(999999999999999999999999999999999999);	// 에러
+				alert(arr.length);
+			}catch(e){
+				alert(e);
+			}
+		}
+	};
+</script>
+</head>
+<body>
+	<button id="btn1">event객체</button>
+	<button id="btn2">event강제발생</button>
+	<input type="text" id="mytext">
+	<button id="btn3">event강제발생2</button>
+	<button id="btn4">event제거</button>
+	<button id="btn5">표준이벤트모델</button>
+	<button id="btn6">예외처리</button>
+	<hr>
+	<form id="myfrm" action="loginChk.jsp" method="get"> 
+		아이디:<input type="number" name="userid" value="admin" placeholder="숫자만 입력가능"><br>
+		비밀번호:<input type="text" name="userpw" value="1234"><br>
+		<input type="submit" value="로그인">
+	</form>
+	<hr>
+	<h2>고전적 이벤트 모델</h2>
+	<div id="here" onclick="alert('div1');" style="border:1px solid red; padding:10px;">
+		<div onclick="alert('div2');" style="border:1px solid green">
+			<p onclick="alert('p');" style="border:1px solid gray">여기를 누르면 onclick이 자식->부모 노드로 전달됨 : 버블링</p>
+		</div>
+	</div>
+	<br>
+	<div id="here2" onclick="alert('div1');" style="border:1px solid red; padding:10px;">
+		<div onclick="alert('div2');" style="border:1px solid green">
+			<p id="p2" style="border:1px solid gray">이벤트전달(버블링) 막기</p>
+		</div>
+	</div>
+</body>
+</html>

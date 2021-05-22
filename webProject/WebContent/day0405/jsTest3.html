@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+
+<script>
+	// 자바스크립트 변수타입 : 동적타입
+	// 6개 : number, string, boolean, object, function, undefined(선언만하고 정의안함)
+	a = 100;
+	document.write("<p>" + a + " ==> " + typeof(a) + "</p>");	// number
+	a = "100";
+	document.write("<p>" + a + " ==> " + typeof(a) + "</p>");	// string
+	a = 10 > 20;
+	document.write("<p>" + a + " ==> " + typeof(a) + "</p>");	// boolean
+	a = 100.9;
+	document.write("<p>" + a + " ==> " + typeof(a) + "</p>");	// 소수점도 number
+	a = {"name":"홍길동", age:20};	// object: 키-값, 키는 "" 안해도 괜찮다. 
+	document.write("<p>" + a + " ==> " + typeof(a) + "</p>");	// object
+	a = [1, 2, 3, 4, 5];
+	document.write("<p>" + a + " ==> " + typeof(a) + "</p>");	// 배열도 object
+	a = function(){ alert("함수이다"); };	// 변수에 함수도 들어갈 수 있다.
+	document.write("<p>" + a + " ==> " + typeof(a) + "</p>");	// function
+	
+	var b;
+	document.write("<p>" + b + " ==> " + typeof(b) + "</p>");	// undefined
+	</script>
+
+<body>
+
+</body>
+</html>

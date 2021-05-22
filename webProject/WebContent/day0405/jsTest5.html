@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script>
+	// document.write(a + "<br>");	// (error) not defined 
+	document.write(b + "<br>");			// undefined
+	// document.write(c + "<br>"); 	// (error) Cannot access 'c' before initialization
+
+	a = 10;
+	var b = 20;
+	let c = 30;
+	
+	document.write(a + "<br>");
+	document.write(b + "<br>");
+	document.write(c + "<br>");
+</script>
+
+<script>
+	document.write("a는 undefined <br>");
+	var a = "자바스크립트";
+	document.write("a = " + a + "<br>");
+	
+	// function도 호이스팅된다.
+	f1();
+	f2();
+	
+	function f1(){
+		document.write("function 1");
+	}
+	function f2(){
+		document.write("function 2");
+	}
+</script>
+
+</head>
+<body>
+
+</body>
+</html>

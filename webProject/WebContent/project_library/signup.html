@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+</head>
+<body>
+<header>
+</header>
+
+<main>
+<h1>회원가입</h1>
+<form action="lib_signup.jsp" method="post">
+  <p><label for="userid">ID:</label>
+  <input type="text" id="userid" name="userid"></p>
+  <p><label for="userpw">PW:</label>
+  <input type="password" id="userpw" name="userpw"></p>
+  <p><label for="username">이름:</label>
+  <input type="text" id="username" name="username"></p>
+  <p><label for="userbirth">생년월일:</label>
+  <input type="date" id="userbirth" name="userbirth"></p>
+  <p><label for="usertel">전화번호:</label>
+  <input type="tel" id="usertel" name="usertel" pattern="[01]{3}-[0-9]{4}-[0-9]{4}"></p>
+  <input type="submit" value="가입완료">
+</form>
+
+</main>
+
+</body>
+</html>

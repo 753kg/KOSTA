@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jQuery Ajax</title>
+<script src="../day0409/js/jquery-3.6.0.min.js"></script>
+<script>
+$(function(){
+	
+	$("#btn1").on("click", function(){
+		var xhr = new XMLHttpRequest();
+		xhr.open("get", "jQueryEvent.html", true);	// 페이지이동없이 서버에 자원을 요청
+		// 비동기라서 밑 코드가 먼저 실행됨 ==> onreadystatechange 사용
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				here.innerHTML = xhr.responseText;
+			}
+		};
+		xhr.send();	// 실제로 감
+	});
+	
+	$("#btn2").on("click", function(){
+		$("#here").load("result.jsp");		// 파싱은 안됨
+	});
+	
+	$("#btn3").on("click", function(){
+		$.ajax({
+			url:"전국도서관표준데이터.json",		// 파싱안해도됨. object로 들어온다.
+			type:"get",
+			success:function(responsedata){
+				//성공하면 수행할 문장
+				console.log(responsedata);
+				//도서관 이름들 가져오기
+				var arr = responsedata["records"];
+				var s = "";
+				for(var i=0; i<arr.length; i++){
+					s += arr[i]["도서관명"] + "<br>";
+				}
+				$("#here").html(s);
+			},
+			error:function(){
+				//에러났을 때 수행할 문장
+			}
+		});
+	});
+	
+	$("#btn4").on("click", function(){
+		var url = "전국도서관표준데이터.json";
+		$.getJSON(url, function(responsedata) {
+			var arr = responsedata["records"];
+			var s = "";
+			for(var i=0; i<arr.length; i++){
+				s += arr[i]["도서관명"] + "<br>";
+			}
+			$("#here").html(s);
+		});
+	});
+	
+	$("#btn5").on("click", function(){
+		$.ajax({
+			url:"loginChk.jsp",
+			type:"get",
+			data:{"userid":$("#userid").val(), "email":$("#useremail").val()},	//파라미터
+			success:function(responsedata){
+				$("#here").html(responsedata);
+			},
+			error:function(){}
+		});
+	});
+	
+	$("#btn6").on("click", function(){
+		$.ajax({
+			url:"loginChk2.jsp",
+			type:"get",
+			data:{"userid":$("#userid").val(), "email":$("#useremail").val() },
+			success:function(responsedata){
+				var obj = JSON.parse(responsedata);
+				var s = "";
+				for(var key in obj){
+					s += "<p>" + key + " : " + obj[key] + "</p>";
+				}
+				$("#here").html(s);
+			},
+			error:function(){}
+		});
+	});
+	
+	$("#btn7").on("click", function(){
+		var param="?userid="+$("#userid").val()+"&email="+$("#useremail").val();
+		$.ajax({
+			url:"loginChk2.jsp"+param,
+			type:"get",
+			//data:{"userid":$("#userid").val(), "email":$("#useremail").val() },
+			success:function(responsedata){
+				var obj = JSON.parse(responsedata);
+				var s = "";
+				for(var key in obj){
+					s += "<p>" + key + " : " + obj[key] + "</p>";
+				}
+				$("#here").html(s);
+			},
+			error:function(){}
+		});
+	});
+	
+	$("#btn8").on("click", function(){
+		var param = $("#myfrm").serialize();	//myfrm 안의 모든 input이 serialize됨
+		$.ajax({
+			url:"loginChk2.jsp?"+param,
+			type:"get",
+			success:function(responsedata){
+				var obj = JSON.parse(responsedata);
+				var s = "";
+				for(var key in obj){
+					s += "<p>" + key + " : " + obj[key] + "</p>";
+				}
+				$("#here").html(s);
+			},
+			error:function(){}
+		});
+	});
+	
+	
+})
+</script>
+</head>
+<body>
+	<h1>AJAX(Asynchronous JavaScript and XML)</h1>
+	<button id="btn1">JavaScript AJAX</button>
+	<button id="btn2">JQuery AJAX(load)</button>
+	<button id="btn3">JQuery AJAX(ajax)</button>
+	<button id="btn4">JQuery AJAX(getJSON)</button><br>
+	<hr>
+	<form id="myfrm">
+	아이디:<input type="number" value="100" name="userid" id="userid"><br>
+	이메일:<input type="text" value="web1@daum.net" name="email" id="useremail">
+	</form>
+	<button id="btn5">JQuery AJAX(ajax-jsp호출-html)</button>
+	<button id="btn6">JQuery AJAX(ajax-jsp호출-json1)</button>
+	<button id="btn7">JQuery AJAX(ajax-jsp호출-json2)</button>
+	<button id="btn8">JQuery AJAX(ajax-jsp호출-json3-serialize)</button>
+	<div id="here">여기</div>
+</body>
+</html>

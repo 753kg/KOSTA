@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Function Review</title>
+<script>
+	// 1. global 변수
+	var a = 10;
+	b = 20;
+	//alert(a + b);
+	
+	for(i=1; i<=5; i++){
+		console.log("i= " + i);
+	}
+	for(var j=1; j<=5; j++){
+		console.log("j= " + j);
+	}
+	//alert(i + j);
+	// 함수 밖에서 선언한 변수(var)는 무조건 global
+	// 선언 안하고 사용한 변수는 함수 밖이든 안이든 무조건 global
+	
+	function call(){
+		for(i2=1; i2<=5; i2++){
+			console.log("i2= " + i2);
+		}
+		// 함수 내에서 선언한 변수(var)는 local
+		for(var j2=1; j2<=5; j2++){
+			console.log("j2= " + j2);
+		}
+		for(var z2=1; z2<=5; z2++){
+			console.log("z2= " + z2);
+		}
+		for(let i4=1; i4<=5; i4++){
+			console.log("i4= " + i4);
+		}
+		//console.log("i4= " + i4); // 에러 : i4 is not defined
+		return z2;
+	}
+	//call();
+	//alert(i2);	// 6
+	//alert(j2);	// 에러 : j2 is not defined
+	
+	//var result = call();
+	//alert(result);	// z2
+	
+	alert(j2);	// call()을 호출해야 j2가 생긴다.
+</script>
+</head>
+<body>
+	<h1>Function Review</h1>
+</body>
+</html>

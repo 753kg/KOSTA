@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>webShop Project</h1>
+	<hr>
+	<h2>주소창(get방식):http://localhost:9090/webShop/first</h2>
+	<hr>
+	<h2>a태그(get방식)</h2>
+	<ul>
+		<!-- webShop/first  -->
+		<li><a href="first1">첫번째 서블릿 연결(get방식 상대경로1)</a></li>
+		<li><a href="./first1">첫번째 서블릿 연결(get방식 상대경로2)</a></li>
+		<li><a href="/webShop/first1">첫번째 서블릿 연결(get방식 절대경로)</a></li>
+		<li><a href="memberForm.html">멤버회원가입</a></li>
+		<li><a href="calc.html">계산기</a></li>
+		<li><a href="dept/deptlist">부서전부조회</a></li>
+		<li><a href="emp/emplist">직원전부조회</a></li>
+		<li><a href="login/loginChk.kosta">로그인하기</a></li>
+	</ul>
+	<hr>
+	<h2>form(get방식)</h2>
+	<form action="first1">	<!-- first 서버로 가라 -->
+		<input type="submit" value="get요청">
+	</form>
+	<hr>
+	<h2>form(post방식)</h2>
+	<form action="first1" method="post">
+		<input type="submit" value="post요청">
+	</form>
+	<hr>
+	<h2>LoginChk</h2>
+	<form action="loginChk.kosta" method="post">
+		<!-- name이 getParameter의 매개변수 -->
+		ID: <input type="text" name="userid"><br>
+		PW: <input type="text" name="userpw"><br>
+		<input type="submit" value="로그인">
+	</form>
+</body>
+</html>

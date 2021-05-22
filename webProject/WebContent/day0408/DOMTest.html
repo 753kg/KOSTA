@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>DOM</title>
+<style>
+	#here {
+		width:300px; height:300px;
+		border:1px solid gray;
+		margin-top: 10px;
+	}
+	p {
+		color: red;
+	}
+</style>
+<script>
+	function call1(){
+		var t = document.createTextNode("text 노드 생성");
+		var e = document.createElement("p");	//<p></p>로 만들어짐
+		// p 사이에 text 넣기
+		e.appendChild(t);	// <p>text 노드 생성</p>
+		var h = document.getElementById("here");
+		h.appendChild(e);	// <div><p>text 노드 생성</p></div>
+		
+		h.innerHTML += "<p>innerHTML로 p 태그 생성</p>";
+		
+		var e = document.createElement("img");	//<img/>
+		e.src = "../doit/16/images/doit.jpg";		// 속성 주기
+		e.width = "100";
+		e.hieght = "100";
+		h.appendChild(e);
+		
+		h.innerHTML += "<img class='my' src='../doit/16/images/doit.jpg' width='200' height='200'>";
+	}
+	function call2(){
+		var imgs = document.querySelectorAll(".my");
+		imgs.forEach(function(elt, i, array) {
+			elt.setAttribute("src", "../doit/15/images/flower.jpg");	
+		})
+		// 속성을 변수로 줄수있어서 좋다.
+	}
+	function call3(){
+		var imgs = document.querySelectorAll(".my");
+		imgs.forEach(function(elt, i, array) {
+			elt.src = "../doit/11/images/bear.jpg";
+		})
+	}
+	function call4(){
+		var buttons = document.querySelectorAll("button");
+		buttons.forEach(function(elt, i, array) {
+			here.innerHTML += "<p>" + elt.innerHTML + "</p>";
+		});
+	}
+	function call5(){
+		var h = document.querySelector("#here");
+		h.style.color = "white";
+		h.style.backgroundColor = "black";
+	}
+	function call6(){
+		// 지울 객체의 부모가 지워야 한다.
+		var h = document.querySelector("#here");	// 부모
+		var img = document.querySelector(".my");	// 지우고싶은거. 처음 만나는 my
+		h.removeChild(img);
+	}
+	function call7(){
+		// 부모 노드 찾기
+		var h = document.querySelector("#here");
+		h.parentNode.removeChild(h);
+	}
+</script>
+</head>
+<body>
+	<h1>DOM(Document Object Model)</h1>
+	<button onclick="call1();">동적객체생성</button>
+	<button onclick="call2();">동적속성변경-함수</button>
+	<button onclick="call3();">동적속성변경-속성값</button>
+	<button onclick="call4();">querySelectorAll</button>
+	<button onclick="call5();">style변경</button>
+	<button onclick="call6();">동적문서객체제거-img제거</button>
+	<button onclick="call7();">동적문서객체제거-here제거</button>
+	<div id="here">
+	
+	</div>
+</body>
+</html>

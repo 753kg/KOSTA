@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<style>
+	table, td, th{
+		border:1px solid gray;
+		border-collapse: collapse;
+	}
+	tr:first-of-type {
+		background-color: pink;
+	}
+</style>
+<script src="external.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$($.getScript("external.js"));
+
+window.onload = function(){
+	
+	btn4.addEventListener("click", function(){
+		var url="https://api.bithumb.com/public/ticker/ALL";
+		var xhr = new XMLHttpRequest();
+		xhr.open("get", url, true);	// url을 요청
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				var obj = JSON.parse(xhr.responseText);	// 데이터를 객체로 만들어줌
+				// here.innerHTML = JSON.stringify(obj.data);	// 데이터 보기 JSONLint - The JSON Validato
+				var itemInfoSet = new Set();
+				var s = "";
+				var date = "";
+				for(var item in obj.data){
+					if(item == 'date') { 
+						var d = new Date(Number(obj.data.date));
+						date = d.getFullYear()+"/"+(d.getMonth()+1)+"/"+d.getDate()+" "
+							+ d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+						continue; 
+					}
+					s += `<tr><th>${item}</th>`;
+					for(var itemInfo in obj.data[item]){
+						itemInfoSet.add(itemInfo);
+						s += `<td>${obj.data[item][itemInfo]}</td>`;	
+					}
+					s += "</tr>";
+				}
+				s += "</table>";
+				
+				var h = "<table><tr><th></th>";
+				for(var itemInfo of itemInfoSet){
+					h += `<th>${itemInfo}</th>`;
+				}
+				h += "</tr>";
+				
+				here.innerHTML = date + h + s;
+			}
+		};
+		xhr.send();
+	});
+	
+	btn3.addEventListener("click", function(){
+		var url="https://api.bithumb.com/public/ticker/ALL";
+		var xhr = new XMLHttpRequest();
+		xhr.open("get", url, true);	// url을 요청
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				here.innerHTML = xhr.responseText;
+				/* var obj = JSON.parse(xhr.responseText);
+				var s ="";
+				for(var key in obj.data){
+					s += key +"<br>";
+					for(var k in obj.data[key]){
+						s += k + " : " + obj.data[key][k] + "<br>";	
+					}
+				}
+				here.innerHTML = s; */
+			}
+		};
+		xhr.send();
+	});
+
+ 	btn2.addEventListener("click", function(){
+		var url="https://api.bithumb.com/public/ticker/BTC";
+		var xhr = new XMLHttpRequest();
+		xhr.open("get", url, true);	// url을 요청
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				//here.innerHTML = xhr.responseText
+				var obj = JSON.parse(xhr.responseText);
+				here.innerHTML = obj.data.closing_price;				
+			}
+		};
+		xhr.send();
+	});
+	
+	//AJAX
+	//open : 클라이언트가 서버에 mission1_mysol.html을 AJAX로 요청 
+	//			**페이지 이동 없이** 서버에 요청보내기
+	//send :
+	btn1.addEventListener("click", function() {
+		var xhr = new XMLHttpRequest();
+		var id = document.querySelector("input[name='userid']").value;
+		var pw = document.querySelector("input[name='userpw']").value;
+		var param = "userid="+id+"&userpw="+pw;
+		xhr.open("get", "loginChk2.jsp?"+param , true); //true:비동기(순서없음), false:동기
+		xhr.onreadystatechange = function(){
+			// onreadystatechange : 모든 상태값을 다 알아낼 수 있는 이벤트
+			if(xhr.readyState == 4 && xhr.status == 200){ // 4 : 모든 데이터를 다 받은 상태
+				//here.innerHTML = xhr.responseText;
+				var obj = JSON.parse(xhr.responseText);
+				var s = "이름: " + obj.fname + "<br>" +
+					"성: " + obj.lname + "<br>" +
+					"급여: " + obj.salary + "<br>" +
+					"입사일: " + obj.hiredate + "<br>";
+				here.innerHTML = s;
+			}
+		}
+		xhr.send();
+	});
+	btn5.addEventListener("click", function() {
+		var xhr = new XMLHttpRequest();
+		xhr.open("get", "mission1_mysol2.html" , true);
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				here.innerHTML = xhr.responseText;
+				solveM1();
+				solveM2();
+				solveM3();
+				solveM4();
+				solveM5();
+				solveM6();
+			}
+		}
+		xhr.send();
+	});
+	btn6.addEventListener("click", function() {
+		solveM1();
+		solveM2();
+		solveM3();
+		solveM4();
+		solveM5();
+		solveM6();
+	});
+	
+	
+	myfrm.onsubmit = function(){
+		var uobj = document.querySelector("input[name='userid']");
+		if(!validate(uobj)) return false;	// false가 오면 디폴트 이벤트 제거. 서버로 이동 안함
+		var uobj = document.querySelector("input[name='userpw']");	// var 안붙이면 global돼서 붙였음
+		if(!validate(uobj)) return false;
+		// return true;	// default로 true가 return됨.
+	}
+	function validate(obj){
+		var val = obj.value;
+		if(val==""){	// 입력이 안됐으면
+			alert("필수입력입니다.");
+			obj.focus();	// 마우스 커서가 obj로 간다.
+			return false;
+		}
+		return true;
+	}
+};
+</script>
+</head>
+<body>
+	<button id="btn1">Ajax 비동기 통신</button>
+	<button id="btn2">빗썸API이용하기</button>
+	<button id="btn3">빗썸API이용하기(all)-데이터</button>
+	<button id="btn4">빗썸API이용하기(all)-표</button>
+	<button id="btn5">mission</button>
+	<button id="btn6">mission-함수호출</button>
+	<form id="myfrm" action="loginChk.jsp" method="get"> 
+		아이디:<input type="number" name="userid" value="admin" placeholder="숫자만 입력가능"><br>
+		비밀번호:<input type="text" name="userpw" value="1234"><br>
+		<input type="submit" value="로그인">
+	</form>
+	<div id="here"></div>
+
+</body>
+</html>

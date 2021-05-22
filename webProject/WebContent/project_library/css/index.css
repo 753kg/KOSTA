@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+
+body {
+  /* border:5px solid powderblue; */
+  font-family: 'Nanum Gothic', sans-serif;
+  background-color: powderblue;
+}
+
+main {
+	display:block;
+	width:1200px;
+	height: 900px;
+	background-color: white;
+	border-radius: 30px;
+	margin:20px auto;
+}
+
+header { 
+  	/* border:5px solid gray; */
+  	/* background-color: powderblue;  */
+  	text-align: center;
+  	height: 120px;
+}
+
+
+ h1 { 
+  	display: inline-block;
+  	/* border:1px solid gray; */
+  	font-size: 3em;
+}
+
+img {
+	width:100px;
+	height:100px;
+  	/* display: inline-block; */
+	/* border:1px solid gray; */
+	position: relative;
+	top:40px;
+}
+
+nav{
+ 	text-align: center;
+ 	/* border:2px solid lightgray;
+ 	border-top-color: lightgray;
+ 	border-bottom-color: lightgray;
+ 	border-right-style: none;
+ 	border-left-style: none; */
+ 	padding:0px 30px;
+}
+
+ul {
+	display: inline-block;
+  	list-style-type: none;
+}
+
+li {
+	border:1px solid powderblue;
+	float: left;
+	/* text-align: center; */
+	margin: 10px;
+	border-radius: 5px;
+	
+}
+
+nav a:hover{
+	background-color: powderblue;
+  	color: white ;
+}
+
+a {
+	  text-decoration: none;
+	  color: black;
+	  /* border:1px solid blue; */
+}
+
+nav a{
+	display: block;
+	padding: 10px;
+	font-size: 1.3em;
+	border-radius: inherit;
+}
+
+header a {
+  	color: black;
+}
+
+section {
+	padding: 50px;
+	clear: left;
+}

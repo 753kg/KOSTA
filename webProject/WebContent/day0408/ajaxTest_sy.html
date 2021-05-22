@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+window.onload= function(){
+   
+   //이벤트에 이벤트핸들러를 적용
+   btn1.addEventListener("click", function(e) {
+      var xhr= new XMLHttpRequest(); //객체 생성
+      var id= document.querySelector("input[name='userid']").value;
+      var pw= document.querySelector("input[name='userpw']").value;
+      var param="userid="+id+"&userpw="+pw;
+      xhr.open("get","loginChk3.jsp?"+param,true);  //요청(요청방식, 요청하고싶은 페이지, 비동기여부)준비
+      //true=> 비동기(순서없음), 오거나말거나 그 이후 작업 실행한다.
+      xhr.onreadystatechange= function(){
+         //비동기에서도 사용할 수 있게 설정
+         if(xhr.readyState==4 && xhr.status==200) {
+            //정상적으로 서버가 다 응답했다.
+            //here.innerHTML= xhr.responseText;
+            var obj= JSON.parse(xhr.responseText);
+            var s= "<br>이름: "+obj.fname;
+            s+= "<br>성: "+obj.lname;
+            s+= "<br>급여: "+obj.salary;
+            s+= "<br>입사일: "+obj.hiredate;
+            here.innerHTML="<b>직원정보</b>";
+            here.innerHTML+= s;
+         }
+      };
+      xhr.send();//전송
+      //here.innerHTML= xhr.responseText; 
+      //응답오면 받아서 출력(true일때는 작업끝나기전에 실행되어서 아무것도 뜨지x)
+      //false(동기) 일때는 응답올때까지 대기했다 응답을출력해준다.
+      
+   }, false);
+   
+   myfrm.onsubmit= function(){
+      var uobj= document.querySelector("input[name='userid']");
+      if(!validate(uobj)) return false;
+      
+      var uobj= document.querySelector("input[name='userpw']");
+      if(!validate(uobj)) return false;
+      //alert('서버로안감');
+      //return false;
+   }; 
+   
+   
+   function validate(obj){
+      var val= obj.value;
+      if(val==""){
+         alert("필수입력입니다.");
+         obj.focus();
+         return false;
+      }
+      return true;
+   };
+   
+   btn2.addEventListener("click", function() {
+      var url="https://api.bithumb.com/public/ticker/BTC";
+      var xhr= new XMLHttpRequest(); //객체 생성
+      xhr.open("get",url,true);
+      xhr.onreadystatechange= function(){
+         if(xhr.readyState==4 && xhr.status==200) {
+            var obj= JSON.parse(xhr.responseText);
+            here.innerHTML= obj.data.closing_price;
+         }
+      };
+      xhr.send();
+   });
+   
+   btn3.addEventListener("click", function() {
+      var url="https://api.bithumb.com/public/ticker/All";
+      var xhr= new XMLHttpRequest(); //객체 생성
+      xhr.open("get",url,true);
+      xhr.onreadystatechange= function(){
+         if(xhr.readyState==4 && xhr.status==200) {
+            here.innerHTML= xhr.responseText;
+         }
+      };
+      xhr.send();
+   });
+};
+</script>
+</head>
+<body>
+<button id="btn1">Ajax(비동기통신)</button>
+<button id="btn2">빗썸API이용하기</button>
+<button id="btn3">빗썸API이용하기(all)</button>
+<hr>
+<div id="here">여기</div>
+<hr><br>
+<form id="myfrm" action="loginChk.jsp" method="get">
+아이디:<input type="number" name="userid" value="100"><br>
+비밀번호:<input type="password" name="userpw" value="1234"><br>
+<input type="submit" value="로그인하기">
+</form>
+</body>
+</html>

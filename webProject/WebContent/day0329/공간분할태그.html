@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>공간분할태그</title>
+<style>
+	.aa{ border:5px dotted powderblue; }
+	.bb{ border:5px dotted lightgreen; }
+	span{ background-color:palegoldenRod; }
+	/* CSS의 주석 
+		span, img : inline요소 (contents 만큼만 자리를 차지) 
+		div, p : block요소 (한 줄을 모두 차지) */
+	p{color:LightSlateGray; border:1px solid Gray;}
+
+</style>
+
+
+
+</head>
+<body>
+<!-- 공간분할 : div > p > span -->
+<h1>공간분할태그 연습</h1>
+<hr>
+<div class="aa">
+	공간분할에는 div 태그가 있다.<br>
+	관련있는 태그들을 하나의 단락으로 묶을 때 사용 한다.
+	<p style="background-color:MistyRose;">묶어놓는 역할. 뜻을 갖고있진 않다.</p>
+	<p>공간분할에는 p 태그가 있다.</p>
+	<p>일반적으로 "한줄"에 사용된다.</p>
+	<p>span : p 태그 안에 <span>특정 부분</span> 쪼개기 </p>
+</div>
+
+<!-- 상대경로 : 현재위치기준 (WebContent) -->
+<!-- <img 는 열면서 /> 닫기 -->
+<img alt="이곳에 activity 이미지가 있어요" 
+src="03/images/activity.jpg" 
+width="100px" height="100px"/>
+<!--  절대경로 : /로 시작 -->
+<img alt="이곳에 healing 이미지가 있어요" 
+src="/webProject/03/images/healing.jpg" 
+width="100px" height="100px"/>
+<img alt="이곳에 healing 이미지가 있어요" 
+src="http://localhost:9090/webProject/03/images/healing.jpg" 
+width="100px" height="100px"/>
+
+<div class="bb">
+	<p>공간분할에는 div 태그가 있다.</p>
+	<p>관련있는 태그들을 하나의 단락으로 묶을 때 사용 한다.</p>
+	<p>뜻을 갖고있진 않다.</p>
+	<p>공간분할에는 p 태그가 있다.</p>
+	<p>일반적으로 한줄에 사용된다.</p>
+	<p>span : p 태그 안에 <span>특정 부분</span> 쪼개기 </p>
+</div>
+
+</body>
+</html>

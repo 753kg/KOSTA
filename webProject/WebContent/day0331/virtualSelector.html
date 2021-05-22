@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>first-child vs first-of-type</title>
+</head>
+<style>
+  p{ border:1px solid gray; }
+  
+  /* first-child : 자식요소로 첫번째*/
+  /* 자식요소인 모든 태그 중에서 p가 첫번째로 나오면*/
+  p:first-child { background-color: orange; }
+  /* 자식요소 p태그 중에서 처음 나온 p태그 */
+  p:first-of-type { color: hotpink; }
+  
+  h1:first-child{ text-align: center; }
+  h2:first-child{ text-align: center; }
+  
+  /* 짝수번째 li */
+  /* li:nth-child(2n){ background-color: orange; } */
+  li:nth-child(even){ background-color: orange; }
+  /* 홀수번째 li */
+  /* li:nth-child(2n+1){ background-color: hotpink; } */
+  li:nth-child(odd){ background-color: hotpink; }
+  
+  li:nth-child(3n+1){ color: white; }
+  
+</style>
+
+<body>
+
+  <ul>
+    <li>HTML5</li>
+    <li>CSS3</li>
+    <li>JavaScript</li>
+    <li>JavaScript - JQuery</li>
+    <li>JavaScript - node.js</li>
+  </ul>
+
+
+
+
+
+
+  <h1>가상 선택자 연습</h1>
+  <h2>body의 h2... first-child 안됨</h2>
+  <p>body의 자식요소 p</p>
+  
+  <div>
+    <h2>div의 h2... first-child 적용됨</h2>
+  	<p>첫번째 div의 자식요소p1</p>
+ 	<p>p2</p>
+	<p>p3</p>
+	<p>p4</p>
+	<p>p5</p>
+  </div>
+  
+  <div>
+    <h1>두 번째 div</h2>
+  	<p>p1</p>
+ 	<p>p2</p>
+	<p>p3</p>
+	<p>p4</p>
+	<p>p5</p>
+  </div>
+  
+</body>
+</html>

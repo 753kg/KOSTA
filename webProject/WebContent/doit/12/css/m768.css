@@ -1,0 +1,6 @@
+@media screen and (max-width:768px){
+	body {
+	  background: url(../images/bg2.jpg) no-repeat fixed;  /* 가로가 768px 이하면 bg2.jpg 지정 */
+	  background-size:cover;
+	}
+}
