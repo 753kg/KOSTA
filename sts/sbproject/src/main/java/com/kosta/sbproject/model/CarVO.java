@@ -1,5 +1,7 @@
 package com.kosta.sbproject.model;
 
+import javax.persistence.Entity;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

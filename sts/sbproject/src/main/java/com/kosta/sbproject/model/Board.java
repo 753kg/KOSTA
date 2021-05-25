@@ -31,7 +31,8 @@ public class Board {
 	String content;
 	
 	@CreationTimestamp	// create시 자동으로 들어감
-	Timestamp regdate;
+	Timestamp regdate;	// regDate --> table엔 reg_date
+						// Repository에서 변수이름 사용시 주의 findByRegDate (대문자시작,변수이름그대로)
 	
 	@UpdateTimestamp	// update시 자동으로 들어감
 	Timestamp updatedate;
