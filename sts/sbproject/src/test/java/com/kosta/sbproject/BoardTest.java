@@ -17,7 +17,7 @@ import lombok.extern.java.Log;
 public class BoardTest {
 
 	@Autowired
-	BoardRepository boardrepo;
+	BoardRepository boardrepo;	// 자동으로 만들어진 구현class가 생성됨
 	
 	// @Test
 	public void repoInfo() {

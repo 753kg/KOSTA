@@ -1,12 +1,11 @@
 package com.kosta.sbproject;
 
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kosta.sbproject.model.DeptVO;
 import com.kosta.sbproject.persistence.DeptRepository;
@@ -17,60 +16,91 @@ import lombok.extern.java.Log;
 @SpringBootTest
 public class DeptTest {
 	
+	// DI
 	@Autowired
 	DeptRepository drepo;
 	
-	//@Test
+	// @Test
 	public void insert() {
 		DeptVO dept = new DeptVO();
-		dept.setDepartment_name("인사부");
-		dept.setLocation_id(12);
-		dept.setManager_id(12);
+		dept.setDeptname("인사부");
+		dept.setLocationid(12);
+		dept.setManagerid(12);
 		drepo.save(dept);
 	}
 	
-	// @Test
-	public void insertMultiple(@PathVariable String deptName) {
-		IntStream.range(1, 4).forEach(i -> {
-			DeptVO dept = new DeptVO();
-			dept.setDepartment_name(deptName + i + "팀");
-			dept.setLocation_id(i);
-			dept.setManager_id(i);
+	@Test
+	public void insertMultiple() {
+		IntStream.range(1, 6).forEach(i -> {
+			// 안정적으로 생성
+			DeptVO dept = DeptVO.builder()
+					.deptname("홍보부" + i)
+					.managerid(i)
+					.locationid(i+2)
+					.build();
 			drepo.save(dept);
 		});
+		
+		/*
+		IntStream.range(21, 31).forEach(i -> {
+			DeptVO dept = new DeptVO();
+			dept.setDepartment_name("부서" + i);
+			dept.setLocation_id(i);
+			dept.setManager_id(i+10);
+			drepo.save(dept);
+		});
+		
+		for(int i=31; i<41; i++) {
+			// 생성자 순서 주의
+			DeptVO dept = new DeptVO(i, "개발부" + i, i, i+10);
+			drepo.save(dept);
+		}
+		*/
 	}
 	
 	
 	// @Test
 	public void deptlist() {
+		// List<DeptVO> deptlist = (List<DeptVO>) drepo.findAll();
+		
 		drepo.findAll().forEach(dept -> {
 			log.info(dept.toString());
 		});
 	}
 	
-	@Test
-	public void deptById() {
-		DeptVO dept = drepo.findById(112).get();
-		log.info(dept.toString());
-	}
-	
 	// @Test
-	public void deptCount() {
-		log.info("count: " + drepo.count());
+	public void deptById() {
+		Optional<DeptVO> dept = drepo.findById(135);
+		dept.ifPresent(d -> {
+			// 존재하면 출력
+			log.info(d.toString());			
+		});
 	}
 	
 	// @Test
 	public void updateDept() {
-		drepo.findById(112).ifPresent(dept -> {
-			String deptName = dept.getDepartment_name();
-			dept.setDepartment_name(deptName + "_수정");
+		drepo.findById(135).ifPresent(dept -> {
+			String deptName = dept.getDeptname();
+			dept.setDeptname(deptName + "_수정");
 			drepo.save(dept);
 		});
 	}
 	
 	// @Test
 	public void deleteDept() {
-		drepo.deleteById(105);
+		drepo.deleteById(134);
+	}
+	
+	// @Test
+	public void existDept() {
+		boolean result = drepo.existsById(134);
+		log.info(result?"존재함":"존재하지않음");
+	}
+	
+	// @Test
+	public void deptCount() {
+		long rowCount = drepo.count();
+		log.info("count: " + rowCount);
 	}
 	
 	
