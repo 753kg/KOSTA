@@ -31,12 +31,12 @@ public class DeptTest {
 	
 	@Test
 	public void insertMultiple() {
-		IntStream.range(1, 6).forEach(i -> {
+		IntStream.range(1, 11).forEach(i -> {
 			// 안정적으로 생성
 			DeptVO dept = DeptVO.builder()
-					.deptname("홍보부" + i)
-					.managerid(i)
-					.locationid(i+2)
+					.deptname("영업부" + i)
+					.managerid(i+4)
+					.locationid(i)
 					.build();
 			drepo.save(dept);
 		});

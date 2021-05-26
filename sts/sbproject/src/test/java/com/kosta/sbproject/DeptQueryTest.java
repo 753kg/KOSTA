@@ -25,12 +25,41 @@ public class DeptQueryTest {
 	DeptRepository repo;
 	
 	// @Test
+	public void selectAll() {
+		List<DeptVO> deptlist = repo.selectAll();
+		deptlist.forEach(dept -> {
+			log.info(dept.toString());			
+		});
+	}
+	
+	// @Test
 	public void findAllPaging() {
 		Pageable paging = PageRequest.of(0, 5);
 		Page<DeptVO> page = repo.findAll(paging);
 		List<DeptVO> deptlist = page.getContent();
 		deptlist.forEach(dept -> {
 			log.info(dept.toString());
+		});
+	}
+	
+	@Test
+	public void selectById() {
+		// 200보다 큰 deptlist
+		log.info("selectById----------------------------");
+		repo.selectById(200).forEach(dept -> {
+			log.info(dept.toString());			
+		});
+		log.info("selectByIdParam----------------------------");
+		repo.selectByIdParam(200).forEach(dept -> {
+			log.info(dept.toString());			
+		});
+		log.info("selectByIdEntity----------------------------");
+		repo.selectByIdEntity(200).forEach(dept -> {
+			log.info(dept.toString());			
+		});
+		log.info("selectByIdSQL----------------------------");
+		repo.selectByIdSQL(200).forEach(dept -> {
+			log.info(dept.toString());			
 		});
 	}
 	
@@ -90,7 +119,7 @@ public class DeptQueryTest {
 		
 	}
 	
-	@Test
+	// @Test
 	public void joinWithDepartments() {
 		repo.joinWithDepartments().forEach(arr -> {
 			log.info(Arrays.toString(arr));
