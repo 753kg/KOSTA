@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">	<!-- thymeleaf : 동적인 html 페이지 만들기 -->
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>Thymeleaf 연습 시작!!</h1>
+	
+	<p th:text="${greeting}">이 부분이 변경됨</p>
+	
+	<div th:text="${board}">toString이 호출됨</div>
+	<div th:text="${board.content}"></div>
+	
+	<div th:utext="${'<h1>' + board.content + '</h1>'}">utext:html태그</div>
+	<div th:text="${'<h1>' + board.content + '</h1>'}">text:문자그대로</div>
+</body>
+</html>

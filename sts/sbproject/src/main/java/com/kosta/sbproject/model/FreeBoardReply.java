@@ -23,7 +23,7 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString//(exclude = "board")	// toString할 때 board 빼기 (양방향 관계일 때 무한루프 방지)
+@ToString(exclude = "board")	// toString할 때 board 빼기 (양방향 관계일 때 무한루프 방지)
 @Entity
 @Builder
 @AllArgsConstructor

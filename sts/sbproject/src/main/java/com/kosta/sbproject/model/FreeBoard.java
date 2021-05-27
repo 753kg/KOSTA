@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,7 +26,7 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString//(exclude = "replies")	// toString할 때 replies 빼기 (양방향 관계일 때 무한루프 방지)
+@ToString(exclude = "replies")	// toString할 때 replies 빼기 (양방향 관계일 때 무한루프 방지)
 @Entity
 @Builder
 @AllArgsConstructor
@@ -52,6 +54,7 @@ public class FreeBoard {
 	@OneToMany(mappedBy = "board", 
 			cascade = CascadeType.ALL, 
 			fetch = FetchType.LAZY)			// LAZY면 board로 reply insert가 안된다. @Transactional 적어주면 됨
+	@JsonIgnore
 	List<FreeBoardReply> replies;
 			//fetch = FetchType.EAGER) --> 권장하지않음. 필요할때만 쓰도록
 }

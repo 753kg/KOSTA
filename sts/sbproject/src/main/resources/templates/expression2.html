@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>표현식 유틸리티 객체</h1>
+	<h3>date</h3>
+	<p th:text="${now}"></p>
+	<p th:text="${#dates.format(now, 'yyyy-MM-dd')}"></p>	<!-- 포맷 -->
+	<!-- with: 지역변수. 하위 태그에서만 사용 가능 -->
+	<div th:with="aa=${#dates.format(now, 'yyyy-MM-dd')}">
+		<p>[[${aa}]]</p>
+		<p th:text="${aa}"></p>	
+	</div>
+	
+	<h3>price</h3>
+	<p th:text="${price}"></p>
+	<p th:text="${#numbers.formatInteger(price, 3, 'COMMA')}"></p>	<!-- 3자리마다 콤마 -->
+	<p th:text="${#numbers.formatDecimal(price, 5, 10, 'POINT')}"></p>	<!-- 정수5자리 소수10자리 -->
+	<div th:with="price2=123.45">
+		<p th:text="${#numbers.formatDecimal(price2, 5, 10, 'POINT')}"></p>
+	</div>
+	<p th:text="${#numbers.formatDecimal(3.14, 5, 10, 'POINT')}"></p>
+	
+	<h3>title</h3>
+	<p th:text="${title}"></p>
+	<p th:utext="${#strings.replace(title, 's', '<b>s</b>')}"></p>	<!-- s를 <b>s</b>로 바꾸기 -->
+	<p th:utext="${#strings.replace(title, ' ', '<br>')}"></p>
+	<p th:text="${#strings.toUpperCase(title)}"></p>
+	<ul>
+		<li th:each="aa:${#strings.listSplit(title, ' ')}">[[${aa}]]</li>
+	</ul>
+	
+	<h3>array</h3>
+	<ul>
+		<li th:each="fruit:${options}">[[${fruit}]]</li>
+	</ul>
+</body>
+</html>

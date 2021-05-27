@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>직원 목록</h1>
+	<table>
+		<tr>
+			<th>직원번호</th>
+			<th>이름</th>
+			<th>성</th>
+			<th>전화번호</th>
+			<th>이메일</th>
+			<th>급여</th>
+			<th>커미션</th>
+			<th>직책</th>
+			<th>입사일</th>
+			<th>매니저</th>
+			<th>부서번호</th>
+		</tr>
+		<tr th:each="emp:${emplist}">
+			<td>
+				<a th:href="@{/emp/empDetail(empid=${emp.employeeId})}" th:text="${emp.employeeId}"></a>
+			</td>
+			<td th:text="${emp.firstName}"></td>
+			<td th:text="${emp.lastName}"></td>
+			<td th:text="${emp.phoneNumber}"></td>
+			<td th:text="${emp.email}"></td>
+			<td th:text="${emp.salary}"></td>
+			<td th:text="${emp.commissionPct}"></td>
+			<td th:text="${emp.jobId}"></td>
+			<td th:text="${emp.hireDate}"></td>
+			<td th:text="${emp.managerId}"></td>
+			<td th:text="${emp.department.deptid}"></td>
+		</tr>
+	</table>
+</body>
+</html>

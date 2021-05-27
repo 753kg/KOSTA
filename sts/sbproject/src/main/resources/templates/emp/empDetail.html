@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>직원</h1>
+	<p>직원번호:<span th:text="${emp.employeeId}"></span></p>
+	<p>이름:<span th:text="${emp.firstName}"></span></p>
+	<p>성:<span th:text="${emp.lastName}"></span></p>
+	<p>전화번호:<span th:text="${emp.phoneNumber}"></span></p>
+	<p>이메일:<span th:text="${emp.email}"></span></p>
+	<p>급여:<span th:text="${emp.salary}"></span></p>
+	<p>커미션:<span th:text="${emp.commissionPct}"></span></p>
+	<p>직책:<span th:text="${emp.jobId}"></span></p>
+	<p>입사일:<span th:text="${emp.hireDate}"></span></p>
+	<p>매니저:<span th:text="${emp.managerId}"></span></p>
+	<p>부서번호:<span th:text="${emp.department.deptid}"></span></p>
+</body>
+</html>

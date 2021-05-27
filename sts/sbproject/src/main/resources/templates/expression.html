@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script th:inline="javascript">
+	/*
+	JSON {"키":"값"}
+	boardlist은 [{},{},{}] 리스트이기 때문에 FreeBoard List<FreeBoardReply>에 @JsonIgnore추가
+	*/
+	var obj = [[${boardlist}]];
+	//console.log(obj);
+	$.each(obj, function(i, elt) {
+		console.log(i + " --> " + elt["title"]);
+	})
+</script>
+</head>
+<body>
+	<h1>표현식 유틸리티 객체</h1>
+	<p th:if="${not #lists.isEmpty(boardlist)}">값이있다</p>
+	<p th:if="${#lists.isEmpty(boardlist)}">값이없다</p>
+
+	<h1>객체 정보 조회....Expression Basic Object</h1>
+	<!-- inline방식 -->
+	<p>[[${#vars.board}]]</p>
+	<p>[[${board}]]</p>
+	<p>[['BB' + ${board}]]</p>
+	<p>[[${#response.characterEncoding}]]</p>	<!-- 내장객체 -->
+	<p>세션정보: [[${session.user}]]</p>
+	<p>세션정보: [[${session["user"]}]]</p>
+	<p>파라메터: [[${param.myname}]]</p>	<!-- http://localhost:8888/expression?myname=iiiii -->
+	<p>파라메터: [[${#request.getParameter('myname')}]]</p>
+	
+	<!-- natural 방식 -->
+	<p th:text="${param.myname}"></p>
+	<p th:text="${session.user}">세션정보</p>
+	<!-- application.properties에 있는 속성 읽기 -->
+	<p th:text="${@environment.getProperty('app.title')}"></p>
+	<p th:with="target='jj'">
+		[[${target=='jj'?'OK':'NO'} + 'BB' + ${board}]]</p>
+		
+	<p>여기 [[${boardlist}]]</p><!-- toString exclude !!! -->
+</body>
+</html>
