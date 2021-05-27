@@ -1,10 +1,15 @@
 package com.kosta.sbproject.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -12,8 +17,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
+@ToString(exclude = "emplist")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -43,4 +50,12 @@ public class DeptVO {
 	
 	@Column(name = "location_id", nullable = true)
 	int locationid;
+	
+	// 하나의 부서에는 여러명의 직원이 있다.
+	// mappedBy = "department" --> EmpVO의 department에 매여있다.
+	// fetch = FetchType.LAZY --> lazy(default) : 부서정보를 가져올 때 직원정보는 안가져옴
+	@OneToMany(mappedBy = "department", 
+			cascade = CascadeType.ALL,
+			fetch = FetchType.LAZY)	
+	List<EmpVO> emplist;
 }
