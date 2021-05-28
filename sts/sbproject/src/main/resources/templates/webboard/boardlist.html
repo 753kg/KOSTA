@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/layout1}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<th:block layout:fragment="style1">
+	<style>
+		/* table, th, td { border:1px solid gray; border-collapse: collapse; }
+		th, td { padding: 5px; } */
+	</style>
+</th:block>
+</head>
+<body>
+
+	<div class="panel panel-default" layout:fragment="content1">
+		<h1>web-board content</h1>
+		<!-- <p>[[${boardResult}]]</p> -->
+		<!-- <p>[[${boardResult.content}]]</p> -->
+		<table class="table table-striped table-bordered table-hover">
+			<tr>
+				<th>번호</th><th>제목</th><th>내용</th><th>작성자</th><th>작성일</th><th>수정일</th>
+			</tr>
+			<tr th:each="b:${boardResult.content}">
+				<td>
+					<a th:text="${b.bno}" th:href="@{/webboard/boarddetail(bno=${b.bno})}"></a>
+				</td>
+				<td th:text="${b.title}"></td>
+				<td th:text="${b.content}"></td>
+				<td th:text="${b.writer}"></td>
+				<td th:text="${#dates.format(b.regdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+				<td th:text="${#dates.format(b.updatedate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+			</tr>
+		</table>
+		
+		<!-- 페이징 처리 -->
+		<!-- 페이지 버튼을 누르면 form을 통해 페이지 정보 전송 -->
+		<form id="f1" th:action="@{/webboard/boardlist}" method="get">
+			<input type="text" name="page" th:value="${result.currentPageNum}">
+			<input type="text" name="size" th:value="${result.currentPage.pageSize}">
+		</form>
+		
+		<nav>
+			<div>
+				<ul class="pagination">
+					<li class="page-item" th:if="${result.prevPage}">
+						<a th:href="${result.prevPage.pageNumber}+1" th:text="${'PREV'+(result.prevPage.pageNumber+1)}"></a>
+					</li>
+					<li class="page-item" th:each="pg:${result.pageList}">
+						<a th:href="${pg.pageNumber}+1" th:text="${pg.pageNumber + 1}"></a>
+					</li>
+					<li class="page-item" th:if="${result.nextPage}">
+						<a th:href="${result.nextPage.pageNumber}+1" th:text="${'NEXT'+(result.nextPage.pageNumber+1)}">NEXT</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+	
+	<th:block layout:fragment="script1">
+		<script>
+			$(function(){
+				var formObj = $("#f1");
+				$(".pagination a").click(function(e){
+					e.preventDefault();	// 본래의 기능(link)을 취소
+					formObj.find("[name='page']").val($(this).attr("href"));
+					//alert($(this).attr("href"));
+					formObj.submit();
+				});
+			});
+		</script>
+	</th:block>
+</body>
+</html>
