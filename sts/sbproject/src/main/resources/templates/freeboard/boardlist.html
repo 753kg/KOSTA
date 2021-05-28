@@ -1,75 +1,92 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/layout1}">	<!-- layout1.html을 상속받음 -->
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-	table, th, td {
-		border: 1px solid black;
-		border-collapse: collapse;
-	}
-	.myclass {
-		background-color: skyblue;
-	}
-	.myclass2 {
-		color: blue;
-		font-size: 20px;
-		font-weight: bold;
-	}
-	.myclass3 {
-		background-color: gray;
-	}
-</style>
+<th:block layout:fragment="style1">
+	<style>
+		table, th, td {
+			border: 1px solid black;
+			border-collapse: collapse;
+		}
+		.myclass {
+			background-color: skyblue;
+		}
+		.myclass2 {
+			color: blue;
+			font-size: 20px;
+			font-weight: bold;
+		}
+		.myclass3 {
+			background-color: gray;
+		}
+	</style>
+</th:block>
 </head>
 <body>
-	<h1>FreeBoard 목록</h1>
-	<table>
-		<tr>
-			<th>번호</th><th>제목</th><th>내용</th>
-			<th>작성자</th><th>작성일</th><th>수정일</th>
-			<th>index</th>
-			<th>index+1</th>
-			<th>count</th>
-			<th>size</th>
-			<th>first?</th>
-			<th>last?</th>
-			<th>odd?</th>
-			<th>even?</th>
-			<th>작성자<br>(지역변수연습)</th>
-			<th>index<br>(inline방식)</th>
-		</tr>
-		
-		<!-- with: 변수선언 -->
-		<tr th:each="board, boardState2:${boardlist}" 
-		th:class="${boardState2.odd}? 'myclass'"
-		th:classappend=
-			"${ (boardState2.first or boardState2.last?'myclass2':'') + 
-		 		(boardState2.count == 5?'myclass2':'') }"
-		th:with="a=10,b=20, target='writer7'">
-			<td>
-				<a th:text="${board.bno}" th:href="@{boardDetail(bno=${board.bno})}"></a> <!-- 상대경로 -->
-			</td>
-			<td th:text="${'제목:' + board.title}">제목</td>
-			<td th:text="|내용: ${board.content}|"></td>
-			<td>
-				<a th:text="${board.writer}" th:href="@{/freeboard/boardDetail(bno=${board.bno})}"></a> <!-- 절대경로(/): 포트번호까지 -->
-			</td>
-			<td th:text="${board.regdate}">작성일</td>
-			<td th:text="${board.updatedate}">수정일</td>
+
+	<!-- 부모에게 물려받은 header가 이 부분에 온다. -->
+
+	<div class="panel panel-default" layout:fragment="content1">
+		<p>부모가 정의한 content 재정의!! </p>
+	
+		<h1 class="panel-body">FreeBoard 목록</h1>
+		<table>
+			<tr>
+				<th>번호</th><th>제목</th><th>내용</th>
+				<th>작성자</th><th>작성일</th><th>수정일</th>
+				<th>index</th>
+				<th>index+1</th>
+				<th>count</th>
+				<th>size</th>
+				<th>first?</th>
+				<th>last?</th>
+				<th>odd?</th>
+				<th>even?</th>
+				<th>작성자<br>(지역변수연습)</th>
+				<th>index<br>(inline방식)</th>
+			</tr>
 			
-			<td th:text="${boardState2.index}">index는 0부터시작</td>
-			<td th:text="${boardState2.index + 1}">index는 0부터시작</td>
-			<td th:text="${boardState2.count}">count는 1부터시작</td>
-			<td th:text="${boardState2.size + a + b}">size</td>
-			<td th:text="${boardState2.first}">첫번째인지</td>
-			<td th:text="${boardState2.last}">마지막인지</td>
-			<td th:text="${boardState2.odd}">홀수인지</td>
-			<td th:text="${boardState2.even}">짝수인지</td>
-			<td th:text="${board.writer==target?'타겟':'손님'}">작성자(지역변수연습)</td>
-			
-			<!-- inline 방식 -->
-			<td>[[${boardState2.index}]]</td>
-		</tr>
-	</table>
+			<!-- with: 변수선언 -->
+			<tr th:each="board, boardState2:${boardlist}" 
+			th:class="${boardState2.odd}? 'myclass'"
+			th:classappend=
+				"${ (boardState2.first or boardState2.last?'myclass2':'') + 
+			 		(boardState2.count == 5?'myclass2':'') }"
+			th:with="a=10,b=20, target='writer7'">
+				<td>
+					<a th:text="${board.bno}" th:href="@{boardDetail(bno=${board.bno})}"></a> <!-- 상대경로 -->
+				</td>
+				<td th:text="${'제목:' + board.title}">제목</td>
+				<td th:text="|내용: ${board.content}|"></td>
+				<td>
+					<a th:text="${board.writer}" th:href="@{/freeboard/boardDetail(bno=${board.bno})}"></a> <!-- 절대경로(/): 포트번호까지 -->
+				</td>
+				<td th:text="${board.regdate}">작성일</td>
+				<td th:text="${board.updatedate}">수정일</td>
+				
+				<td th:text="${boardState2.index}">index는 0부터시작</td>
+				<td th:text="${boardState2.index + 1}">index는 0부터시작</td>
+				<td th:text="${boardState2.count}">count는 1부터시작</td>
+				<td th:text="${boardState2.size + a + b}">size</td>
+				<td th:text="${boardState2.first}">첫번째인지</td>
+				<td th:text="${boardState2.last}">마지막인지</td>
+				<td th:text="${boardState2.odd}">홀수인지</td>
+				<td th:text="${boardState2.even}">짝수인지</td>
+				<td th:text="${board.writer==target?'타겟':'손님'}">작성자(지역변수연습)</td>
+				
+				<!-- inline 방식 -->
+				<td>[[${boardState2.index}]]</td>
+			</tr>
+		</table>
+	</div>
+	
+	<th:block layout:fragment="script1">
+		<script>
+			console.log("layout연습-재정의")
+		</script>
+	</th:block>
 </body>
 </html>

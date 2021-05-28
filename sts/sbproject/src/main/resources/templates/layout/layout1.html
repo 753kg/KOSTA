@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	  
+<head>
+<meta charset="UTF-8">
+
+<!-- 공통 layout 만들기 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<style>
+	/* 공통 스타일 */
+	/* link 거는게 더 좋은 방법 */
+	* { font-family: "나눔스퀘어"; }
+</style>
+
+<!-- 하위 html에서 CSS 재정의할 예정 -->
+<th:block layout:fragment="style1">
+	<!--/* style */-->
+</th:block>
+</head>
+<body>
+	<header th:replace="/fragments/header::header1"></header>
+		
+	<!-- 하위 html에서 컨텐츠 재정의할 예정 -->
+	<div class="panel panel-default" layout:fragment="content1">
+		<p>부모가 정의한 content. 이 부분이 재정의된다.</p>
+	</div>
+	
+	<footer th:replace="/fragments/footer::footer1"></footer>
+	
+	<!-- 하위 html에서 javascript 재정의할 예정 -->
+	<!-- th:block은 없어지는 태그이다. -->
+	<th:block layout:fragment="script1">
+	</th:block>
+
+</body>
+</html>

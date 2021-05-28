@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<header class="page-header" th:fragment="header1">
+		<h1>
+			SpringBoot Project <small>for spring mvc + jpa</small>
+		</h1>
+		<div style="border: 1px solid green">header1</div>
+	</header>
+	
+	<div th:fragment="header2">
+		<div>header의 2번째 조각</div>
+	</div>
+	
+	<div th:fragment="header3">
+		<div>header의 3번째 조각</div>
+	</div>
+</body>
+</html>
