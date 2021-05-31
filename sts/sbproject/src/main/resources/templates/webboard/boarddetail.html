@@ -101,12 +101,16 @@
 			});
 			
 			$("#delButton").click(function(){
+				
 				var rno = $("input[name='rno']");
 				var obj = {
 						"bno":"[[${board.bno}]]", 
 						"rno":rno.val()
 					};
 				replyManager.remove(obj, printList);
+				rno.val("");
+				$("input[name='replyText']").val("");
+				$("input[name='replyer']").val("");
 			});
 			
 			$("#modalButton").click(function(){
