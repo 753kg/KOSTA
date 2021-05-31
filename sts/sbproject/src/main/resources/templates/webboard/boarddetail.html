@@ -4,11 +4,177 @@
 	  layout:decorate="~{layout/layout1}">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>상세보기</title>
 </head>
 <body>
-	<div class="panel panel-default" layout:fragment="content1">
-		[[${board}]]
+	<div layout:fragment="content1">
+		<h1 class="panel-heading">Board 상세보기</h1>
+		<div class="panel-body">
+			  <form id="myfrm" th:action="@{/webboard/update}" method="post">
+			  	<input type="hidden" id="bno" name="bno" th:value="${board.bno}">
+			  	<input type="hidden" id="regdate" name="regdate" th:value="${board.regdate}">
+			    <div class="form-group">
+			      <label for="title">title:</label>
+			      <input type="text" th:value="${board.title}" class="form-control" id="title" name="title">
+			    </div>
+			    <div class="form-group">
+			      <label for="writer">writer:</label>
+			      <input type="text" th:value="${board.writer}" class="form-control" id="writer" name="writer">
+			    </div>
+			    <div class="form-group">
+			      <label for="content">content:</label>
+			      <textarea class="form-control" rows="3" cols="" id="content" name="content">[[${board.content}]]</textarea>
+			    </div>
+			    <div class="pull-right">
+				    <a href="javascript:call()" class="btn btn-success modbtn22">수정</a>
+				    <a th:href="@{/webboard/delete(bno=${board.bno})}" class="btn btn-danger delbtn22">삭제</a>
+				    <a th:href="@{/webboard/boardlist(page=${pagevo.page},size=${pagevo.size},type=${pagevo.type},keyword=${pagevo.keyword})}" class="btn btn-default retbtn22">목록</a>
+			    </div>
+			    </form>
+			    
+			    <!-- Modal -->
+				<div id="myModal" class="modal fade" role="dialog">
+				  <div class="modal-dialog">
+				
+				    <!-- Modal content-->
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal">&times;</button>
+				        <h4 class="modal-title">Modal Header</h4>
+				      </div>
+				      <div class="modal-body">
+				      	<label>댓글번호</label>
+				        <input type="text" name="rno" class="form-control" readonly="readonly">
+				      	<label>작성자</label>
+				        <input type="text" name="replyer" class="form-control">
+				        <label>내용</label>
+				        <input type="text" name="replyText" class="form-control">
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" id="modalButton" class="btn btn-primary" data-dismiss="modal">저장</button>
+				        <button type="button" id="delButton" class="btn btn-danger" data-dismiss="modal">삭제</button>
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				      </div>
+				    </div>
+				
+				  </div>
+				</div>
+			    
+			    <!-- 댓글추가 -->
+			    <!-- data-toggle="modal" data-target="#myModal" : modal이랑 연결 -->
+			    <div>
+			    	<button data-toggle="modal" data-target="#myModal" class="btn btn-primary" id="addReply">댓글작성</button>
+			    </div>
+			    
+			    <!-- 댓글조회 -->
+			    <table>
+			    	<thead>
+				    	<tr>
+				    		<th>번호</th>
+				    		<th>작성자</th>
+				    		<th>내용</th>
+				    	</tr>
+			    	</thead>
+			    	<tbody data-toggle="modal" data-target="#myModal" id="replyTable">
+			    	
+			    	</tbody>
+			    </table>
+		</div>
+		
+		<!-- 페이징 정보 -->
+		<form id="f1" action="" method="get">
+			<input type="hidden" name="page" th:value="${pagevo.page}">
+			<input type="hidden" name="size" th:value="${pagevo.size}">
+			<input type="hidden" name="type" th:value="${pagevo.type}">
+			<input type="hidden" name="keyword" th:value="${pagevo.keyword}">
+		</form>
 	</div>
+	
+	<th:block layout:fragment="script1">
+		<script th:src="@{/js/external.js}"></script>
+		<script>
+			var mode = "";
+			$("#addReply").click(function(){
+				$("#myModal").show();
+				$(".modal-title").text("댓글 작성");
+				mode = "ADD";
+			});
+			
+			$("#delButton").click(function(){
+				var rno = $("input[name='rno']");
+				var obj = {
+						"bno":"[[${board.bno}]]", 
+						"rno":rno.val()
+					};
+				replyManager.remove(obj, printList);
+			});
+			
+			$("#modalButton").click(function(){
+				var replyText = $("input[name='replyText']");
+				var replyer = $("input[name='replyer']");
+				var rno = $("input[name='rno']");
+				if(mode == "ADD"){
+					var obj = {
+								"bno":"[[${board.bno}]]", 
+								"reply":replyText.val(), 
+								"replyer":replyer.val()
+							};
+					replyManager.add(obj, printList);
+					alert("입력완료");
+					
+				}
+				else if(mode == "MOD"){
+					var obj2 = {
+								"bno":"[[${board.bno}]]", 
+								"rno":rno.val(),
+								"reply":replyText.val(), 
+								"replyer":replyer.val()
+								};
+					replyManager.update(obj2, printList);
+					alert("수정완료");
+				}
+				$("#myModal").hide();
+				rno.val("");
+				replyText.val("");
+				replyer.val("");
+			});
+			
+			// 댓글 table의 각 row를 누르면
+			$("#replyTable").on("click", "tr", function(){
+				mode = "MOD";	// 수정
+				var tds = $(this).find("td");
+				var rno = tds[0].innerHTML;
+				var replyer = tds[1].innerHTML;
+				var reply = tds[2].innerHTML;
+				$("input[name='rno']").val(rno);
+				$("input[name='replyText']").val(reply);
+				$("input[name='replyer']").val(replyer);
+				$("#myModal").show();
+				$(".modal-title").text("댓글 수정");
+				
+			});
+		
+			// console.log(replyManager);	// {"getAll":function(){}, "add":function...}
+			replyManager.getAll("[[${board.bno}]]", printList);
+			
+			function printList(rList){
+				console.log(rList);
+				var str = "";
+				$.each(rList, function(i, elt) {
+					str += "<tr>";
+					str += "<td>" + elt["rno"] + "</td>";
+					str += "<td>" + elt["replyer"] + "</td>";
+					str += "<td>" + elt["reply"] + "</td>";
+					str += "</tr>";
+				});
+				$("#replyTable").html(str);
+			}
+		
+		
+			function call(){
+				$("#myfrm").submit();
+			}
+		</script>
+	</th:block>
 </body>
 </html>

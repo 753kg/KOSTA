@@ -73,7 +73,11 @@ public class WebBoardReplyController {
 		WebBoard board = WebBoard.builder().bno(bno).build();
 		//reply.setRno(rno);
 		reply.setBoard(board);
-		service.updateOrInsert(reply);
+		log.info("bno: " + bno);
+		log.info("reply: " + reply.toString());
+		
+		WebBoardReply result = service.updateOrInsert(reply);
+		log.info(result.toString());
 		return new ResponseEntity<>(service.selectAll(board), HttpStatus.OK);
 	}
 
