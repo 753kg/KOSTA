@@ -31,7 +31,7 @@ public class WebBoardTest {
 	@Autowired
 	WebBoardRepository repo;
 	
-	@Test
+	// @Test
 	public void pagingTest() {
 		Pageable paging = PageRequest.of(0, 3, Direction.DESC, "bno");
 		Page<WebBoard> result = repo.findByWriter("writer2", paging);
@@ -88,16 +88,16 @@ public class WebBoardTest {
 	}
 	
 	@Transactional
-	// @Test
+	@Test
 	public void insertReply() {
-		repo.findById(477L).ifPresent(board -> {
-			board.setTitle("금요일좋아");
+		repo.findById(635L).ifPresent(board -> {
+			//board.setTitle("");
 			
 			// cascade
 			List<WebBoardReply> replies = board.getReplies(); // lazy이므로 transactional&commit
 			IntStream.range(1, 4).forEach(i -> {
 				WebBoardReply wreply = WebBoardReply.builder()
-						.reply("댓걸"+i)
+						.reply("eoeooeoeoeo"+i)
 						.replyer("writer"+i)
 						.board(board)
 						.build();

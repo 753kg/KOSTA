@@ -23,7 +23,7 @@ public class WebBoardService {
 	WebBoardRepository repo;
 	
 	public Page<WebBoard> selectAll(PageVO pvo) {
-		Predicate p = repo.makePredicate(null, null);	// 조건
+		Predicate p = repo.makePredicate(pvo.getType(), pvo.getKeyword());	// 조건
 		
 		//PageVO pvo = new PageVO();
 		//pvo.setSize(5);
@@ -36,5 +36,23 @@ public class WebBoardService {
 	
 	public WebBoard selectById(long bno) {
 		return repo.findById(bno).get(); 
+	}
+	
+	public WebBoard insertBoard(WebBoard board) {
+		return repo.save(board);
+	}
+	
+	public WebBoard updateBoard(WebBoard board) {
+		return repo.save(board);	// id가 있어야 수정된다.
+	}
+	
+	public int deleteBoard(long bno) {
+		int ret = 0;
+		
+		try {
+			repo.deleteById(bno);		
+			ret = 1;
+		} catch (Exception e) {}
+		return ret;
 	}
 }

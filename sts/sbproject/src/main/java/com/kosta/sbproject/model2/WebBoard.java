@@ -50,7 +50,8 @@ public class WebBoard {
 	@UpdateTimestamp
 	Timestamp updatedate;
 	
-	// @JsonIgnore	// javascript 변수로 받을 때 필요
+	// toString과 유사. JSON 만들때 무한loop방지
+	@JsonIgnore	// javascript 변수로 받을 때 필요
 	@OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
 	List<WebBoardReply> replies;
 }
