@@ -32,8 +32,9 @@ public class PageMaker<T> {
 		calcPage();
 	}
 	public void calcPage() {
-		int tempEndNum = (int)(Math.ceil(currentPageNum/10.0)*10);	// 페이지바 개수(pageList) 10개
-		int startNum = tempEndNum - 9;
+		int cnt = 10;
+		int tempEndNum = (int)(Math.ceil(currentPageNum/(cnt*1.0))*cnt);	// 페이지바 개수(pageList) 10개
+		int startNum = tempEndNum - (cnt-1);
 		Pageable startPage = this.currentPage;
 		for(int i = startNum; i<this.currentPageNum; i++) {
 			startPage = startPage.previousOrFirst();

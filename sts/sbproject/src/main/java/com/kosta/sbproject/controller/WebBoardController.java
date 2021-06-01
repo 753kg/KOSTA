@@ -1,6 +1,9 @@
 package com.kosta.sbproject.controller;
 
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.kosta.sbproject.model2.PageMaker;
 import com.kosta.sbproject.model2.PageVO;
@@ -24,21 +28,27 @@ public class WebBoardController {
 	@Autowired
 	WebBoardService service;
 	
-	@GetMapping("/webboard/boardlist")
-	public void selectAll(Model model, PageVO pagevo) {
-		Page<WebBoard> result = service.selectAll(pagevo);
-		List<WebBoard> boardlist = result.getContent();
-		boardlist.forEach(b -> {
-			log.info(b.toString());
-		});
-		log.info("한페이지의사이즈" + result.getSize());
-		log.info("전체페이지" + result.getTotalPages());
+	@GetMapping("/webboard/boardlist")   //방법2 PageVO pagevo param방법
+	public void selectAll(Model model,PageVO pagevo , HttpServletRequest request ) {
 		
-		// return type : Page<WebBoard>
+		/* 방법1 rttr getAttribute
+		Map<String, ?> flashMap =RequestContextUtils.getInputFlashMap(request);
+        
+        if(flashMap!=null) {
+            
+            PageVO p =(PageVO)flashMap.get("pagevo");
+            System.out.println("flashMap p:" + p);
+        }
+        */
+		Page<WebBoard> result = service.selectAll(pagevo);
+		 
+		List<WebBoard> boardlist = result.getContent();
+				
 		model.addAttribute("boardResult", result);
+		model.addAttribute("pagevo", pagevo);
 		model.addAttribute("result", new PageMaker<>(result));
-		model.addAttribute("pagevo", pagevo);	// keyword, type 정보
 	}
+
 	
 	@GetMapping("/webboard/register")
 	public void boardRegister() {
@@ -73,9 +83,21 @@ public class WebBoardController {
 	}
 	
 	@PostMapping("/webboard/update")
-	public String boardUpdate(WebBoard board) {
+	public String boardUpdate(WebBoard board, Integer page, Integer size, String type, String keyword, RedirectAttributes rttr) {
 		WebBoard result = service.updateBoard(board);
 		log.info(result == null ? "수정실패":"수정성공");
-		return "redirect:/webboard/boardlist";
+		
+		/* 방법1. 주소창에 안보임
+		PageVO pagevo = new PageVO();
+		pagevo.setPage(page);
+		pagevo.setSize(size);
+		pagevo.setType(type);
+		pagevo.setKeyword(keyword);
+		//rttr.addFlashAttribute("pagevo", pagevo);
+		*/
+		// 방법2. 주소창에 보임
+		String param = "page=" + page + "&size=" + size + "&type=" + type + "&keyword=" + keyword;
+		log.info(param);
+		return "redirect:/webboard/boardlist?" + param;
 	}
 }
