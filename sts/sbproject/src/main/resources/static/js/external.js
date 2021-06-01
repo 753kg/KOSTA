@@ -43,10 +43,7 @@ var replyManager = ( function(){
 		console.log("remove reply....");
 		$.ajax({
 			url: "/replies/" + obj["bno"] + "/" + obj["rno"],
-			data: JSON.stringify(obj),
-			dataType: "json",
 			type: "delete",
-			contentType: "application/json",
 			success: callback
 		});
 	};

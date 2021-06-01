@@ -67,7 +67,7 @@
 			    </div>
 			    
 			    <!-- 댓글조회 -->
-			    <table>
+			    <table class="table table-striped table-bordered table-hover">
 			    	<thead>
 				    	<tr>
 				    		<th>번호</th>
@@ -95,6 +95,9 @@
 		<script>
 			var mode = "";
 			$("#addReply").click(function(){
+				$("input[name='rno']").val("");
+				$("input[name='replyText']").val("");
+				$("input[name='replyer']").val("");
 				$("#myModal").show();
 				$(".modal-title").text("댓글 작성");
 				mode = "ADD";
@@ -102,10 +105,10 @@
 			
 			$("#delButton").click(function(){
 				
-				var rno = $("input[name='rno']");
+				//var rno = $("input[name='rno']");		// replyTable click-> global변수로 저장함
 				var obj = {
 						"bno":"[[${board.bno}]]", 
-						"rno":rno.val()
+						"rno":rno
 					};
 				replyManager.remove(obj, printList);
 				rno.val("");
@@ -116,25 +119,20 @@
 			$("#modalButton").click(function(){
 				var replyText = $("input[name='replyText']");
 				var replyer = $("input[name='replyer']");
-				var rno = $("input[name='rno']");
+				// var rno = $("input[name='rno']");
+				var obj = {
+							"bno":"[[${board.bno}]]", 
+							"reply":replyText.val(), 
+							"replyer":replyer.val()
+						};
 				if(mode == "ADD"){
-					var obj = {
-								"bno":"[[${board.bno}]]", 
-								"reply":replyText.val(), 
-								"replyer":replyer.val()
-							};
 					replyManager.add(obj, printList);
 					alert("입력완료");
 					
 				}
 				else if(mode == "MOD"){
-					var obj2 = {
-								"bno":"[[${board.bno}]]", 
-								"rno":rno.val(),
-								"reply":replyText.val(), 
-								"replyer":replyer.val()
-								};
-					replyManager.update(obj2, printList);
+					obj["rno"] = rno;
+					replyManager.update(obj, printList);
 					alert("수정완료");
 				}
 				$("#myModal").hide();
@@ -147,7 +145,7 @@
 			$("#replyTable").on("click", "tr", function(){
 				mode = "MOD";	// 수정
 				var tds = $(this).find("td");
-				var rno = tds[0].innerHTML;
+				rno = tds[0].innerHTML;		// global
 				var replyer = tds[1].innerHTML;
 				var reply = tds[2].innerHTML;
 				$("input[name='rno']").val(rno);

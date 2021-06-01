@@ -48,6 +48,7 @@
 				</td>
 				<td>
 					<a class="boardLink" th:text="${b.title}" th:href="${b.bno}"></a>
+					<span class="badge">[[${b.replies.size()}]]</span>
 				</td>
 				<td th:text="${b.content}"></td>
 				<td>
@@ -73,7 +74,8 @@
 					<li class="page-item" th:if="${result.prevPage}">
 						<a th:href="${result.prevPage.pageNumber}+1" th:text="${'PREV'+(result.prevPage.pageNumber+1)}"></a>
 					</li>
-					<li class="page-item" th:each="pg:${result.pageList}">
+					<li class="page-item" th:each="pg:${result.pageList}"
+					th:classappend="${pg.pageNumber==result.currentPageNum-1}?active:''">
 						<a th:href="${pg.pageNumber}+1" th:text="${pg.pageNumber + 1}"></a>
 					</li>
 					<li class="page-item" th:if="${result.nextPage}">
