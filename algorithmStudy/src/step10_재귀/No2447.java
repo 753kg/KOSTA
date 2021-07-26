@@ -11,7 +11,8 @@ public class No2447 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int N = Integer.parseInt(br.readLine());
-		printStar(N);
+		String[][] starArr = new String[N][N];
+		printStar(starArr, N);
 		System.out.println(sb);
 		/*
 		
@@ -39,7 +40,18 @@ public class No2447 {
 
 	}
 	
-	public static void printStar(int N) {
+	public static void printStar(String[][] arr, int N) {
+		int K = N / 3;
+		for(int i=0; i<3; i++) {
+			for(int j=0; j<3; j++) {
+				printStar(arr, K);
+			}
+		}
+	}
+	
+	/*
+	public static void printStar(String[][] arr, int N) {
+		System.out.println("--시작 N:" + N);
 		if(N == 1) {
 			sb.append("*");
 		}
@@ -49,12 +61,13 @@ public class No2447 {
 			for(int i=1; i<=len; i++) {
 				if(i == 5) sb.append(" ");
 				else printStar(K);
-				
+				System.out.println(i + " " + N);
+				System.out.println(i % N);
 				if(i % N == 0) sb.append("\n");
 			}			
 		}
 	}
-
+*/
 }
 
 
